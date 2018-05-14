@@ -13,6 +13,7 @@
 		BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA39998520A9E92200383CFB /* AppDelegate.swift */; };
 		BA39998820A9E92200383CFB /* Herman VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA39998720A9E92200383CFB /* Herman VC.swift */; };
 		BA39998D20A9E92300383CFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA39998C20A9E92300383CFB /* Assets.xcassets */; };
+		BF33B71D20AA4D00009ECCCF /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33B71C20AA4D00009ECCCF /* CollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		BA39998720A9E92200383CFB /* Herman VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Herman VC.swift"; sourceTree = "<group>"; };
 		BA39998C20A9E92300383CFB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA39999120A9E92300383CFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF33B71C20AA4D00009ECCCF /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,10 +108,27 @@
 			isa = PBXGroup;
 			children = (
 				BA05CFDF20AA35EB00021565 /* GoogleService-Info.plist */,
+				BF33B71B20AA4C8C009ECCCF /* Spencer */,
 				BA13F08B20AA2D1B004BF8FC /* Isaac */,
 				BA13F08720AA26FA004BF8FC /* Resources */,
 			);
 			path = Scrappy;
+			sourceTree = "<group>";
+		};
+		BF33B71B20AA4C8C009ECCCF /* Spencer */ = {
+			isa = PBXGroup;
+			children = (
+				BF33B71E20AA4D23009ECCCF /* View Controllers */,
+			);
+			path = Spencer;
+			sourceTree = "<group>";
+		};
+		BF33B71E20AA4D23009ECCCF /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BF33B71C20AA4D00009ECCCF /* CollectionViewController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 		FE5767F0BE3954553E377259 /* Frameworks */ = {
@@ -237,6 +256,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF33B71D20AA4D00009ECCCF /* CollectionViewController.swift in Sources */,
 				BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */,
 				BA39998820A9E92200383CFB /* Herman VC.swift in Sources */,
 				BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */,
@@ -368,7 +388,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SRSHZ764K7;
 				INFOPLIST_FILE = "$(SRCROOT)/Scrappy/Resources/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.isaac.Scrappy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -384,7 +407,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SRSHZ764K7;
 				INFOPLIST_FILE = "$(SRCROOT)/Scrappy/Resources/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.isaac.Scrappy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
