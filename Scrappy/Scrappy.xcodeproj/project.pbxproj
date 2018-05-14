@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		48CF927101978D225DA1BF8B /* Pods_Scrappy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67BC927EB3D895ABB51477AD /* Pods_Scrappy.framework */; };
+		5D54DB9020AA415B00CACAF7 /* BlankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D54DB8F20AA415B00CACAF7 /* BlankViewController.swift */; };
 		BA05CFE020AA35EB00021565 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA05CFDF20AA35EB00021565 /* GoogleService-Info.plist */; };
 		BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA13F08920AA2B86004BF8FC /* Root Nav.swift */; };
 		BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA39998520A9E92200383CFB /* AppDelegate.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D54DB8F20AA415B00CACAF7 /* BlankViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankViewController.swift; sourceTree = "<group>"; };
 		628AE67FCF76F9488F2909E0 /* Pods-Scrappy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scrappy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Scrappy/Pods-Scrappy.release.xcconfig"; sourceTree = "<group>"; };
 		67BC927EB3D895ABB51477AD /* Pods_Scrappy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scrappy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A357D38E9E88116E4DD23C03 /* Pods-Scrappy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scrappy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Scrappy/Pods-Scrappy.debug.xcconfig"; sourceTree = "<group>"; };
@@ -49,6 +51,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		5D54DB9120AA43B500CACAF7 /* Herman */ = {
+			isa = PBXGroup;
+			children = (
+				BA39998720A9E92200383CFB /* Herman VC.swift */,
+				5D54DB8F20AA415B00CACAF7 /* BlankViewController.swift */,
+			);
+			path = Herman;
+			sourceTree = "<group>";
+		};
 		BA13F08620AA26EF004BF8FC /* App Delegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -70,7 +81,6 @@
 			isa = PBXGroup;
 			children = (
 				BA13F08920AA2B86004BF8FC /* Root Nav.swift */,
-				BA39998720A9E92200383CFB /* Herman VC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -107,6 +117,7 @@
 			children = (
 				BA05CFDF20AA35EB00021565 /* GoogleService-Info.plist */,
 				BA13F08B20AA2D1B004BF8FC /* Isaac */,
+				5D54DB9120AA43B500CACAF7 /* Herman */,
 				BA13F08720AA26FA004BF8FC /* Resources */,
 			);
 			path = Scrappy;
@@ -240,6 +251,7 @@
 				BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */,
 				BA39998820A9E92200383CFB /* Herman VC.swift in Sources */,
 				BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */,
+				5D54DB9020AA415B00CACAF7 /* BlankViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,7 +380,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SRSHZ764K7;
 				INFOPLIST_FILE = "$(SRCROOT)/Scrappy/Resources/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.isaac.Scrappy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -384,7 +399,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SRSHZ764K7;
 				INFOPLIST_FILE = "$(SRCROOT)/Scrappy/Resources/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.isaac.Scrappy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
