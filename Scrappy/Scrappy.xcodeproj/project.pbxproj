@@ -11,7 +11,6 @@
 		BA05CFE020AA35EB00021565 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA05CFDF20AA35EB00021565 /* GoogleService-Info.plist */; };
 		BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA13F08920AA2B86004BF8FC /* Root Nav.swift */; };
 		BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA39998520A9E92200383CFB /* AppDelegate.swift */; };
-		BA39998820A9E92200383CFB /* Herman VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA39998720A9E92200383CFB /* Herman VC.swift */; };
 		BA39998D20A9E92300383CFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA39998C20A9E92300383CFB /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -23,7 +22,6 @@
 		BA13F08920AA2B86004BF8FC /* Root Nav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Root Nav.swift"; sourceTree = "<group>"; };
 		BA39998220A9E92200383CFB /* Scrappy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrappy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA39998520A9E92200383CFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BA39998720A9E92200383CFB /* Herman VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Herman VC.swift"; sourceTree = "<group>"; };
 		BA39998C20A9E92300383CFB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA39999120A9E92300383CFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,7 +68,6 @@
 			isa = PBXGroup;
 			children = (
 				BA13F08920AA2B86004BF8FC /* Root Nav.swift */,
-				BA39998720A9E92200383CFB /* Herman VC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -238,7 +235,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */,
-				BA39998820A9E92200383CFB /* Herman VC.swift in Sources */,
 				BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
