@@ -11,6 +11,7 @@
 		5D54DB9020AA415B00CACAF7 /* BlankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D54DB8F20AA415B00CACAF7 /* BlankViewController.swift */; };
 		BA05CFE020AA35EB00021565 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA05CFDF20AA35EB00021565 /* GoogleService-Info.plist */; };
 		BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA13F08920AA2B86004BF8FC /* Root Nav.swift */; };
+		BA1E7DCA20AA53050008FF74 /* Scrappy VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1E7DC920AA53050008FF74 /* Scrappy VC.swift */; };
 		BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA39998520A9E92200383CFB /* AppDelegate.swift */; };
 		BA39998D20A9E92300383CFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA39998C20A9E92300383CFB /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -22,6 +23,7 @@
 		A357D38E9E88116E4DD23C03 /* Pods-Scrappy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scrappy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Scrappy/Pods-Scrappy.debug.xcconfig"; sourceTree = "<group>"; };
 		BA05CFDF20AA35EB00021565 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BA13F08920AA2B86004BF8FC /* Root Nav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Root Nav.swift"; sourceTree = "<group>"; };
+		BA1E7DC920AA53050008FF74 /* Scrappy VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scrappy VC.swift"; sourceTree = "<group>"; };
 		BA39998220A9E92200383CFB /* Scrappy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrappy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA39998520A9E92200383CFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA39998C20A9E92300383CFB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -52,7 +54,6 @@
 		5D54DB9120AA43B500CACAF7 /* Herman */ = {
 			isa = PBXGroup;
 			children = (
-				BA39998720A9E92200383CFB /* Herman VC.swift */,
 				5D54DB8F20AA415B00CACAF7 /* BlankViewController.swift */,
 			);
 			path = Herman;
@@ -62,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				BA39998520A9E92200383CFB /* AppDelegate.swift */,
+				BA1E7DC920AA53050008FF74 /* Scrappy VC.swift */,
 			);
 			path = "App Delegate";
 			sourceTree = "<group>";
@@ -246,6 +248,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA1E7DCA20AA53050008FF74 /* Scrappy VC.swift in Sources */,
 				BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */,
 				BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */,
 				5D54DB9020AA415B00CACAF7 /* BlankViewController.swift in Sources */,
