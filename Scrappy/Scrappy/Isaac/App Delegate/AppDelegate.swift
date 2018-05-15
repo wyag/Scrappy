@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let rootNav = RootNavigationViewController()
-        rootNav.viewControllers = [ScrappyViewController()]
+        rootNav.viewControllers = [LoginViewController()]
         
         window?.rootViewController = rootNav
         window?.makeKeyAndVisible()
