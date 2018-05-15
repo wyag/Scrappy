@@ -7,14 +7,42 @@
 //
 
 import UIKit
+import Firebase
 import SkyFloatingLabelTextField
 
 class SignupViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = UIColor.white
+        
+        usernameTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+
         setupViews()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            
+            view.frame.origin.y += -(keyboardHeight)
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            
+            view.frame.origin.y += keyboardHeight
+        }
     }
     
     let closeButton: UIButton = {
@@ -43,11 +71,12 @@ class SignupViewController: UIViewController {
         return stackView
     }()
     
-    let fullNameTextField: SkyFloatingLabelTextFieldWithIcon = {
+    let usernameTextField: SkyFloatingLabelTextFieldWithIcon = {
         let name = SkyFloatingLabelTextFieldWithIcon()
         name.translatesAutoresizingMaskIntoConstraints = false
-        name.placeholder = "First Name"
-        name.textColor = UIColor.lightGray
+        name.placeholder = "Username"
+        name.textColor = UIColor.black
+        name.autocorrectionType = UITextAutocorrectionType.no
         name.iconText = "\u{f007}"
         name.iconFont = UIFont(name: "Font Awesome 5 Free", size: 12)
         name.iconColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
@@ -63,7 +92,8 @@ class SignupViewController: UIViewController {
         let email = SkyFloatingLabelTextFieldWithIcon()
         email.translatesAutoresizingMaskIntoConstraints = false
         email.placeholder = "Email Address"
-        email.textColor = UIColor.lightGray
+        email.textColor = UIColor.black
+        email.autocorrectionType = UITextAutocorrectionType.no
         email.iconText = "\u{f0e0}"
         email.iconFont = UIFont(name: "Font Awesome 5 Free", size: 12)
         email.iconColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
@@ -80,7 +110,7 @@ class SignupViewController: UIViewController {
         password.translatesAutoresizingMaskIntoConstraints = false
         password.placeholder = "Password"
         password.isSecureTextEntry = true 
-        password.textColor = UIColor.lightGray
+        password.textColor = UIColor.black
         password.iconText = "\u{f023}"
         password.iconFont = UIFont(name: "Font Awesome 5 Free", size: 12)
         password.iconColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
@@ -109,7 +139,40 @@ class SignupViewController: UIViewController {
     }
     
     @objc func signUpButtonTapped() {
+        handleUserSignUp()
         print("Sign Up Button Tapped")
+    }
+    
+    func handleUserSignUp() {
+        
+        guard let username = usernameTextField.text else { return }
+        guard let email = emailTextField.text, !email.isEmpty else { return }
+        guard let password = passwordTextField.text, !password.isEmpty else { return }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+            
+            if let error = error {
+                print("Failed to create new user", error)
+                return
+            }
+            
+            print("Successfully created user:", user?.uid ?? "")
+            
+            let dictionaryValues = ["username": username, "email": email]
+            guard let uid = user?.uid else { return }
+            
+            let values = [uid: dictionaryValues]
+            
+            Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (error, reference) in
+                
+                if let error = error {
+                    print("Failed to save user info into db", error)
+                }
+                
+                print("Successfully saved user info into db")
+    
+            })
+        }
     }
     
     func setupViews() {
@@ -126,7 +189,7 @@ class SignupViewController: UIViewController {
         createNewAccLabel.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         
         view.addSubview(textfieldStackView)
-        textfieldStackView.addArrangedSubview(fullNameTextField)
+        textfieldStackView.addArrangedSubview(usernameTextField)
         textfieldStackView.addArrangedSubview(emailTextField)
         textfieldStackView.addArrangedSubview(passwordTextField)
         textfieldStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25).isActive = true
@@ -141,6 +204,28 @@ class SignupViewController: UIViewController {
         signUpButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 }
+
+extension SignupViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        usernameTextField.resignFirstResponder()
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        return true
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

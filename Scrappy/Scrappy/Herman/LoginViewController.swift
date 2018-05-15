@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 import SkyFloatingLabelTextField
 
 class LoginViewController: UIViewController {
@@ -15,8 +16,32 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.white
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        
         navigationController?.navigationBar.isHidden = true
         setupViews()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide , object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+
+            view.frame.origin.y += -(keyboardHeight)
+        }
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+
+            view.frame.origin.y += keyboardHeight
+        }
     }
     
     let scrappyLabel: UILabel = {
@@ -42,7 +67,8 @@ class LoginViewController: UIViewController {
         let email = SkyFloatingLabelTextFieldWithIcon()
         email.translatesAutoresizingMaskIntoConstraints = false
         email.placeholder = "Email"
-        email.textColor = UIColor.lightGray
+        email.textColor = UIColor.black
+        email.autocorrectionType = UITextAutocorrectionType.no
         email.iconText = "\u{f0e0}"
         email.iconFont = UIFont(name: "Font Awesome 5 Free", size: 12)
         email.iconColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
@@ -58,7 +84,8 @@ class LoginViewController: UIViewController {
         let password = SkyFloatingLabelTextFieldWithIcon()
         password.translatesAutoresizingMaskIntoConstraints = false
         password.placeholder = "Password"
-        password.textColor = UIColor.lightGray
+        password.textColor = UIColor.black
+        password.isSecureTextEntry = true 
         password.iconText = "\u{f023}"
         password.iconFont = UIFont(name: "Font Awesome 5 Free", size: 12)
         password.iconColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
@@ -88,6 +115,7 @@ class LoginViewController: UIViewController {
         button.setTitle("SIGN IN", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = button.frame.height / 2
+        button.addTarget(self, action: #selector(signInButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -112,11 +140,40 @@ class LoginViewController: UIViewController {
     }()
     
     @objc func forgotPasswordButtonTapped() {
-        print("Forgot Password Pressed")
+        
+        let forgotPasswordVC = ForgotPasswordViewController()
+        forgotPasswordVC.modalPresentationStyle = .overCurrentContext
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        present(forgotPasswordVC, animated: true, completion: nil)
+    }
+    
+    @objc func signInButtonTapped() {
+        
+        handleUserLogIn()
     }
     
     @objc func createNewAccButtonPressed() {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         present(SignupViewController(), animated: true, completion: nil)
+    }
+    
+    func handleUserLogIn() {
+        
+        guard let email = emailTextField.text, !email.isEmpty else { return }
+        guard let password = passwordTextField.text, !password.isEmpty else { return }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            
+            if let error = error {
+                print("Failed to sign in with email", error)
+                return
+            }
+            
+            print("Successfully logged back in with user:", user?.uid ?? "")
+            
+        }
     }
     
     func setupViews() {
@@ -151,6 +208,16 @@ class LoginViewController: UIViewController {
         view.addSubview(createNewAccButton)
         createNewAccButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         createNewAccButton.topAnchor.constraint(equalTo: dontHaveAccLabel.bottomAnchor, constant: 1).isActive = true
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        return true
     }
 }
 
