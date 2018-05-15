@@ -16,6 +16,8 @@
 		BA1E7DCA20AA53050008FF74 /* Scrappy VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1E7DC920AA53050008FF74 /* Scrappy VC.swift */; };
 		BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA39998520A9E92200383CFB /* AppDelegate.swift */; };
 		BA39998D20A9E92300383CFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA39998C20A9E92300383CFB /* Assets.xcassets */; };
+		BAB0DE0E20AB88580020C200 /* Custom Nav VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB0DE0D20AB88580020C200 /* Custom Nav VC.swift */; };
+		BAB0DE1120AB88840020C200 /* Copy & Paste.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB0DE1020AB88840020C200 /* Copy & Paste.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		BA39998520A9E92200383CFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA39998C20A9E92300383CFB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA39999120A9E92300383CFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BAB0DE0D20AB88580020C200 /* Custom Nav VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom Nav VC.swift"; sourceTree = "<group>"; };
+		BAB0DE1020AB88840020C200 /* Copy & Paste.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Copy & Paste.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,7 @@
 			children = (
 				BA13F08620AA26EF004BF8FC /* App Delegate */,
 				BA13F08820AA2703004BF8FC /* View Controllers */,
+				BAB0DE0F20AB88620020C200 /* Custom Nav */,
 			);
 			path = Isaac;
 			sourceTree = "<group>";
@@ -127,6 +132,15 @@
 				BA13F08720AA26FA004BF8FC /* Resources */,
 			);
 			path = Scrappy;
+			sourceTree = "<group>";
+		};
+		BAB0DE0F20AB88620020C200 /* Custom Nav */ = {
+			isa = PBXGroup;
+			children = (
+				BAB0DE0D20AB88580020C200 /* Custom Nav VC.swift */,
+				BAB0DE1020AB88840020C200 /* Copy & Paste.swift */,
+			);
+			path = "Custom Nav";
 			sourceTree = "<group>";
 		};
 		FE5767F0BE3954553E377259 /* Frameworks */ = {
@@ -258,6 +272,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA1E7DCA20AA53050008FF74 /* Scrappy VC.swift in Sources */,
+				BAB0DE1120AB88840020C200 /* Copy & Paste.swift in Sources */,
+				BAB0DE0E20AB88580020C200 /* Custom Nav VC.swift in Sources */,
 				BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */,
 				5D54DB9B20AA585B00CACAF7 /* SignupViewController.swift in Sources */,
 				BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */,
