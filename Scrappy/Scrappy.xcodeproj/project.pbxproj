@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		48CF927101978D225DA1BF8B /* Pods_Scrappy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67BC927EB3D895ABB51477AD /* Pods_Scrappy.framework */; };
+		5D0FD43B20AB3E2200E90F0E /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FD43A20AB3E2200E90F0E /* ForgotPasswordViewController.swift */; };
 		5D54DB9920AA584A00CACAF7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D54DB9820AA584A00CACAF7 /* LoginViewController.swift */; };
 		5D54DB9B20AA585B00CACAF7 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D54DB9A20AA585B00CACAF7 /* SignupViewController.swift */; };
 		5DC5904E20AA942D00992A33 /* fa-solid-900.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DC5904D20AA942D00992A33 /* fa-solid-900.ttf */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D0FD43A20AB3E2200E90F0E /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		5D54DB9820AA584A00CACAF7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5D54DB9A20AA585B00CACAF7 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		5DC5904D20AA942D00992A33 /* fa-solid-900.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fa-solid-900.ttf"; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			children = (
 				5D54DB9820AA584A00CACAF7 /* LoginViewController.swift */,
 				5D54DB9A20AA585B00CACAF7 /* SignupViewController.swift */,
+				5D0FD43A20AB3E2200E90F0E /* ForgotPasswordViewController.swift */,
 			);
 			path = Herman;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 			files = (
 				BA1E7DCA20AA53050008FF74 /* Scrappy VC.swift in Sources */,
 				BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */,
+				5D0FD43B20AB3E2200E90F0E /* ForgotPasswordViewController.swift in Sources */,
 				5D54DB9B20AA585B00CACAF7 /* SignupViewController.swift in Sources */,
 				BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */,
 				5D54DB9920AA584A00CACAF7 /* LoginViewController.swift in Sources */,
