@@ -6,7 +6,6 @@
 //  Copyright © 2018 Isaac. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class AllImagesCell: UICollectionViewCell {
@@ -19,10 +18,9 @@ class AllImagesCell: UICollectionViewCell {
         }
     }
     
-    weak var delegate: AllImagesCellDelegate?
-    
     let imageView: UIImageView = {
         let iv = UIImageView()
+        iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
         iv.layer.cornerRadius = 15
@@ -36,7 +34,11 @@ class AllImagesCell: UICollectionViewCell {
     
     func setupViews() {
         addSubview(imageView)
-        imageView.setAnchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0)
+        imageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        imageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+//        imageView.setAnchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
