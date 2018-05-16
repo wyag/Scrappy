@@ -186,11 +186,11 @@
 		BF31588620AB916B008EA7E5 /* Spencer */ = {
 			isa = PBXGroup;
 			children = (
+				BF31588A20AB9195008EA7E5 /* TopSellerImageCell.swift */,
 				BF31588820AB9195008EA7E5 /* AllImagesCell.swift */,
 				BF31588B20AB9195008EA7E5 /* CollectionViewController.swift */,
 				BF31588720AB9195008EA7E5 /* DetailCollectionViewController.swift */,
 				BF31588920AB9195008EA7E5 /* extensions.swift */,
-				BF31588A20AB9195008EA7E5 /* TopSellerImageCell.swift */,
 			);
 			path = Spencer;
 			sourceTree = "<group>";
