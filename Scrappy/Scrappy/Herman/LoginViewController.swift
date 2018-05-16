@@ -177,6 +177,7 @@ class LoginViewController: UIViewController {
     }
     
     func setupViews() {
+        
         view.addSubview(scrappyLabel)
         scrappyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         scrappyLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 150).isActive = true

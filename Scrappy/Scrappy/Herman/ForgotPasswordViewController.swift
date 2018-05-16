@@ -14,7 +14,6 @@ class ForgotPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         view.backgroundColor = UIColor.clear
         setupBlurEffect()
         emailTextField.delegate = self
@@ -61,7 +60,6 @@ class ForgotPasswordViewController: UIViewController {
         leftView.backgroundColor = UIColor.clear
         email.leftView = leftView
         email.leftViewMode = .always
-        
         return email 
     }()
     
