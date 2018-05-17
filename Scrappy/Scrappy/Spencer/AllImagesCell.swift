@@ -38,7 +38,6 @@ class AllImagesCell: UICollectionViewCell {
         imageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         imageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         imageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-//        imageView.setAnchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
