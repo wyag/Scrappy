@@ -8,7 +8,8 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
+    
     
 
     ////////////////////////////////////////////////////// MARK: Lifecycle Functions
@@ -22,6 +23,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     ////////////////////////////////////////////////////// MARK: Local Properties
+    
+    // Transition
+    let transition = CircularTransition()
     
     // Nav Menu
     let menuView = CustomNavigationViewController()
@@ -47,18 +51,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // 'menuView'
         menuView.view.frame = self.view.frame
         menuView.view.alpha = 1
-        
-        self.accessibilityValue = "2"   // ************************ Change this to your page's #
-        
         menuView.closeMenuButton.addTarget(self, action: #selector(self.dismissMenu(_:)), for: .touchUpInside)
+        
+        self.accessibilityValue = "1"   // ************************ Change this to your page's #
         
         // 'customeNavBarView'
         self.navigationController?.navigationBar.isHidden = true
-        customNavBarView.backgroundColor = UIColor.orange
+        customNavBarView.backgroundColor = UIColor.black
         customNavBarView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.width/6.9)
+        customNavBarView.alpha = 0.7
         
         // Setup Nav Title
-        let navTitleLabelAT = NSMutableAttributedString(string: "Home", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: self.view.frame.width/20.7) as Any])
+        let navTitleLabelAT = NSMutableAttributedString(string: "Scrappy", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: self.view.frame.width/20.7) as Any])
         navTitleLabel.attributedText = navTitleLabelAT
         navTitleLabel.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/4.14, height: self.view.frame.width/20.7)
         navTitleLabel.sizeToFit()
@@ -80,7 +84,44 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         customNavBarView.addSubview(menuButton)
         menuButton.center.y = self.view.frame.height/18.4
         
+        // Add Targets to Menu Button's
+        menuView.homeMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+        menuView.birthdayMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+        menuView.sesonalMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+        menuView.holidayMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+        menuView.sportsMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+        menuView.congratsMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+        menuView.miscMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
         
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if operation == .push {
+            transition.transitionMode = .present
+            transition.circleColor = UIColor.white
+            return transition
+        } else {
+            transition.transitionMode = .dismiss
+            transition.circleColor = UIColor.white
+            return transition
+        }
+    }
+    
+    
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+            transition.transitionMode = .present
+            transition.circleColor = UIColor.white
+            return transition
+    }
+    
+    
+
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .dismiss
+        transition.circleColor = UIColor.white
+        return transition
     }
     
     
@@ -100,6 +141,26 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    @objc private func changeVC(_ sender: UIButton) {
+        var nextVC: UIViewController!
+        var center: CGPoint!
+        let centers = [self.menuView.homeMenuButton.center, self.menuView.birthdayMenuButton.center, self.menuView.sesonalMenuButton.center, self.menuView.holidayMenuButton.center, self.menuView.sportsMenuButton.center, self.menuView.congratsMenuButton.center, self.menuView.miscMenuButton.center]
+        let identifiers = ["1", "2", "3", "4", "5", "6", "7"]
+        guard let id = sender.accessibilityIdentifier else { return }
+        if identifiers.contains(id) {
+            guard let index = identifiers.index(of: id) else { return }
+            let vcS = [HomeViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController()]
+            center = centers[index]
+            nextVC = vcS[index]
+        }
+        
+        transition.startingPoint = center
+        nextVC.accessibilityValue = id
+        nextVC.transitioningDelegate = self
+        nextVC.modalPresentationStyle = .custom
+        self.navigationController?.present(nextVC, animated: true, completion: nil)
+    }
+    
     
     
     ////////////////////////////////////////////////////////////// MARK: Setup UI Function
@@ -110,23 +171,22 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.view.backgroundColor = UIColor.white
         
         // Setup Cell Array's
-        cellImages = [UIImage(named: "bdayb"), UIImage(named: "bdayb"), UIImage(named: "bdayb"), UIImage(named: "bdayb"), UIImage(named: "bdayb"), UIImage(named: "bdayb")] as! [UIImage]
+        cellImages = [UIImage(named: "whitecake"), UIImage(named: "whiteflower"), UIImage(named: "whiteholiday"), UIImage(named: "whiteball"), UIImage(named: "whitegirl"), UIImage(named: "whitescissors")] as! [UIImage]
         cellColors = [UIColor.AppColorPalette.HomeGreen, UIColor.AppColorPalette.HomePurple, UIColor.AppColorPalette.HomeLightPurple, UIColor.AppColorPalette.HomePink, UIColor.AppColorPalette.HomeBlue, UIColor.AppColorPalette.HomeLightGreen]
         cellNames = ["Birthday", "Seasonal", "Holiday", "Sports", "Congrats", "Misc"]
         
         
-        
         // 'categoryTableView'
         categoryTableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "homeCell")
+        // For Y: self.view.frame.width/6.9
         categoryTableView.frame = CGRect(x: 0, y: self.view.frame.width/6.9, width: self.view.frame.width, height: (self.view.frame.height - (self.view.frame.width/6.9)))
         categoryTableView.backgroundColor = UIColor.black
         categoryTableView.delegate = self
         categoryTableView.dataSource = self
         categoryTableView.rowHeight = 160
         
+        
         self.view.addSubview(categoryTableView)
-        
-        
     }
     
     
@@ -142,13 +202,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let color = cellColors[indexPath.row]
         let name = cellNames[indexPath.row]
         // Pretty Up Cell
-        cell.cellBackgroundImage = image
+        cell.cellIconImage = image
         cell.cellColor = color
         cell.cellName = name
         cell.cellButton.addTarget(self, action: #selector(self.cellWasTapped(_:)), for: .touchUpInside)
-
+        cell.accessoryType = .disclosureIndicator
         cell.cellButton.accessibilityIdentifier = "\(indexPath.row)"
-
         let cellFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 160)
         cell.setupCellUI(cellFrame: cellFrame)
         // Return Cell
@@ -161,15 +220,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @objc func cellWasTapped(_ sender: UIButton) {
         print("Cell Was Tapped!")
         
+        var nextVC: UIViewController!
         let identifiers = ["0", "1", "2", "3", "4", "5"]
-        print(sender.accessibilityIdentifier)
+        guard let id = sender.accessibilityIdentifier else { return }
         
-        
-        if identifiers.contains(sender.accessibilityIdentifier!) {
-            print("Button Identifier Found!")
+        if identifiers.contains(id) {
+            guard let index = identifiers.index(of: id) else { return }
+            let vcS = [CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController()]
+            nextVC = vcS[index]
         }
-        
+        self.navigationController?.show(nextVC, sender: self)
     }
     
+ 
     
+    
+/////// End Of Class
 }

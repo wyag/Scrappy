@@ -11,9 +11,13 @@ import Foundation
 
 /*
  
- *********** 3 Steps Respectively
+ *********** 4 Steps Respectively
  
  ********************************************* 1.) Add These Local Properties!!
+ 
+ 
+ // Transition
+ let transition = CircularTransition()
  
  // Nav Menu
  let menuView = CustomNavigationViewController()
@@ -23,9 +27,8 @@ import Foundation
  
  
  
- 
- 
  ********************************************* 2.) Put in your "SetupUI" Function!!
+ 
  
  
  
@@ -34,18 +37,18 @@ import Foundation
  // 'menuView'
  menuView.view.frame = self.view.frame
  menuView.view.alpha = 1
- 
- self.accessibilityValue = "2"   // ************************ Change this to your page's #
- 
  menuView.closeMenuButton.addTarget(self, action: #selector(self.dismissMenu(_:)), for: .touchUpInside)
+ 
+ self.accessibilityValue = "1"   // ************************ Change this to your page's #
  
  // 'customeNavBarView'
  self.navigationController?.navigationBar.isHidden = true
- customNavBarView.backgroundColor = UIColor.orange
+ customNavBarView.backgroundColor = UIColor.black
  customNavBarView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.width/6.9)
+ customNavBarView.alpha = 0.7
  
  // Setup Nav Title
- let navTitleLabelAT = NSMutableAttributedString(string: "Home", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: self.view.frame.width/20.7) as Any])
+ let navTitleLabelAT = NSMutableAttributedString(string: "Scrappy", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: self.view.frame.width/20.7) as Any])
  navTitleLabel.attributedText = navTitleLabelAT
  navTitleLabel.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/4.14, height: self.view.frame.width/20.7)
  navTitleLabel.sizeToFit()
@@ -66,6 +69,15 @@ import Foundation
  navTitleLabel.center.y = self.view.frame.height/18.4
  customNavBarView.addSubview(menuButton)
  menuButton.center.y = self.view.frame.height/18.4
+ 
+ // Add Targets to Menu Button's
+ menuView.homeMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+ menuView.birthdayMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+ menuView.sesonalMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+ menuView.holidayMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+ menuView.sportsMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+ menuView.congratsMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+ menuView.miscMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
  
  
  
@@ -89,9 +101,52 @@ import Foundation
  self.menuView.view.alpha = 0
  }
  }
+ 
+ @objc private func changeVC(_ sender: UIButton) {
+ var nextVC: UIViewController!
+ var center: CGPoint!
+ let centers = [self.menuView.homeMenuButton.center, self.menuView.birthdayMenuButton.center, self.menuView.sesonalMenuButton.center, self.menuView.holidayMenuButton.center, self.menuView.sportsMenuButton.center, self.menuView.congratsMenuButton.center, self.menuView.miscMenuButton.center]
+ let identifiers = ["1", "2", "3", "4", "5", "6", "7"]
+ guard let id = sender.accessibilityIdentifier else { return }
+ if identifiers.contains(id) {
+ guard let index = identifiers.index(of: id) else { return }
+ let vcS = [HomeViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController()]
+ center = centers[index]
+ nextVC = vcS[index]
+ }
+ 
+ transition.startingPoint = center
+ nextVC.accessibilityValue = id
+ nextVC.transitioningDelegate = self
+ nextVC.modalPresentationStyle = .custom
+ self.navigationController?.present(nextVC, animated: true, completion: nil)
+ }
 
  
  
+  ********************************************* 4.) Add this delegate to your controller!!
+ 
+ 
+ 'UIViewControllerTransitioningDelegate'   <- <- <- <- <- <- <-
+ 
+ 
+ //////////////////////------------------------ With these delegate functions
+ 
+ 
+ func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+ transition.transitionMode = .present
+ transition.circleColor = UIColor.white
+ return transition
+ }
+ 
+ 
+ 
+ 
+ func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+ transition.transitionMode = .dismiss
+ transition.circleColor = UIColor.white
+ return transition
+ }
  
  
  
