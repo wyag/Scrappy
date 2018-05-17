@@ -149,14 +149,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc func signInButtonTapped() {
-        
         handleUserLogIn()
-    }
-    
-    @objc func createNewAccButtonPressed() {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        present(SignupViewController(), animated: true, completion: nil)
     }
     
     func handleUserLogIn() {
@@ -175,6 +168,13 @@ class LoginViewController: UIViewController {
             
         }
     }
+    
+    @objc func createNewAccButtonPressed() {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        present(SignupViewController(), animated: true, completion: nil)
+    }
+    
     
     func setupViews() {
         
