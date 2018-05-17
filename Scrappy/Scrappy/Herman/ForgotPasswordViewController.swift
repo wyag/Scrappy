@@ -78,7 +78,19 @@ class ForgotPasswordViewController: UIViewController {
         handleUserForgotPassword()
         let emailFormat = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailCheck = NSPredicate(format: "SELF MATCHES %@", emailFormat)
-        emailCheck.evaluate(with: emailTextField.text) == true ? dismiss(animated: true, completion: nil) : print("Diddn't work")
+        
+        let alert = UIAlertController(title: "Email Sent!", message: nil, preferredStyle: .alert)
+        let done = UIAlertAction(title: "Done", style: .default) { (_) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(done)
+        
+        if emailCheck.evaluate(with: emailTextField.text) {
+            present(alert, animated: true)
+        } else {
+            print("Email check didn't work")
+        }
+        
     }
     
     func handleUserForgotPassword() {
