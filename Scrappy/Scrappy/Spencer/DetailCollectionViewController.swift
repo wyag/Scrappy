@@ -67,7 +67,7 @@ class DetailCollectionViewController: UIViewController {
         
         menuView.view.frame = self.view.frame
         menuView.view.alpha = 1
-        //menuView.setupUI()
+        menuView.setupUI()
         menuView.closeMenuButton.addTarget(self, action: #selector(self.dismissMenu(_:)), for: .touchUpInside)
         self.view.addSubview(menuView.view)
         self.view.bringSubview(toFront: menuView.view)
