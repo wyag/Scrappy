@@ -25,6 +25,7 @@
 		BA97FED920ACC2AA003BF19D /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA97FED820ACC2AA003BF19D /* HomeTableViewCell.swift */; };
 		BAB0DE0E20AB88580020C200 /* Custom Nav VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB0DE0D20AB88580020C200 /* Custom Nav VC.swift */; };
 		BAB0DE1120AB88840020C200 /* Copy & Paste.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB0DE1020AB88840020C200 /* Copy & Paste.swift */; };
+		BAF35B7520AD6C0400CE3A87 /* CircularTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF35B7420AD6C0400CE3A87 /* CircularTransition.swift */; };
 		BF31588C20AB9195008EA7E5 /* DetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31588720AB9195008EA7E5 /* DetailCollectionViewController.swift */; };
 		BF31588D20AB9195008EA7E5 /* AllImagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31588820AB9195008EA7E5 /* AllImagesCell.swift */; };
 		BF31588E20AB9195008EA7E5 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31588920AB9195008EA7E5 /* extensions.swift */; };
@@ -55,6 +56,7 @@
 		BA97FED820ACC2AA003BF19D /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		BAB0DE0D20AB88580020C200 /* Custom Nav VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom Nav VC.swift"; sourceTree = "<group>"; };
 		BAB0DE1020AB88840020C200 /* Copy & Paste.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Copy & Paste.swift"; sourceTree = "<group>"; };
+		BAF35B7420AD6C0400CE3A87 /* CircularTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTransition.swift; sourceTree = "<group>"; };
 		BF31588720AB9195008EA7E5 /* DetailCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewController.swift; sourceTree = "<group>"; };
 		BF31588820AB9195008EA7E5 /* AllImagesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllImagesCell.swift; sourceTree = "<group>"; };
 		BF31588920AB9195008EA7E5 /* extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			children = (
 				BA97FED320ACA08B003BF19D /* UIImageViewEx.swift */,
 				BA97FED620ACBEEF003BF19D /* UIColorEx.swift */,
+				BAF35B7420AD6C0400CE3A87 /* CircularTransition.swift */,
 			);
 			path = "Supporting Functions";
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				BF31588D20AB9195008EA7E5 /* AllImagesCell.swift in Sources */,
 				BA97FED420ACA08B003BF19D /* UIImageViewEx.swift in Sources */,
 				BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */,
+				BAF35B7520AD6C0400CE3A87 /* CircularTransition.swift in Sources */,
 				BA97FED920ACC2AA003BF19D /* HomeTableViewCell.swift in Sources */,
 				5D54DB9920AA584A00CACAF7 /* LoginViewController.swift in Sources */,
 				5D43504320AB9486001132B6 /* ProfileSettingViewController.swift in Sources */,
