@@ -1,55 +1,28 @@
 //
-//  SignupViewController.swift
+//  SignUpInputViews.swift
 //  Scrappy
 //
-//  Created by Herman Kwan on 5/14/18.
+//  Created by Herman Kwan on 5/18/18.
 //  Copyright © 2018 Isaac. All rights reserved.
 //
 
 import UIKit
-import Firebase
 import SkyFloatingLabelTextField
 
-class SignupViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = UIColor.white
-        
-        usernameTextField.delegate = self
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
-
-        setupViews()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+class SignUpInputViews: UIView {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
     }
     
-    @objc func keyboardWillShow(_ notification: Notification) {
-        if let keyboardFrame: NSValue = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            
-            view.frame.origin.y += -(keyboardHeight)
-        }
-    }
-    
-    @objc func keyboardWillHide(_ notification: Notification) {
-        if let keyboardFrame: NSValue = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            
-            view.frame.origin.y += keyboardHeight
-        }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     let closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(#imageLiteral(resourceName: "xMark").withRenderingMode(UIImageRenderingMode.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -109,7 +82,7 @@ class SignupViewController: UIViewController {
         let password = SkyFloatingLabelTextFieldWithIcon()
         password.translatesAutoresizingMaskIntoConstraints = false
         password.placeholder = "Password"
-        password.isSecureTextEntry = true 
+        password.isSecureTextEntry = true
         password.textColor = UIColor.black
         password.iconText = "\u{f023}"
         password.iconFont = UIFont(name: "Font Awesome 5 Free", size: 12)
@@ -130,103 +103,38 @@ class SignupViewController: UIViewController {
         button.setTitle("SIGN UP", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = button.frame.height / 2
-        button.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         return button
     }()
     
-    @objc func closeButtonTapped() {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func signUpButtonTapped() {
-        handleUserSignUp()
-        print("Sign Up Button Tapped")
-    }
-    
-    func handleUserSignUp() {
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
-        guard let username = usernameTextField.text else { return }
-        guard let email = emailTextField.text, !email.isEmpty else { return }
-        guard let password = passwordTextField.text, !password.isEmpty else { return }
-        
-        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
-            
-            if let error = error {
-                print("Failed to create new user", error)
-                return
-            }
-            
-            print("Successfully created user:", user?.uid ?? "")
-            
-            let dictionaryValues = ["username": username, "email": email]
-            guard let uid = user?.uid else { return }
-            
-            let values = [uid: dictionaryValues]
-            
-            Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (error, reference) in
-                
-                if let error = error {
-                    print("Failed to save user info into db", error)
-                }
-                
-                print("Successfully saved user info into db")
-    
-            })
-        }
-    }
-    
-    func setupViews() {
-        
-        view.addSubview(closeButton)
-        closeButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 13).isActive = true
-        closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 13).isActive = true
+        addSubview(closeButton)
+        closeButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 13).isActive = true
+        closeButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 13).isActive = true
         closeButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
         closeButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
         
-        view.addSubview(createNewAccLabel)
-        createNewAccLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        createNewAccLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 80).isActive = true
-        createNewAccLabel.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        addSubview(createNewAccLabel)
+        createNewAccLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        createNewAccLabel.topAnchor.constraint(equalTo: topAnchor, constant: 80).isActive = true
+        createNewAccLabel.widthAnchor.constraint(equalToConstant: frame.width).isActive = true
         
-        view.addSubview(textfieldStackView)
+        addSubview(textfieldStackView)
         textfieldStackView.addArrangedSubview(usernameTextField)
         textfieldStackView.addArrangedSubview(emailTextField)
         textfieldStackView.addArrangedSubview(passwordTextField)
-        textfieldStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25).isActive = true
+        textfieldStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25).isActive = true
         textfieldStackView.topAnchor.constraint(equalTo: createNewAccLabel.bottomAnchor, constant: 100).isActive = true
-        textfieldStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
+        textfieldStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25).isActive = true
         textfieldStackView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
-        view.addSubview(signUpButton)
-        signUpButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25).isActive = true
-        signUpButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true 
-        signUpButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
+        addSubview(signUpButton)
+        signUpButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25).isActive = true
+        signUpButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50).isActive = true
+        signUpButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25).isActive = true
         signUpButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-    }
-}
-
-extension SignupViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        usernameTextField.resignFirstResponder()
-        emailTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
-        return true
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

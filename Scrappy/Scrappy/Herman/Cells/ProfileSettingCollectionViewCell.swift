@@ -31,7 +31,7 @@ class ProfileSettingCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(someView)
         someView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         someView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        someView.heightAnchor.constraint(equalToConstant: contentView.frame.height * 0.8).isActive = true
+        someView.heightAnchor.constraint(equalToConstant: contentView.frame.height * 0.6).isActive = true
         someView.widthAnchor.constraint(equalToConstant: contentView.frame.width).isActive = true 
     }
 }

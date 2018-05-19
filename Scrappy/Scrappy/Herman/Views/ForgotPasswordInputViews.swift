@@ -1,31 +1,21 @@
 //
-//  ForgotPasswordViewController.swift
+//  ForgotPasswordInputViews.swift
 //  Scrappy
 //
-//  Created by Herman Kwan on 5/15/18.
+//  Created by Herman Kwan on 5/18/18.
 //  Copyright © 2018 Isaac. All rights reserved.
 //
 
 import UIKit
-import Firebase
 
-class ForgotPasswordViewController: UIViewController {
+class ForgotPasswordInputViews: UIView {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = UIColor.clear
-        setupBlurEffect()
-        emailTextField.delegate = self
-        setupViews()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
     }
     
-    func setupBlurEffect() {
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.prominent)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
-        blurEffectView.frame = self.view.bounds
-        self.view.addSubview(blurEffectView)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     let popUpView: UIView = {
@@ -42,13 +32,8 @@ class ForgotPasswordViewController: UIViewController {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(#imageLiteral(resourceName: "xMark").withRenderingMode(UIImageRenderingMode.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         return button
     }()
-    
-    @objc func closeButtonTapped() {
-        dismiss(animated: true, completion: nil)
-    }
     
     let emailTextField: UITextField = {
         let email = UITextField()
@@ -60,7 +45,7 @@ class ForgotPasswordViewController: UIViewController {
         leftView.backgroundColor = UIColor.clear
         email.leftView = leftView
         email.leftViewMode = .always
-        return email 
+        return email
     }()
     
     let submitButton: UIButton = {
@@ -69,50 +54,17 @@ class ForgotPasswordViewController: UIViewController {
         button.setTitle("Submit", for: .normal)
         button.backgroundColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
         button.setTitleColor(UIColor.white, for: .normal)
-        button.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
         return button
     }()
     
-    @objc func submitButtonTapped() {
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
-        handleUserForgotPassword()
-        let emailFormat = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailCheck = NSPredicate(format: "SELF MATCHES %@", emailFormat)
-        
-        let alert = UIAlertController(title: "Email Sent!", message: nil, preferredStyle: .alert)
-        let done = UIAlertAction(title: "Done", style: .default) { (_) in
-            self.dismiss(animated: true, completion: nil)
-        }
-        alert.addAction(done)
-        
-        if emailCheck.evaluate(with: emailTextField.text) {
-            present(alert, animated: true)
-        } else {
-            print("Email check didn't work")
-        }
-        
-    }
-    
-    func handleUserForgotPassword() {
-        
-        guard let email = emailTextField.text, !email.isEmpty else { return }
-        
-        Auth.auth().sendPasswordReset(withEmail: email) { (error) in
-            
-            if let error = error {
-                print("Failed to send password reset", error)
-                return
-            }
-        }
-    }
-    
-    func setupViews() {
-        
-        view.addSubview(popUpView)
-        popUpView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        popUpView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        popUpView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.8).isActive = true
-        popUpView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.8).isActive = true
+        addSubview(popUpView)
+        popUpView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        popUpView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        popUpView.widthAnchor.constraint(equalToConstant: frame.width * 0.8).isActive = true
+        popUpView.heightAnchor.constraint(equalToConstant: frame.height * 0.8).isActive = true
         
         popUpView.addSubview(closeButton)
         closeButton.leadingAnchor.constraint(equalTo: popUpView.safeAreaLayoutGuide.leadingAnchor, constant: 13).isActive = true
@@ -128,26 +80,8 @@ class ForgotPasswordViewController: UIViewController {
         emailTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         popUpView.addSubview(submitButton)
-        submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        submitButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         submitButton.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 150).isActive = true
         submitButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
     }
 }
-
-extension ForgotPasswordViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-
-        emailTextField.resignFirstResponder()
-        return true
-    }
-}
-
-
-
-
-
-
-
-
-
