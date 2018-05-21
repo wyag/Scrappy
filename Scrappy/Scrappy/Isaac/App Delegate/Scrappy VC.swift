@@ -42,6 +42,9 @@ class ScrappyViewController: UIViewController {
         self.view.addSubview(menuButton)
     }
     
+    
+    
+    
     @objc private func menuOpen(_ sender: UIButton) {
         self.view.bringSubview(toFront: menuView.view)
         menuView.view.alpha = 1
@@ -57,4 +60,12 @@ class ScrappyViewController: UIViewController {
             self.menuView.view.alpha = 0
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
 }
