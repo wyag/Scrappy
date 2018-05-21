@@ -41,7 +41,7 @@ class ScrappyViewController: UIViewController {
         self.view.addSubview(menuView.view)
         self.view.addSubview(menuButton)
     }
-
+    
     
     
     
@@ -67,5 +67,5 @@ class ScrappyViewController: UIViewController {
     
     
     
-
+    
 }

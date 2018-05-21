@@ -9,8 +9,11 @@
 import UIKit
 
 class TopSellerImagesCell: UICollectionViewCell {
-
+    
     let cellID = "cellID"
+    let raitingStackView = UIStackView()
+    var raitingButtons = [UIButton()]
+    var itemRaiting = 4
     var images: String? {
         didSet {
             if let imageName = images {
@@ -19,7 +22,7 @@ class TopSellerImagesCell: UICollectionViewCell {
         }
     }
     
-    let imageView: UIImageView = {
+    var imageView: UIImageView = {
         let iv = UIImageView()
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFit
@@ -27,14 +30,17 @@ class TopSellerImagesCell: UICollectionViewCell {
         iv.layer.cornerRadius = 15
         return iv
     }()
-
-    let cellLabel: UILabel = {
-       let label = UILabel()
+    
+    var cellLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.text = "Donald Trump B-Day"
         label.font = UIFont.boldSystemFont(ofSize: 12)
         label.textColor = UIColor.black
         return label
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -45,10 +51,71 @@ class TopSellerImagesCell: UICollectionViewCell {
     }
     
     func setupViews() {
+        
         addSubview(imageView)
-        imageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        imageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50).isActive = true
         imageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         imageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        
+        addSubview(cellLabel)
+        cellLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20).isActive = true
+        cellLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
+        cellLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        cellLabel.widthAnchor.constraint(equalToConstant: 125).isActive = true
+        
+        setupRaitingStackView()
+        
+    }
+    
+    func setupRaitingStackView() {
+        
+        addSubview(raitingStackView)
+        raitingStackView.translatesAutoresizingMaskIntoConstraints = false
+        raitingStackView.axis = .horizontal
+        raitingStackView.distribution = .fillEqually
+        raitingStackView.bottomAnchor.constraint(equalTo: cellLabel.topAnchor).isActive = true
+        raitingStackView.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        raitingStackView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        raitingStackView.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
+        
+        for _ in 0..<5 {
+            let starButton = UIButton()
+            starButton.setImage(#imageLiteral(resourceName: "emptyStar"), for: .normal)
+            starButton.setImage(#imageLiteral(resourceName: "fullStar"), for: .selected)
+            starButton.translatesAutoresizingMaskIntoConstraints = false
+            raitingStackView.addArrangedSubview(starButton)
+            raitingButtons.append(starButton)
+        }
+            if itemRaiting == 1 {
+                raitingButtons[1].isSelected = true
+            }
+            
+            if itemRaiting == 2 {
+                raitingButtons[1].isSelected = true
+                raitingButtons[2].isSelected = true
+            }
+            
+            if itemRaiting == 3 {
+                raitingButtons[1].isSelected = true
+                raitingButtons[2].isSelected = true
+                raitingButtons[3].isSelected = true
+            }
+            
+            if itemRaiting == 4 {
+                raitingButtons[1].isSelected = true
+                raitingButtons[2].isSelected = true
+                raitingButtons[3].isSelected = true
+                raitingButtons[4].isSelected = true
+            }
+            
+            if itemRaiting == 5 {
+                raitingButtons[1].isSelected = true
+                raitingButtons[2].isSelected = true
+                raitingButtons[3].isSelected = true
+                raitingButtons[4].isSelected = true
+                raitingButtons[5].isSelected = true
+            }
     }
 }
+
