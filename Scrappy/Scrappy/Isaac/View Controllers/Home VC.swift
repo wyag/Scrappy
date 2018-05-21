@@ -8,30 +8,48 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
 
     ////////////////////////////////////////////////////// MARK: Lifecycle Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Setup Nav
         setupNav()
         
         // Setup UI
         setupUI()
+        
+        if moreThanOneVC != nil && moreThanOneVC == true {
+            guard var vcs = self.navigationController?.viewControllers else { return }
+            for vc in vcs {
+                if vcs.last == vc {
+                    return
+                }
+                if !(vc.isKind(of: HomeViewController.classForCoder())) {
+                    guard let index = vcs.index(of: vc) else { return }
+                    vcs.remove(at: index)
+                    self.navigationController?.viewControllers = vcs
+                    return
+                }
+            }
+        }
     }
 
     ////////////////////////////////////////////////////// MARK: Local Properties
     
     // Transition
-    let transition = CircularTransition()
+    //var pushingOnLoad: Bool = false
     
     // Nav Menu
     let menuView = CustomNavigationViewController()
     let customNavBarView = UIView()
     let navTitleLabel = UILabel()
     let menuButton = UIButton()
+    let cartButton = UIButton()
+    var moreThanOneVC: Bool?
     
     // Table View
     let categoryTableView = UITableView()
@@ -46,14 +64,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func setupNav() {
         
-        //////////////// MARK: Setup Navigation
-        
         // 'menuView'
         menuView.view.frame = self.view.frame
         menuView.view.alpha = 1
         menuView.closeMenuButton.addTarget(self, action: #selector(self.dismissMenu(_:)), for: .touchUpInside)
         
-        self.accessibilityValue = "1"   // ************************ Change this to your page's #
+        self.accessibilityValue = "1"
         
         // 'customeNavBarView'
         self.navigationController?.navigationBar.isHidden = true
@@ -75,7 +91,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         menuButton.frame = CGRect(x: self.view.frame.width/20.7, y: 0, width: self.view.frame.width/13.8, height: self.view.frame.width/13.8)
         menuButton.addTarget(self, action: #selector(self.menuOpen(_:)), for: .touchUpInside)
         
-        // Add Subview's
+        // 'cartButton'
+        cartButton.setImage(UIImage(named: "basketorange"), for: .normal)
+        cartButton.setImage(UIImage(named: "basketorange"), for: .highlighted)
+        cartButton.setImage(UIImage(named: "basketorange"), for: .selected)
+        cartButton.backgroundColor = UIColor.clear
+        cartButton.frame = CGRect(x: 360, y: 0, width: 40, height: 40)
+        
+        
+        /////// Add Subview's
         self.view.addSubview(menuView.view)
         self.view.addSubview(customNavBarView)
         customNavBarView.addSubview(navTitleLabel)
@@ -83,8 +107,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         navTitleLabel.center.y = self.view.frame.height/18.4
         customNavBarView.addSubview(menuButton)
         menuButton.center.y = self.view.frame.height/18.4
+        customNavBarView.addSubview(cartButton)
+        cartButton.center.y = self.view.frame.height/18.4
         
-        // Add Targets to Menu Button's
+        //////// Add Targets to Menu Button's
         menuView.homeMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
         menuView.birthdayMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
         menuView.sesonalMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
@@ -92,38 +118,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         menuView.sportsMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
         menuView.congratsMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
         menuView.miscMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
-        
+        menuView.logOutMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
     }
-    
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if operation == .push {
-            transition.transitionMode = .present
-            transition.circleColor = UIColor.white
-            return transition
-        } else {
-            transition.transitionMode = .dismiss
-            transition.circleColor = UIColor.white
-            return transition
-        }
-    }
-    
-    
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-            transition.transitionMode = .present
-            transition.circleColor = UIColor.white
-            return transition
-    }
-    
-    
-
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.transitionMode = .dismiss
-        transition.circleColor = UIColor.white
-        return transition
-    }
-    
     
     @objc private func menuOpen(_ sender: UIButton) {
         menuView.setupUI(view: self)
@@ -142,24 +138,50 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @objc private func changeVC(_ sender: UIButton) {
+        // MARK: Pages
+        /*
+         0 - Login
+         1 - Home
+         (2 - 7) - Collection View's
+         8 - Any Collection Detail View
+         9 - Cart
+         10 - Profile
+        */
+        
         var nextVC: UIViewController!
-        var center: CGPoint!
-        let centers = [self.menuView.homeMenuButton.center, self.menuView.birthdayMenuButton.center, self.menuView.sesonalMenuButton.center, self.menuView.holidayMenuButton.center, self.menuView.sportsMenuButton.center, self.menuView.congratsMenuButton.center, self.menuView.miscMenuButton.center]
-        let identifiers = ["1", "2", "3", "4", "5", "6", "7"]
+        let vcS = [LoginViewController(),HomeViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), DetailCollectionViewController(), CartViewController(), ProfileSettingViewController()]
+        let identifiers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
         guard let id = sender.accessibilityIdentifier else { return }
         if identifiers.contains(id) {
             guard let index = identifiers.index(of: id) else { return }
-            let vcS = [HomeViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController()]
-            center = centers[index]
             nextVC = vcS[index]
         }
-        
-        transition.startingPoint = center
-        nextVC.accessibilityValue = id
-        nextVC.transitioningDelegate = self
-        nextVC.modalPresentationStyle = .custom
-        self.navigationController?.present(nextVC, animated: true, completion: nil)
+        guard let index = Int(self.accessibilityValue!) else { return }
+        switch nextVC {
+        case vcS[index]:
+            dismissMenu(sender) ; return
+        case vcS[0]:
+            self.navigationController?.popToRootViewController(animated: true)
+            return
+        case vcS[2], vcS[3], vcS[4], vcS[5], vcS[6], vcS[7]:
+            guard let destinationVC = (nextVC as? CollectionViewController) else { return }
+            self.dismissMenu(sender)
+            destinationVC.accessibilityValue = id
+            self.navigationController?.show(destinationVC, sender: self)
+            return
+        case vcS[8]: return // Go To Detail View
+        case vcS[9]:
+            guard let destinationVC = (nextVC as? CartViewController) else { return }
+            destinationVC.accessibilityValue = id
+            self.navigationController?.show(nextVC, sender: self)
+        case vcS[10]:
+            guard let destinationVC = (nextVC as? ProfileSettingViewController) else { return }
+            destinationVC.accessibilityValue = id
+            self.navigationController?.show(nextVC, sender: self)
+        default: self.dismissMenu(sender) ; return
+        }
     }
+    
     
     
     
