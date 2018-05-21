@@ -17,15 +17,17 @@ class CollectionViewController: UIViewController {
     let menuButton = UIButton()
     
     // Properties
+    let raiting = 4
     let allImageCellID = "ImageCellID"
     let topSellerImagesID = "TopSellerImagesID"
-    
-    let topImagesArray = ["topSeller1", "topSeller2", "topSeller3", "topSeller4", "topSeller5"]
-    let allImagesArray = ["image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8", "image9"]
+
+    let topImagesArray = ["Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day"]
+    let allImagesArray = ["Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day"]
+    let cardDescription = "'Sorry losers and haters, but my I.Q. is one of the highest - and you all know it! Please don't feel so stupid or insecure, it's not your fault' - The Donald"
     
     let topCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 30
+        layout.minimumInteritemSpacing = 30
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .clear
@@ -43,6 +45,13 @@ class CollectionViewController: UIViewController {
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.tag = 1
         return cv
+    }()
+    
+    let addItemButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(#imageLiteral(resourceName: "addButton"), for: .normal)
+        return button
     }()
     
     override func viewDidLoad() {
@@ -69,7 +78,7 @@ class CollectionViewController: UIViewController {
         customNavBarView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.width/6.9)
         
         // Setup Nav Title
-        let navTitleLabelAT = NSMutableAttributedString(string: "Home", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: self.view.frame.width/20.7) as Any])
+        let navTitleLabelAT = NSMutableAttributedString(string: "Birthday Cards", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: self.view.frame.width/20.7) as Any])
         navTitleLabel.attributedText = navTitleLabelAT
         navTitleLabel.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/4.14, height: self.view.frame.width/20.7)
         navTitleLabel.sizeToFit()
@@ -96,20 +105,34 @@ class CollectionViewController: UIViewController {
         
         // Register Collection Views
         topCollectionView.register(TopSellerImagesCell.self, forCellWithReuseIdentifier: topSellerImagesID)
-        bottomCollectionView.register(AllImagesCell.self, forCellWithReuseIdentifier: allImageCellID)
+        bottomCollectionView.register(BottomImagesCell.self, forCellWithReuseIdentifier: allImageCellID)
         
+        // 'bottomCollectionView'
         view.addSubview(bottomCollectionView)
         bottomCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        bottomCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.5).isActive = true
+        bottomCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.6).isActive = true
         bottomCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         bottomCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
+        // 'topCollectionView'
         view.addSubview(topCollectionView)
         topCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        topCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.5).isActive = true
+        topCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.4).isActive = true
         topCollectionView.bottomAnchor.constraint(equalTo: bottomCollectionView.topAnchor).isActive = true
         topCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 75).isActive = true
         
+        // 'addItemButton'
+        topCollectionView.addSubview(addItemButton)
+        addItemButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        addItemButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        addItemButton.leadingAnchor.constraint(equalTo: topCollectionView.leadingAnchor, constant: 20).isActive = true
+        addItemButton.topAnchor.constraint(equalTo: topCollectionView.topAnchor).isActive = true
+        addItemButton.addTarget(self, action: #selector(addItem(_:)), for: .touchUpInside)
+    }
+    
+    @objc private func addItem(_ sender: UIButton) {
+        let addItemVC = AddItemViewController()
+        show(addItemVC, sender: self)
     }
     
     @objc private func menuOpen(_ sender: UIButton) {
@@ -130,7 +153,7 @@ class CollectionViewController: UIViewController {
     }
 }
 
-// Delegate/Datasource Extension
+// Mark: - Extension for Delegate/Datasource
 extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     // Delegates
@@ -142,7 +165,6 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
     }
     
     // Datasource Functions
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 0  {
             return topImagesArray.count
@@ -156,13 +178,19 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
             let detailCollectionVC = DetailCollectionViewController()
             detailCollectionVC.itemImage = UIImage(named: topImagesArray[indexPath.item])
             detailCollectionVC.itemTitle = topImagesArray[indexPath.item].capitalized
-            present(detailCollectionVC, animated: true, completion: nil)
+            detailCollectionVC.raitingNumber = raiting
+            detailCollectionVC.cardDescription = cardDescription
+            show(detailCollectionVC, sender: self)
+            
+        } else {
+            print(allImagesArray[indexPath.item])
+            let detailCollectionVC = DetailCollectionViewController()
+            detailCollectionVC.itemImage = UIImage(named: allImagesArray[indexPath.item])
+            detailCollectionVC.itemTitle = allImagesArray[indexPath.item].capitalized
+            detailCollectionVC.raitingNumber = raiting
+            detailCollectionVC.cardDescription = cardDescription
+            show(detailCollectionVC, sender: self)
         }
-        print(allImagesArray[indexPath.item])
-        let detailCollectionVC = DetailCollectionViewController()
-        detailCollectionVC.itemImage = UIImage(named: allImagesArray[indexPath.item])
-        detailCollectionVC.itemTitle = allImagesArray[indexPath.item].capitalized
-        present(detailCollectionVC, animated: true, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -170,25 +198,26 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
         if collectionView.tag == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: topSellerImagesID, for: indexPath) as! TopSellerImagesCell
             cell.images = topImagesArray[indexPath.item]
+//            cell.cellLabel = allImagesArray[indexPath.item].capitalized
+//            cell.itemRaiting = raiting
             return cell
         }
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: allImageCellID, for: indexPath) as! AllImagesCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: allImageCellID, for: indexPath) as! BottomImagesCell
         cell.images = allImagesArray[indexPath.item]
         return cell
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView.tag == 1 {
-            return CGSize(width: (view.frame.width / 3) - 16, height: 100)
+            return CGSize(width: (view.frame.width / 2) - 5, height: 200)
         }
-        return CGSize(width: (view.frame.width / 3), height: 300)
+        return CGSize(width: (view.frame.width / 2.5), height: 300)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if collectionView.tag == 0 {
-            return UIEdgeInsets(top: 10, left: 14, bottom: 10, right: 14)
+            return UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 14)
         }
         return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }

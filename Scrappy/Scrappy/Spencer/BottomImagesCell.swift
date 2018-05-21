@@ -1,19 +1,18 @@
-
-//  TopSellerImageCell.swift
+//
+//  AllImagesCell.swift
 //  Scrappy
 //
 //  Created by Spencer Cawley on 5/15/18.
 //  Copyright © 2018 Isaac. All rights reserved.
-
+//
 
 import UIKit
 
-class TopSellerImagesCell: UICollectionViewCell {
+class BottomImagesCell: UICollectionViewCell {
     
-    let cellID = "cellID"
-    let raitingStackView = UIStackView()
+    var raitingStackView = UIStackView()
     var raitingButtons = [UIButton()]
-    var itemRaiting = 4
+    var itemRaiting = 3
     var images: String? {
         didSet {
             if let imageName = images {
@@ -46,14 +45,9 @@ class TopSellerImagesCell: UICollectionViewCell {
         setupViews()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     func setupViews() {
-        
         addSubview(imageView)
-        imageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        imageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
         imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50).isActive = true
         imageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         imageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
@@ -65,7 +59,6 @@ class TopSellerImagesCell: UICollectionViewCell {
         cellLabel.widthAnchor.constraint(equalToConstant: 125).isActive = true
         
         setupRaitingStackView()
-        
     }
     
     func setupRaitingStackView() {
@@ -87,35 +80,38 @@ class TopSellerImagesCell: UICollectionViewCell {
             raitingStackView.addArrangedSubview(starButton)
             raitingButtons.append(starButton)
         }
-            if itemRaiting == 1 {
-                raitingButtons[1].isSelected = true
-            }
-            
-            if itemRaiting == 2 {
-                raitingButtons[1].isSelected = true
-                raitingButtons[2].isSelected = true
-            }
-            
-            if itemRaiting == 3 {
-                raitingButtons[1].isSelected = true
-                raitingButtons[2].isSelected = true
-                raitingButtons[3].isSelected = true
-            }
-            
-            if itemRaiting == 4 {
-                raitingButtons[1].isSelected = true
-                raitingButtons[2].isSelected = true
-                raitingButtons[3].isSelected = true
-                raitingButtons[4].isSelected = true
-            }
-            
-            if itemRaiting == 5 {
-                raitingButtons[1].isSelected = true
-                raitingButtons[2].isSelected = true
-                raitingButtons[3].isSelected = true
-                raitingButtons[4].isSelected = true
-                raitingButtons[5].isSelected = true
-            }
+        if itemRaiting == 1 {
+            raitingButtons[1].isSelected = true
+        }
+        
+        if itemRaiting == 2 {
+            raitingButtons[1].isSelected = true
+            raitingButtons[2].isSelected = true
+        }
+        
+        if itemRaiting == 3 {
+            raitingButtons[1].isSelected = true
+            raitingButtons[2].isSelected = true
+            raitingButtons[3].isSelected = true
+        }
+        
+        if itemRaiting == 4 {
+            raitingButtons[1].isSelected = true
+            raitingButtons[2].isSelected = true
+            raitingButtons[3].isSelected = true
+            raitingButtons[4].isSelected = true
+        }
+        
+        if itemRaiting == 5 {
+            raitingButtons[1].isSelected = true
+            raitingButtons[2].isSelected = true
+            raitingButtons[3].isSelected = true
+            raitingButtons[4].isSelected = true
+            raitingButtons[5].isSelected = true
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
-
