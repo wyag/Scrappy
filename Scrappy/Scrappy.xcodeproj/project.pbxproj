@@ -40,8 +40,9 @@
 		BAB0DE0E20AB88580020C200 /* Custom Nav VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB0DE0D20AB88580020C200 /* Custom Nav VC.swift */; };
 		BAB0DE1120AB88840020C200 /* Copy & Paste.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB0DE1020AB88840020C200 /* Copy & Paste.swift */; };
 		BAF35B7520AD6C0400CE3A87 /* CircularTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF35B7420AD6C0400CE3A87 /* CircularTransition.swift */; };
+		BF250D8720B330ED00B051FE /* AddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF250D8620B330ED00B051FE /* AddItemViewController.swift */; };
 		BF31588C20AB9195008EA7E5 /* DetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31588720AB9195008EA7E5 /* DetailCollectionViewController.swift */; };
-		BF31588D20AB9195008EA7E5 /* AllImagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31588820AB9195008EA7E5 /* AllImagesCell.swift */; };
+		BF31588D20AB9195008EA7E5 /* BottomImagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31588820AB9195008EA7E5 /* BottomImagesCell.swift */; };
 		BF31588F20AB9195008EA7E5 /* TopSellerImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31588A20AB9195008EA7E5 /* TopSellerImageCell.swift */; };
 		BF31589020AB9195008EA7E5 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31588B20AB9195008EA7E5 /* CollectionViewController.swift */; };
 /* End PBXBuildFile section */
@@ -84,8 +85,9 @@
 		BAB0DE0D20AB88580020C200 /* Custom Nav VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom Nav VC.swift"; sourceTree = "<group>"; };
 		BAB0DE1020AB88840020C200 /* Copy & Paste.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Copy & Paste.swift"; sourceTree = "<group>"; };
 		BAF35B7420AD6C0400CE3A87 /* CircularTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTransition.swift; sourceTree = "<group>"; };
+		BF250D8620B330ED00B051FE /* AddItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemViewController.swift; sourceTree = "<group>"; };
 		BF31588720AB9195008EA7E5 /* DetailCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewController.swift; sourceTree = "<group>"; };
-		BF31588820AB9195008EA7E5 /* AllImagesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllImagesCell.swift; sourceTree = "<group>"; };
+		BF31588820AB9195008EA7E5 /* BottomImagesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomImagesCell.swift; sourceTree = "<group>"; };
 		BF31588A20AB9195008EA7E5 /* TopSellerImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopSellerImageCell.swift; sourceTree = "<group>"; };
 		BF31588B20AB9195008EA7E5 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -270,7 +272,8 @@
 			isa = PBXGroup;
 			children = (
 				BF31588A20AB9195008EA7E5 /* TopSellerImageCell.swift */,
-				BF31588820AB9195008EA7E5 /* AllImagesCell.swift */,
+				BF31588820AB9195008EA7E5 /* BottomImagesCell.swift */,
+				BF250D8620B330ED00B051FE /* AddItemViewController.swift */,
 				BF31588B20AB9195008EA7E5 /* CollectionViewController.swift */,
 				BF31588720AB9195008EA7E5 /* DetailCollectionViewController.swift */,
 			);
@@ -416,6 +419,7 @@
 				5DC1FB3A20AFE19B0034A149 /* SellerPaymentViewController.swift in Sources */,
 				BAB0DE0E20AB88580020C200 /* Custom Nav VC.swift in Sources */,
 				5D5BB1EF20ACDC1F00EDA8C9 /* Item.swift in Sources */,
+				BF250D8720B330ED00B051FE /* AddItemViewController.swift in Sources */,
 				BA97FED720ACBEEF003BF19D /* UIColorEx.swift in Sources */,
 				BA97FED220AC95B1003BF19D /* HomeViewController.swift in Sources */,
 				BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */,
@@ -424,11 +428,14 @@
 				BF31588C20AB9195008EA7E5 /* DetailCollectionViewController.swift in Sources */,
 				BF31588F20AB9195008EA7E5 /* TopSellerImageCell.swift in Sources */,
 				5D5BB1ED20ACDC1600EDA8C9 /* Users.swift in Sources */,
+
 				5DC1FB4420AFEC7E0034A149 /* ProfileSettingInputViews.swift in Sources */,
 				5D5BB1F620ADE09900EDA8C9 /* UserPaymentViewController.swift in Sources */,
 				5DC1FB4220AFEA4B0034A149 /* ForgotPasswordInputViews.swift in Sources */,
-				BF31588D20AB9195008EA7E5 /* AllImagesCell.swift in Sources */,
 				5DBBD96220B0E29900B89A21 /* StripePaymentViewController.swift in Sources */,
+
+				BF31588D20AB9195008EA7E5 /* BottomImagesCell.swift in Sources */,
+
 				BA97FED420ACA08B003BF19D /* UIImageViewEx.swift in Sources */,
 				5DC1FB4B20B0A9050034A149 /* UserPaymentInputViews.swift in Sources */,
 				5DC1FB3C20AFE22C0034A149 /* LoginInputViews.swift in Sources */,
