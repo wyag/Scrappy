@@ -16,10 +16,11 @@ class ForgotPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        blurEffectView.frame = self.view.bounds
+        view.addSubview(blurEffectView)
         view.addSubview(forgotPasswordInputViews)
-        
+        view.bringSubview(toFront: forgotPasswordInputViews)
         view.backgroundColor = UIColor.clear
-        setupBlurEffect()
         
         forgotPasswordInputViews.emailTextField.delegate = self
         
@@ -27,13 +28,12 @@ class ForgotPasswordViewController: UIViewController {
         forgotPasswordInputViews.submitButton.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
     }
     
-    func setupBlurEffect() {
+    let blurEffectView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.prominent)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.translatesAutoresizingMaskIntoConstraints = false
-        blurEffectView.frame = self.view.bounds
-        self.view.addSubview(blurEffectView)
-    }
+        return blurEffectView
+    }()
     
     @objc func closeButtonTapped() {
         dismiss(animated: true, completion: nil)

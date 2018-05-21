@@ -17,6 +17,9 @@ class ProfileSettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        view.addSubview(profileSettingInputViews)
+        
         profileSettingInputViews.nameTextField.delegate = self
         profileSettingInputViews.emailTextField.delegate = self
         profileSettingInputViews.passwordTextField.delegate = self
@@ -31,6 +34,12 @@ class ProfileSettingViewController: UIViewController {
         navigationItem.leftBarButtonItem?.tintColor = UIColor.black
         
         profileSettingInputViews.changeProfileImageButton.addTarget(self, action: #selector(handleImagePicker), for: .touchUpInside)
+        profileSettingInputViews.cardInfoButton.addTarget(self, action: #selector(cardInfoButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func cardInfoButtonTapped() {
+        let stripePaymentVC = StripePaymentViewController()
+        present(stripePaymentVC, animated: true, completion: nil)
     }
     
     @objc func handleImagePicker() {
@@ -48,6 +57,29 @@ class ProfileSettingViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    func handleImageDownload() {
+        
+        guard let image = self.profileSettingInputViews.profileImage.image else { return }
+        
+        guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
+        
+        let fileName = UUID().uuidString
+        
+        let storageItem = Storage.storage().reference().child("profile_images").child(fileName)
+        storageItem.putData(uploadData, metadata: nil) { (metadata, error) in
+            
+            if let error = error {
+                print("Failed to upload profile image", error)
+            }
+            
+            storageItem.downloadURL(completion: { (url, error) in
+                if let error = error {
+                    
+                }
+            })
+        }
+    }
+    
 }
 
 extension ProfileSettingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -56,6 +88,7 @@ extension ProfileSettingViewController: UIImagePickerControllerDelegate, UINavig
         
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
             profileSettingInputViews.profileImage.image = editedImage.withRenderingMode(.alwaysOriginal)
+            
         } else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             profileSettingInputViews.profileImage.image = originalImage.withRenderingMode(.alwaysOriginal)
         }

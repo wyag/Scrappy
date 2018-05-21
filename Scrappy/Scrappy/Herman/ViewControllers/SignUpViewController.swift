@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import SkyFloatingLabelTextField
+import SVProgressHUD
 
 class SignUpViewController: UIViewController {
     
@@ -55,8 +56,9 @@ class SignUpViewController: UIViewController {
     }
     
     @objc func signUpButtonTapped() {
+        SVProgressHUD.show(withStatus: "Signing Up...")
         handleUserSignUp()
-        print("Sign Up Button Tapped")
+        SVProgressHUD.dismiss(withDelay: 2)
     }
     
     func handleUserSignUp() {
@@ -86,6 +88,8 @@ class SignUpViewController: UIViewController {
                 }
                 
                 print("Successfully saved user info into db")
+                
+                self.dismiss(animated: true, completion: nil)
     
             })
         }
