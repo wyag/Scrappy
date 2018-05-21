@@ -23,7 +23,7 @@ class CircularTransition: NSObject {
     var duration = 0.3
     
     enum CircularTransitionMode: Int {
-        case present, dismiss, pop, show
+        case present, dismiss, pop, push
     }
     
     var transitionMode: CircularTransitionMode = .present
@@ -41,7 +41,7 @@ extension CircularTransition: UIViewControllerAnimatedTransitioning {
         
         let containerView = transitionContext.containerView
         
-        if transitionMode == .present {
+        if transitionMode == .present || transitionMode == .push {
             if let presentedView = transitionContext.view(forKey: .to) {
                 let viewCenter = presentedView.center
                 let viewSize = presentedView.frame.size
@@ -92,8 +92,6 @@ extension CircularTransition: UIViewControllerAnimatedTransitioning {
                         self.circle.removeFromSuperview()
                         transitionContext.completeTransition(success)
                     }
-                    
-                    
                 }
             }
         }

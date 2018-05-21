@@ -8,38 +8,19 @@
 
 import UIKit
 
+class CustomNavigationViewController: UIViewController {
 
-
-
-class CustomNavigationViewController: UIViewController, UIViewControllerTransitioningDelegate {
-
-    // Transition
-    let transition = CircularTransition()
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.transitionMode = .show
-        transition.startingPoint = birthdayMenuButton.center
-        transition.circleColor = UIColor.white
-        return transition
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.transitionMode = .pop
-        transition.startingPoint = birthdayMenuButton.center
-        transition.circleColor = UIColor.white
-        return transition
-    }
+    ///////////////////////////////////////////////// MARK: Local Properties
     
     // Blur View
     var blurView = UIVisualEffectView()
     let closeMenuButton = UIButton()
     
-    
     // Nav Menu
     let menuView = UIView()
     let circleView = UIView()
     
-    // Nav Menu Button(s)
+    /// Nav Menu Button(s)
     let homeMenuButton = UIButton()
     // Category(s)
     let birthdayMenuButton = UIButton()
@@ -51,12 +32,14 @@ class CustomNavigationViewController: UIViewController, UIViewControllerTransiti
     let logOutMenuButton = UIButton()
 
     
+    ///////////////////////////////////////////////// MARK: Setup Nav Menu View's Function
+    
     func setupUI(view: UIViewController) {
         
         // Setup Button Colors
         guard let identifier = view.accessibilityValue else { return }
-        let identifiers = ["1", "2", "3", "4", "5", "6", "7"]
-        var colors = [UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white]
+        let identifiers = ["1", "2", "3", "4", "5", "6", "7", "8"]
+        var colors = [UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white]
         if identifiers.contains(identifier) {
             let index = identifiers.index(of: identifier)
             colors.remove(at: index!)
@@ -127,7 +110,7 @@ class CustomNavigationViewController: UIViewController, UIViewControllerTransiti
         holidayMenuButton.accessibilityIdentifier = "4"
         
         // 'sportsMenuButton'
-        let sportsMenuButtonAT = NSMutableAttributedString(string: "- Sports", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 16) as Any])
+        let sportsMenuButtonAT = NSMutableAttributedString(string: "- Sports", attributes: [NSAttributedStringKey.foregroundColor: colors[4], NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 16) as Any])
         sportsMenuButton.setAttributedTitle(sportsMenuButtonAT, for: .normal)
         sportsMenuButton.backgroundColor = UIColor.clear
         sportsMenuButton.frame = CGRect(x: 0, y: 260, width: 100, height: 20)
@@ -136,7 +119,7 @@ class CustomNavigationViewController: UIViewController, UIViewControllerTransiti
         sportsMenuButton.accessibilityIdentifier = "5"
         
         // 'congratsMenuButton'
-        let congratsMenuButtonAT = NSMutableAttributedString(string: "- Congrats", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 16) as Any])
+        let congratsMenuButtonAT = NSMutableAttributedString(string: "- Congrats", attributes: [NSAttributedStringKey.foregroundColor: colors[5], NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 16) as Any])
         congratsMenuButton.setAttributedTitle(congratsMenuButtonAT, for: .normal)
         congratsMenuButton.backgroundColor = UIColor.clear
         congratsMenuButton.frame = CGRect(x: 0, y: 300, width: 100, height: 20)
@@ -145,7 +128,7 @@ class CustomNavigationViewController: UIViewController, UIViewControllerTransiti
         congratsMenuButton.accessibilityIdentifier = "6"
         
         // 'miscMenuButton'
-        let miscMenuButtonAT = NSMutableAttributedString(string: "- Misc", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 16) as Any])
+        let miscMenuButtonAT = NSMutableAttributedString(string: "- Misc", attributes: [NSAttributedStringKey.foregroundColor: colors[6], NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 16) as Any])
         miscMenuButton.setAttributedTitle(miscMenuButtonAT, for: .normal)
         miscMenuButton.backgroundColor = UIColor.clear
         miscMenuButton.frame = CGRect(x: 0, y: 340, width: 100, height: 20)
@@ -155,12 +138,13 @@ class CustomNavigationViewController: UIViewController, UIViewControllerTransiti
         
         
         // 'logOutMenuButton'
-        let logOutMenuButtonAT = NSMutableAttributedString(string: "Log Out", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 24) as Any])
+        let logOutMenuButtonAT = NSMutableAttributedString(string: "Log Out", attributes: [NSAttributedStringKey.foregroundColor: colors[7], NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 24) as Any])
         logOutMenuButton.setAttributedTitle(logOutMenuButtonAT, for: .normal)
         logOutMenuButton.backgroundColor = UIColor.clear
         logOutMenuButton.frame = CGRect(x: 0, y: 640, width: 100, height: 20)
         logOutMenuButton.sizeToFit()
         logOutMenuButton.center.x = (self.view.frame.width/4)
+        logOutMenuButton.accessibilityIdentifier = "0"
         
         
         // Add Subview's to Main View
@@ -179,7 +163,7 @@ class CustomNavigationViewController: UIViewController, UIViewControllerTransiti
         
         // Setup 'circleView'
         var center: CGFloat!
-        var centers = [homeMenuButton.center.y, birthdayMenuButton.center.y, sesonalMenuButton.center.y, holidayMenuButton.center.y]
+        var centers = [homeMenuButton.center.y, birthdayMenuButton.center.y, sesonalMenuButton.center.y, holidayMenuButton.center.y, sportsMenuButton.center.y, congratsMenuButton.center.y, miscMenuButton.center.y, logOutMenuButton.center.y, logOutMenuButton.center.y]
         if identifiers.contains(identifier) {
             let index = identifiers.index(of: identifier)
             center = centers[index!]
@@ -188,12 +172,9 @@ class CustomNavigationViewController: UIViewController, UIViewControllerTransiti
     }
     
     
-    
     ///////////////////////////////////////////////// MARK: Menu Button Function
     
     @objc func menuButtonTapped(_ sender: UIButton) {
-        
-        print("Second Menu Button Tapped!")
         
         // Setup Main View
         closeMenuButton.setImage(UIImage(named: "whiteX"), for: .normal)
@@ -209,20 +190,15 @@ class CustomNavigationViewController: UIViewController, UIViewControllerTransiti
     }
     
     
-    
     ///////////////////////////////////////////////// MARK: Dismiss Menu Function
     
     @objc func dismissNavMenu(_ sender: UIButton) {
-        
-        print("Close Menu!")
         closeMenuButton.setImage(UIImage(named: "whiteX2"), for: .normal)
-        
         UIView.animate(withDuration: 0.7) {
             self.blurView.alpha = 0
             self.closeMenuButton.alpha = 0
             self.menuView.frame.origin.x = -200
         }
-        
     }
     
     
@@ -246,10 +222,28 @@ class CustomNavigationViewController: UIViewController, UIViewControllerTransiti
     }
     
     
+    ///////////////////////////////////////////////// MARK: Highlight Button Function (Home VC Only)
     
+//    func highlightButton(_ id: String) {
+//        var button: UIButton!
+//        let buttons = [self.homeMenuButton, self.birthdayMenuButton, self.sesonalMenuButton, self.holidayMenuButton, self.sportsMenuButton, self.congratsMenuButton, self.miscMenuButton, self.logOutMenuButton]
+//        let identifiers = ["1", "2", "3", "4", "5", "6", "7", "8"]
+//        if identifiers.contains(id) {
+//            guard let index = identifiers.index(of: id) else { return }
+//            button = buttons[index]
+//        }
+//
+//        // Animate Button Color's
+//        UIView.animate(withDuration: 0.5, animations: {
+//            button.setTitleColor(UIColor.blue, for: .normal)
+//        }) { (succes) in
+//            if succes {
+//                button.setTitleColor(UIColor.white, for: .normal)
+//            }
+//        }
+//    }
     
     
 ////////// End Of Class
 }
-
 

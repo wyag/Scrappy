@@ -11,13 +11,15 @@ import Foundation
 
 /*
  
- *********** 4 Steps Respectively
- 
- ********************************************* 1.) Add These Local Properties!!
+ - - - - - - - - - - - - - - - - -> 4 Steps Respectively
  
  
- // Transition
- let transition = CircularTransition()
+ 
+ ******************* 1.) Add These Local Properties!!
+ 
+ 
+ 
+ //////////////// MARK: Navigation Properties
  
  // Nav Menu
  let menuView = CustomNavigationViewController()
@@ -27,19 +29,20 @@ import Foundation
  
  
  
- ********************************************* 2.) Put in your "SetupUI" Function!!
+ 
+ ******************* 2.) Paste & Call This "setupNav" Function in your view did load! (Before Your UI)
  
  
  
  
- //////////////// MARK: Setup Navigation
+ //////////////// MARK: Setup Navigation Function
+ 
+ func setupNav() {
  
  // 'menuView'
  menuView.view.frame = self.view.frame
  menuView.view.alpha = 1
  menuView.closeMenuButton.addTarget(self, action: #selector(self.dismissMenu(_:)), for: .touchUpInside)
- 
- self.accessibilityValue = "1"   // ************************ Change this to your page's #
  
  // 'customeNavBarView'
  self.navigationController?.navigationBar.isHidden = true
@@ -78,12 +81,12 @@ import Foundation
  menuView.sportsMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
  menuView.congratsMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
  menuView.miscMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+ menuView.logOutMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+ }
  
  
+ ******************* 3.) Add These Functions!!
  
- 
- 
- *********************************************** 3.) Add These Functions!!
  
  
  @objc private func menuOpen(_ sender: UIButton) {
@@ -105,49 +108,20 @@ import Foundation
  @objc private func changeVC(_ sender: UIButton) {
  var nextVC: UIViewController!
  var center: CGPoint!
+ let vcS = [HomeViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController()]
  let centers = [self.menuView.homeMenuButton.center, self.menuView.birthdayMenuButton.center, self.menuView.sesonalMenuButton.center, self.menuView.holidayMenuButton.center, self.menuView.sportsMenuButton.center, self.menuView.congratsMenuButton.center, self.menuView.miscMenuButton.center]
- let identifiers = ["1", "2", "3", "4", "5", "6", "7"]
+ let identifiers = ["1", "2", "3", "4", "5", "6", "7", "8"]
  guard let id = sender.accessibilityIdentifier else { return }
  if identifiers.contains(id) {
  guard let index = identifiers.index(of: id) else { return }
- let vcS = [HomeViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController()]
  center = centers[index]
  nextVC = vcS[index]
  }
- 
- transition.startingPoint = center
  nextVC.accessibilityValue = id
- nextVC.transitioningDelegate = self
- nextVC.modalPresentationStyle = .custom
- self.navigationController?.present(nextVC, animated: true, completion: nil)
+ self.navigationController?.show(nextVC, sender: self)
  }
 
  
- 
-  ********************************************* 4.) Add this delegate to your controller!!
- 
- 
- 'UIViewControllerTransitioningDelegate'   <- <- <- <- <- <- <-
- 
- 
- //////////////////////------------------------ With these delegate functions
- 
- 
- func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
- transition.transitionMode = .present
- transition.circleColor = UIColor.white
- return transition
- }
- 
- 
- 
- 
- func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
- transition.transitionMode = .dismiss
- transition.circleColor = UIColor.white
- return transition
- }
- 
- 
+ ************************************************ - DONE - ***********************
  
  */
