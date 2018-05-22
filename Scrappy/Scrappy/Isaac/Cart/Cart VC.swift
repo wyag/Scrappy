@@ -28,6 +28,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     let customNavBarView = UIView()
     let navTitleLabel = UILabel()
     let menuButton = UIButton()
+    let cartButton = UIButton()
     
      //////////////// MARK: UI Properties
     
@@ -97,6 +98,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
+    //************************************************** Navigation Function **********************************
+    
     @objc private func menuOpen(_ sender: UIButton) {
         menuView.setupUI(view: self)
         self.view.bringSubview(toFront: menuView.view)
@@ -113,18 +116,84 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    
+    
+    
     @objc private func changeVC(_ sender: UIButton) {
+        
+        // Next View Controller
         var nextVC: UIViewController!
-        let vcS = [HomeViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController()]
-        let identifiers = ["1", "2", "3", "4", "5", "6", "7", "8"]
+        
+        // Array of Possible View Controllers
+        let vcS = [LoginViewController(),HomeViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), DetailCollectionViewController(), CartViewController(), ProfileSettingViewController()]
+        
+        // Array of Possible Nav Button Identifiers
+        let identifiers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+        
+        // Nav Button's Identifier
         guard let id = sender.accessibilityIdentifier else { return }
+        
+        // Index of 'id' for index of 'vcS'
         if identifiers.contains(id) {
             guard let index = identifiers.index(of: id) else { return }
             nextVC = vcS[index]
         }
-        nextVC.accessibilityValue = id
-        self.navigationController?.show(nextVC, sender: self)
+        
+        // Current VC's Nav Index
+        guard let index = Int(self.accessibilityValue!) else { return }
+        
+        // Find Correct Direction
+        switch nextVC {
+            
+        // Current VC | Close Menu
+        case vcS[index]:
+            dismissMenu(sender) ; return
+            
+        // Login | Pop To Root
+        case vcS[0]:
+            self.navigationController?.popToRootViewController(animated: true)
+            return
+            
+        // Home | Pop To
+        case vcS[1]:
+            let delay = 1 * Double(NSEC_PER_SEC)
+            
+            
+            self.navigationController?.popToViewController((self.navigationController?.viewControllers[1])!, animated: true)
+            return
+            
+        // Item Collection's | Show
+        case vcS[2], vcS[3], vcS[4], vcS[5], vcS[6], vcS[7]:
+            guard let destinationVC = (nextVC as? CollectionViewController) else { return }
+            self.dismissMenu(sender)
+            destinationVC.accessibilityValue = id
+            self.navigationController?.show(destinationVC, sender: self)
+            return
+            
+        // Item Detail | Present
+        case vcS[8]: return // Go To Detail View
+            
+        // Cart | Show
+        case vcS[9]:
+            guard let destinationVC = (nextVC as? CartViewController) else { return }
+            destinationVC.accessibilityValue = id
+            self.navigationController?.show(nextVC, sender: self)
+            
+        // Profile | Show
+        case vcS[10]:
+            guard let destinationVC = (nextVC as? ProfileSettingViewController) else { return }
+            destinationVC.accessibilityValue = id
+            self.navigationController?.show(nextVC, sender: self)
+            
+        // Default | Close Menu
+        default: self.dismissMenu(sender) ; return
+            
+        }
     }
+    
+    
+    
+    
     
     
     

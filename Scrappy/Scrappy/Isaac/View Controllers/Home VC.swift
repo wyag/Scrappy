@@ -43,7 +43,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     // Transition
     //var pushingOnLoad: Bool = false
     
-    // Nav Menu
+    // Nav Menu UI
     let menuView = CustomNavigationViewController()
     let customNavBarView = UIView()
     let navTitleLabel = UILabel()
@@ -51,7 +51,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     let cartButton = UIButton()
     var moreThanOneVC: Bool?
     
-    // Table View
+    // Table View UI
     let categoryTableView = UITableView()
     let numberOfCells = 6
     var cellCount = 1
@@ -60,7 +60,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var cellNames: [String]!
     
     
-    ////////////////////////////////////////////////////// MARK: SetupUI Function
+    ////////////////////////////////////////////////////// MARK: Setup Nav Function
     
     func setupNav() {
         
@@ -97,6 +97,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cartButton.setImage(UIImage(named: "basketorange"), for: .selected)
         cartButton.backgroundColor = UIColor.clear
         cartButton.frame = CGRect(x: 360, y: 0, width: 40, height: 40)
+        cartButton.accessibilityIdentifier = "9"
+        cartButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
         
         
         /////// Add Subview's
@@ -119,6 +121,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         menuView.congratsMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
         menuView.miscMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
         menuView.logOutMenuButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
+        menuView.profileButton.addTarget(self, action: #selector(self.changeVC(_:)), for: .touchUpInside)
     }
     
     @objc private func menuOpen(_ sender: UIButton) {
@@ -137,48 +140,75 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    
+    
+    //************************************************** Navigation Function **********************************
+    
     @objc private func changeVC(_ sender: UIButton) {
-        // MARK: Pages
-        /*
-         0 - Login
-         1 - Home
-         (2 - 7) - Collection View's
-         8 - Any Collection Detail View
-         9 - Cart
-         10 - Profile
-        */
         
+        // Next View Controller
         var nextVC: UIViewController!
+        
+        // Array of Possible View Controllers
         let vcS = [LoginViewController(),HomeViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), CollectionViewController(), DetailCollectionViewController(), CartViewController(), ProfileSettingViewController()]
+        
+        // Array of Possible Nav Button Identifiers
         let identifiers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+        
+        // Nav Button's Identifier
         guard let id = sender.accessibilityIdentifier else { return }
+        
+        // Index of 'id' for index of 'vcS'
         if identifiers.contains(id) {
             guard let index = identifiers.index(of: id) else { return }
             nextVC = vcS[index]
         }
+        
+        // Current VC's Nav Index
         guard let index = Int(self.accessibilityValue!) else { return }
+        
+        // Find Correct Direction
         switch nextVC {
+            
+            // Current VC | Close Menu
         case vcS[index]:
             dismissMenu(sender) ; return
+            
+            // Login | Pop To Root
         case vcS[0]:
             self.navigationController?.popToRootViewController(animated: true)
             return
+            
+            // Home | Pop To
+        case vcS[1]: self.navigationController?.popToViewController((self.navigationController?.viewControllers[1])!, animated: true)
+            return
+            
+            // Item Collection's | Show
         case vcS[2], vcS[3], vcS[4], vcS[5], vcS[6], vcS[7]:
             guard let destinationVC = (nextVC as? CollectionViewController) else { return }
             self.dismissMenu(sender)
             destinationVC.accessibilityValue = id
             self.navigationController?.show(destinationVC, sender: self)
             return
+            
+            // Item Detail | Present
         case vcS[8]: return // Go To Detail View
+            
+            // Cart | Show
         case vcS[9]:
             guard let destinationVC = (nextVC as? CartViewController) else { return }
             destinationVC.accessibilityValue = id
             self.navigationController?.show(nextVC, sender: self)
+            
+            // Profile | Show
         case vcS[10]:
             guard let destinationVC = (nextVC as? ProfileSettingViewController) else { return }
             destinationVC.accessibilityValue = id
             self.navigationController?.show(nextVC, sender: self)
+            
+            // Default | Close Menu
         default: self.dismissMenu(sender) ; return
+            
         }
     }
     
@@ -206,6 +236,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         categoryTableView.delegate = self
         categoryTableView.dataSource = self
         categoryTableView.rowHeight = 160
+        categoryTableView.separatorColor = UIColor.clear
         
         
         self.view.addSubview(categoryTableView)

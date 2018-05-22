@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let rootNav = RootNavigationViewController() 
-        rootNav.viewControllers = [LoginViewController()]
+        rootNav.viewControllers = [LoginViewController()] // Log In
         
         
         window?.rootViewController = rootNav
