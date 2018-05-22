@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
 class AddItemViewController: UIViewController {
     
     // Properties
     var itemImageButton: UIButton = {
-       let imageButton = UIButton()
+        let imageButton = UIButton()
         imageButton.setImage(#imageLiteral(resourceName: "Donald Trump B-Day"), for: .normal)
         imageButton.translatesAutoresizingMaskIntoConstraints = false
         imageButton.addTarget(self, action: #selector(itemImageButtonTapped), for: .touchUpInside)
@@ -51,7 +52,7 @@ class AddItemViewController: UIViewController {
         let des = UITextView()
         des.translatesAutoresizingMaskIntoConstraints = false
         des.backgroundColor = .lightGray
-       return des
+        return des
     }()
     
     var addItemButton: UIButton = {
@@ -78,7 +79,7 @@ class AddItemViewController: UIViewController {
     
     func setupViews() {
         
-        // 'itemImage'
+        // 'itemImageButton'
         view.addSubview(itemImageButton)
         itemImageButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
         itemImageButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
@@ -146,11 +147,47 @@ class AddItemViewController: UIViewController {
             return
             
         }
-        print("success adding stuff!")
+        
         // add to firebase
+        
+        guard let currentImage = self.itemImageButton.currentImage else { return }
+        
+        guard let uploadData = UIImageJPEGRepresentation(currentImage, 0.3) else { return }
+        
+        let imageName = UUID().uuidString
+        
+        let storageImage = Storage.storage().reference().child("selling_images").child(imageName)
+        storageImage.putData(uploadData, metadata: nil) { (_, error) in
             
+            if let error = error {
+                print("Error!: \(error.localizedDescription)")
+            }
+            storageImage.downloadURL(completion: { (url, error) in
+                if let error = error {
+                    print("Error!: \(error.localizedDescription)")
+                }
+                
+                let imageURL = url?.absoluteString
+                
+                guard let uid = Auth.auth().currentUser?.uid else { return }
+                let itemUID = UUID().uuidString
+                print(itemUID)
+                
+                let dictionaryValues = ["title": title, "price": price, "image": imageURL]
+                let itemsDictionary = [itemUID: dictionaryValues]
+                
+                Database.database().reference().child("users/\(uid)/selling").updateChildValues(itemsDictionary) { (error, _) in
+                    if let error = error {
+                        print("Error!: \(error.localizedDescription)")
+                    }
+                    print("Successfully added item to selling database!")
+                    self.dismiss(animated: true, completion: nil)
+                }
+            })
         }
     }
+}
+
 
 // Mark: - Delegates
 extension AddItemViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
