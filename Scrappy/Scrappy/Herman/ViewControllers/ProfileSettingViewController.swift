@@ -74,8 +74,22 @@ class ProfileSettingViewController: UIViewController {
             
             storageItem.downloadURL(completion: { (url, error) in
                 if let error = error {
-                    
+                    print("Failed to downloadURL to storage", error)
                 }
+                
+                let imageUrl = url?.absoluteString
+                guard let uid = Auth.auth().currentUser?.uid else { return }
+                
+                let dictionaryValues = ["profileImageUrl": imageUrl]
+                let values = [uid: dictionaryValues]
+                
+                Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (error, reference) in
+                    if let error = error {
+                        print("Failed to save user image to db:", error)
+                    }
+                    
+                    print("Successfully saved user image to db:")
+                })
             })
         }
     }
@@ -92,6 +106,8 @@ extension ProfileSettingViewController: UIImagePickerControllerDelegate, UINavig
         } else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             profileSettingInputViews.profileImage.image = originalImage.withRenderingMode(.alwaysOriginal)
         }
+        
+        handleImageDownload()
         
         dismiss(animated: true, completion: nil)
     }
@@ -118,7 +134,11 @@ extension ProfileSettingViewController: UICollectionViewDelegate, UICollectionVi
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "profileSettingCell", for: indexPath) as? ProfileSettingCollectionViewCell else { return UICollectionViewCell() }
         return cell 
     }
-
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: collectionView.frame.height)
     }
