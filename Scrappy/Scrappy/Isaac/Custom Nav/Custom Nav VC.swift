@@ -20,8 +20,11 @@ class CustomNavigationViewController: UIViewController {
     let menuView = UIView()
     let circleView = UIView()
     
-    /// Nav Menu Button(s)
+    //////////////// Nav Menu Button(s)
+    
+    // Home
     let homeMenuButton = UIButton()
+    
     // Category(s)
     let birthdayMenuButton = UIButton()
     let sesonalMenuButton = UIButton()
@@ -29,6 +32,12 @@ class CustomNavigationViewController: UIViewController {
     let sportsMenuButton = UIButton()
     let congratsMenuButton = UIButton()
     let miscMenuButton = UIButton()
+    
+    // Profile
+    let profileImage = UIImageView()
+    let profileButton = UIButton()
+    
+    // Log Out
     let logOutMenuButton = UIButton()
 
     
@@ -38,8 +47,8 @@ class CustomNavigationViewController: UIViewController {
         
         // Setup Button Colors
         guard let identifier = view.accessibilityValue else { return }
-        let identifiers = ["1", "2", "3", "4", "5", "6", "7", "8"]
-        var colors = [UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white]
+        let identifiers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+        var colors = [UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white, UIColor.white]
         if identifiers.contains(identifier) {
             let index = identifiers.index(of: identifier)
             colors.remove(at: index!)
@@ -136,12 +145,31 @@ class CustomNavigationViewController: UIViewController {
         miscMenuButton.frame.origin.x = 20
         miscMenuButton.accessibilityIdentifier = "7"
         
+        // 'profileImage'
+        profileImage.image = UIImage(named: "mock6")
+        profileImage.backgroundColor = UIColor.darkGray
+        profileImage.frame = CGRect(x: 0, y: 480, width: 80, height: 80)
+        profileImage.clipsToBounds = true
+        profileImage.layer.cornerRadius = 40
+        profileImage.layer.borderWidth = 2
+        profileImage.layer.borderColor = UIColor.white.cgColor
+        profileImage.center.x = (view.view.frame.width/4)
+        
+        // 'profileButton'
+        profileButton.backgroundColor = UIColor.clear
+        profileButton.frame = CGRect(x: 0, y: 480, width: 80, height: 80)
+        profileButton.accessibilityIdentifier = "10"
+        profileButton.center.x = (view.view.frame.width/4)
+        
         
         // 'logOutMenuButton'
-        let logOutMenuButtonAT = NSMutableAttributedString(string: "Log Out", attributes: [NSAttributedStringKey.foregroundColor: colors[7], NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 24) as Any])
+        let logOutMenuButtonAT = NSMutableAttributedString(string: "  Log Out  ", attributes: [NSAttributedStringKey.foregroundColor: colors[7], NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 24) as Any])
         logOutMenuButton.setAttributedTitle(logOutMenuButtonAT, for: .normal)
         logOutMenuButton.backgroundColor = UIColor.clear
-        logOutMenuButton.frame = CGRect(x: 0, y: 640, width: 100, height: 20)
+        logOutMenuButton.layer.cornerRadius = 8
+        logOutMenuButton.layer.borderColor = UIColor.white.cgColor
+        logOutMenuButton.layer.borderWidth = 2
+        logOutMenuButton.frame = CGRect(x: 0, y: 660, width: 100, height: 20)
         logOutMenuButton.sizeToFit()
         logOutMenuButton.center.x = (self.view.frame.width/4)
         logOutMenuButton.accessibilityIdentifier = "0"
@@ -159,16 +187,20 @@ class CustomNavigationViewController: UIViewController {
         menuView.addSubview(sportsMenuButton)
         menuView.addSubview(congratsMenuButton)
         menuView.addSubview(miscMenuButton)
+        menuView.addSubview(profileImage)
+        menuView.addSubview(profileButton)
         menuView.addSubview(logOutMenuButton)
         
         // Setup 'circleView'
         var center: CGFloat!
-        var centers = [homeMenuButton.center.y, birthdayMenuButton.center.y, sesonalMenuButton.center.y, holidayMenuButton.center.y, sportsMenuButton.center.y, congratsMenuButton.center.y, miscMenuButton.center.y, logOutMenuButton.center.y, logOutMenuButton.center.y]
+        var centers = [homeMenuButton.center.y, birthdayMenuButton.center.y, sesonalMenuButton.center.y, holidayMenuButton.center.y, sportsMenuButton.center.y, congratsMenuButton.center.y, miscMenuButton.center.y, logOutMenuButton.center.y, logOutMenuButton.center.y, profileButton.center.y]
         if identifiers.contains(identifier) {
             let index = identifiers.index(of: identifier)
             center = centers[index!]
         }
-        circleView.center.y = center
+        if center != nil {
+            circleView.center.y = center
+        }
     }
     
     
