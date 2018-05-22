@@ -54,7 +54,7 @@ class ProfileSettingViewController: UIViewController {
     }
     
     @objc func leftBarButtonTapped() {
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     func handleImageDownload() {
