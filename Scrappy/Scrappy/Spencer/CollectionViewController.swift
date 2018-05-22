@@ -10,13 +10,131 @@ import UIKit
 
 class CollectionViewController: UIViewController {
     
-    // Nav Menu
-    let menuView = CustomNavigationViewController()
-    let customNavBarView = UIView()
-    let navTitleLabel = UILabel()
-    let menuButton = UIButton()
+    
     
     // Properties
+    
+    // Nav Menu UI
+    let menu = CustomNavView(frame: UIScreen.main.bounds)
+    let cartButton = UIBarButtonItem()
+    var menuBarButton = UIBarButtonItem()
+    var isMenuOpen: Bool = false
+    
+    ////////////////////////////////////////////////////// MARK: Setup Nav Function
+    
+    func setupNav() {
+        
+        self.accessibilityValue = "Home"
+        
+        // Setup Nav Bar
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.barTintColor = UIColor.black
+        
+        // 'menuBarButton'
+        menuBarButton = UIBarButtonItem(image: UIImage(named: "hMenu"), style: .plain, target: self, action: #selector(self.menuButtonTapped(_:)))
+        menuBarButton.tintColor = UIColor.orange
+        self.navigationItem.setLeftBarButton(menuBarButton, animated: false)
+        
+        menu.closeMenuButton.addTarget(self, action: #selector(self.menuButtonTapped(_:)), for: .touchUpInside)
+        menu.homeMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.birthdayMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.sesonalMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.holidayMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.sportsMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.congratsMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.miscMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.cartMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.profileButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+    }
+    
+    @objc private func menuButtonTapped(_ sender: UIBarButtonItem) {
+        if !isMenuOpen {
+            self.view.addSubview(menu)
+            isMenuOpen = true
+            menu.closeMenuButton.setImage(UIImage(named: "whiteX"), for: .normal)
+            UIView.animate(withDuration: 1) {
+                self.menu.navMenuView.frame.origin.x = 0
+                self.menu.blurView.alpha = 1
+                self.menu.closeMenuButton.alpha = 1
+            }
+        } else {
+            print("Menu Closed")
+            isMenuOpen = false
+            menu.closeMenuButton.setImage(UIImage(named: "whiteX2"), for: .normal)
+            UIView.animate(withDuration: 1, animations: {
+                self.menu.blurView.alpha = 0
+                self.menu.closeMenuButton.alpha = 0
+                self.menu.navMenuView.frame.origin.x = ((self.view.frame.width/2) * -1)
+            }) { (success) in
+                if success {
+                    self.menu.removeFromSuperview()
+                }
+            }
+        }
+    }
+    
+    
+    @objc private func goToVC(_ sender: UIButton) {
+        
+        print("Nav Menu Button Pressed!!")
+        
+        // Unwrap Button ID
+        guard let id = sender.accessibilityIdentifier else { return }
+        guard let vcid = self.accessibilityValue else { return }
+        
+        // Switch On Button ID
+        switch id {
+        case vcid:
+            menuButtonTapped(self.menuBarButton)
+        case "Home":
+            self.navigationController?.popToRootViewController(animated: true)
+        case "Birthday":
+            menuButtonTapped(menuBarButton)
+            let nextVC = CollectionViewController()
+            nextVC.accessibilityValue = "Birthday"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Seasonal":
+            menuButtonTapped(menuBarButton)
+            let nextVC = CollectionViewController()
+            nextVC.accessibilityValue = "Seasonal"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Holiday":
+            menuButtonTapped(menuBarButton)
+            let nextVC = CollectionViewController()
+            nextVC.accessibilityValue = "Holiday"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Sports":
+            menuButtonTapped(menuBarButton)
+            let nextVC = CollectionViewController()
+            nextVC.accessibilityValue = "Sports"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Congrats":
+            menuButtonTapped(menuBarButton)
+            let nextVC = CollectionViewController()
+            nextVC.accessibilityValue = "Congrats"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Misc":
+            menuButtonTapped(menuBarButton)
+            let nextVC = CollectionViewController()
+            nextVC.accessibilityValue = "Misc"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Profile":
+            menuButtonTapped(menuBarButton)
+            let nextVC = ProfileSettingViewController()
+            nextVC.accessibilityValue = "Profile"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Cart":
+            menuButtonTapped(menuBarButton)
+            let nextVC = CartViewController()
+            nextVC.accessibilityValue = "Cart"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Logout":
+            self.navigationController?.popToRootViewController(animated: true)
+        default:
+            menuButtonTapped(self.menuBarButton)
+        }
+    }
+    
     let raiting = 4
     let allImageCellID = "ImageCellID"
     let topSellerImagesID = "TopSellerImagesID"
@@ -66,48 +184,13 @@ class CollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
+        setupNav()
         setupViews()
     }
     
     func setupViews() {
         
-        //////////////// MARK: Setup Navigation
         
-        // 'menuView'
-        menuView.view.frame = self.view.frame
-        menuView.view.alpha = 1
-        
-        self.accessibilityValue = "3"
-        
-        menuView.closeMenuButton.addTarget(self, action: #selector(self.dismissMenu(_:)), for: .touchUpInside)
-        
-        // 'customeNavBarView'
-        self.navigationController?.navigationBar.isHidden = true
-        customNavBarView.backgroundColor = UIColor.orange
-        customNavBarView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.width/6.9)
-        
-        // Setup Nav Title
-        let navTitleLabelAT = NSMutableAttributedString(string: "Birthday Cards", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: self.view.frame.width/20.7) as Any])
-        navTitleLabel.attributedText = navTitleLabelAT
-        navTitleLabel.frame = CGRect(x: 0, y: 0, width: self.view.frame.width/4.14, height: self.view.frame.width/20.7)
-        navTitleLabel.sizeToFit()
-        
-        // 'menuButton'
-        menuButton.setImage(UIImage(named: "hMenu"), for: .normal)
-        menuButton.setImage(UIImage(named: "hMenu"), for: .highlighted)
-        menuButton.setImage(UIImage(named: "hMenu"), for: .selected)
-        menuButton.backgroundColor = UIColor.clear
-        menuButton.frame = CGRect(x: self.view.frame.width/20.7, y: 0, width: self.view.frame.width/13.8, height: self.view.frame.width/13.8)
-        menuButton.addTarget(self, action: #selector(self.menuOpen(_:)), for: .touchUpInside)
-        
-        // Add Subview's
-        self.view.addSubview(menuView.view)
-        self.view.addSubview(customNavBarView)
-        customNavBarView.addSubview(navTitleLabel)
-        navTitleLabel.center.x = customNavBarView.center.x
-        navTitleLabel.center.y = self.view.frame.height/18.4
-        customNavBarView.addSubview(menuButton)
-        menuButton.center.y = self.view.frame.height/18.4
         
         setUpDelegates()
         self.navigationController?.navigationBar.isHidden = true
@@ -151,22 +234,7 @@ class CollectionViewController: UIViewController {
         show(addItemVC, sender: self)
     }
     
-    @objc private func menuOpen(_ sender: UIButton) {
-        
-        menuView.setupUI(view: self)
-        self.view.bringSubview(toFront: menuView.view)
-        menuView.view.alpha = 1
-        UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
-            self.menuView.menuButtonTapped(sender)
-        }, completion: nil)
-    }
-    
-    @objc private func dismissMenu(_ sender: UIButton) {
-        UIView.animate(withDuration: 1) {
-            self.menuView.dismissNavMenu(sender)
-            self.menuView.view.alpha = 0
-        }
-    }
+   
 }
 
 // Mark: - Extension for Delegate/Datasource
