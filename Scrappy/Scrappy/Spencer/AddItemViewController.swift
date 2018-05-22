@@ -12,7 +12,7 @@ import Firebase
 class AddItemViewController: UIViewController {
     
     // Properties
-    var itemImageButton: UIButton = {
+    let itemImageButton: UIButton = {
         let imageButton = UIButton()
         imageButton.setImage(#imageLiteral(resourceName: "Donald Trump B-Day"), for: .normal)
         imageButton.translatesAutoresizingMaskIntoConstraints = false
@@ -58,8 +58,8 @@ class AddItemViewController: UIViewController {
     var addItemButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.text = "Add Item"
-        button.titleLabel?.textColor = .white
+        button.setTitle("Add Item", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = .blue
         return button
     }()
@@ -136,7 +136,7 @@ class AddItemViewController: UIViewController {
     // selector function for 'addItemButton'
     @objc func addItemButtonTapped() {
         
-        guard let title = itemTitle.text, !title.isEmpty, let price = itemPrice.text, !price.isEmpty, let image = itemImageButton.imageView, itemImageButton.currentImage != nil else {
+        guard let title = itemTitle.text, !title.isEmpty, let price = itemPrice.text, !price.isEmpty, let image = itemImageButton.currentImage, itemImageButton.currentImage != nil else {
             
             let alert = UIAlertController(title: "Error Adding Item", message: "Please make sure item has an image, title and price", preferredStyle: .alert)
             

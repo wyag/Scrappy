@@ -25,6 +25,15 @@ class CollectionViewController: UIViewController {
     let allImagesArray = ["Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day"]
     let cardDescription = "'Sorry losers and haters, but my I.Q. is one of the highest - and you all know it! Please don't feel so stupid or insecure, it's not your fault' - The Donald"
     
+    let TopSellerLabel: UILabel = {
+       let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Top Sellers"
+        label.textAlignment = .center
+//        label.font.withSize(25)
+        return label
+    }()
+    
     let topCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 30
@@ -119,15 +128,22 @@ class CollectionViewController: UIViewController {
         topCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         topCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.4).isActive = true
         topCollectionView.bottomAnchor.constraint(equalTo: bottomCollectionView.topAnchor).isActive = true
-        topCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 75).isActive = true
+        topCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         
         // 'addItemButton'
-        topCollectionView.addSubview(addItemButton)
+        view.addSubview(addItemButton)
         addItemButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
         addItemButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
         addItemButton.leadingAnchor.constraint(equalTo: topCollectionView.leadingAnchor, constant: 20).isActive = true
-        addItemButton.topAnchor.constraint(equalTo: topCollectionView.topAnchor).isActive = true
+        addItemButton.bottomAnchor.constraint(equalTo: topCollectionView.topAnchor, constant: -10).isActive = true
         addItemButton.addTarget(self, action: #selector(addItem(_:)), for: .touchUpInside)
+        
+        // 'topSellerLabel'
+//        view.addSubview(TopSellerLabel)
+//        TopSellerLabel.topAnchor.constraint(equalTo: customNavBarView.bottomAnchor, constant: 10).isActive = true
+//        TopSellerLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+////        TopSellerLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
+//        TopSellerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     @objc private func addItem(_ sender: UIButton) {
@@ -180,7 +196,8 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
             detailCollectionVC.itemTitle = topImagesArray[indexPath.item].capitalized
             detailCollectionVC.raitingNumber = raiting
             detailCollectionVC.cardDescription = cardDescription
-            show(detailCollectionVC, sender: self)
+//            show(detailCollectionVC, sender: self)
+            navigationController?.show(detailCollectionVC, sender: self)
             
         } else {
             print(allImagesArray[indexPath.item])
@@ -189,7 +206,8 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
             detailCollectionVC.itemTitle = allImagesArray[indexPath.item].capitalized
             detailCollectionVC.raitingNumber = raiting
             detailCollectionVC.cardDescription = cardDescription
-            show(detailCollectionVC, sender: self)
+//            show(detailCollectionVC, sender: self)
+            navigationController?.show(detailCollectionVC, sender: self)
         }
     }
     
