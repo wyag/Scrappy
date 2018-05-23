@@ -60,7 +60,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         menu.closeMenuButton.addTarget(self, action: #selector(self.menuButtonTapped(_:)), for: .touchUpInside)
         menu.homeMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
         menu.birthdayMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-        menu.sesonalMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.seasonalMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
         menu.holidayMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
         menu.sportsMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
         menu.congratsMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
@@ -205,7 +205,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.cellIconImage = image
         cell.cellColor = color
         cell.cellName = name
-        cell.cellButton.addTarget(self, action: #selector(self.cellWasTapped(_:)), for: .touchUpInside)
+        cell.cellButton.accessibilityIdentifier = name
+        cell.cellButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
         cell.accessoryType = .disclosureIndicator
         cell.cellButton.accessibilityIdentifier = "\(indexPath.row)"
         let cellFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 160)

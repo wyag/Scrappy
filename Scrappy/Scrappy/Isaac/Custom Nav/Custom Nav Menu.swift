@@ -23,7 +23,7 @@ class CustomNavView: UIView {
     // Nav Buttons | 10 Buttons
     let homeMenuButton = UIButton()
     let birthdayMenuButton = UIButton()
-    let sesonalMenuButton = UIButton()
+    let seasonalMenuButton = UIButton()
     let holidayMenuButton = UIButton()
     let sportsMenuButton = UIButton()
     let congratsMenuButton = UIButton()
@@ -81,14 +81,14 @@ class CustomNavView: UIView {
         birthdayMenuButton.frame.origin.x = 20
         birthdayMenuButton.accessibilityIdentifier = "Birthday"
         
-        // 'sesonalMenuButton'
+        // 'seasonalMenuButton'
         let sesonalMenuButtonAT = NSMutableAttributedString(string: "- Sesonal", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 16) as Any])
-        sesonalMenuButton.setAttributedTitle(sesonalMenuButtonAT, for: .normal)
-        sesonalMenuButton.backgroundColor = UIColor.clear
-        sesonalMenuButton.frame = CGRect(x: 0, y: 180, width: 100, height: 20)
-        sesonalMenuButton.sizeToFit()
-        sesonalMenuButton.frame.origin.x = 20
-        sesonalMenuButton.accessibilityIdentifier = "3"
+        seasonalMenuButton.setAttributedTitle(sesonalMenuButtonAT, for: .normal)
+        seasonalMenuButton.backgroundColor = UIColor.clear
+        seasonalMenuButton.frame = CGRect(x: 0, y: 180, width: 100, height: 20)
+        seasonalMenuButton.sizeToFit()
+        seasonalMenuButton.frame.origin.x = 20
+        seasonalMenuButton.accessibilityIdentifier = "Seasonal"
         
         // 'holidayMenuButton'
         let holidayMenuButtonAT = NSMutableAttributedString(string: "- Holiday", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 16) as Any])
@@ -97,7 +97,7 @@ class CustomNavView: UIView {
         holidayMenuButton.frame = CGRect(x: 0, y: 220, width: 100, height: 20)
         holidayMenuButton.sizeToFit()
         holidayMenuButton.frame.origin.x = 20
-        holidayMenuButton.accessibilityIdentifier = "4"
+        holidayMenuButton.accessibilityIdentifier = "Holiday"
         
         // 'sportsMenuButton'
         let sportsMenuButtonAT = NSMutableAttributedString(string: "- Sports", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 16) as Any])
@@ -106,7 +106,7 @@ class CustomNavView: UIView {
         sportsMenuButton.frame = CGRect(x: 0, y: 260, width: 100, height: 20)
         sportsMenuButton.sizeToFit()
         sportsMenuButton.frame.origin.x = 20
-        sportsMenuButton.accessibilityIdentifier = "5"
+        sportsMenuButton.accessibilityIdentifier = "Sports"
         
         // 'congratsMenuButton'
         let congratsMenuButtonAT = NSMutableAttributedString(string: "- Congrats", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 16) as Any])
@@ -115,7 +115,7 @@ class CustomNavView: UIView {
         congratsMenuButton.frame = CGRect(x: 0, y: 300, width: 100, height: 20)
         congratsMenuButton.sizeToFit()
         congratsMenuButton.frame.origin.x = 20
-        congratsMenuButton.accessibilityIdentifier = "6"
+        congratsMenuButton.accessibilityIdentifier = "Congrats"
         
         // 'miscMenuButton'
         let miscMenuButtonAT = NSMutableAttributedString(string: "- Misc", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 16) as Any])
@@ -124,7 +124,7 @@ class CustomNavView: UIView {
         miscMenuButton.frame = CGRect(x: 0, y: 340, width: 100, height: 20)
         miscMenuButton.sizeToFit()
         miscMenuButton.frame.origin.x = 20
-        miscMenuButton.accessibilityIdentifier = "7"
+        miscMenuButton.accessibilityIdentifier = "Misc"
         
         // 'profileImage'
         profileImage.image = UIImage(named: "mock6")
@@ -173,7 +173,7 @@ class CustomNavView: UIView {
         self.addSubview(closeMenuButton)
         navMenuView.addSubview(homeMenuButton)
         navMenuView.addSubview(birthdayMenuButton)
-        navMenuView.addSubview(sesonalMenuButton)
+        navMenuView.addSubview(seasonalMenuButton)
         navMenuView.addSubview(holidayMenuButton)
         navMenuView.addSubview(sportsMenuButton)
         navMenuView.addSubview(congratsMenuButton)
