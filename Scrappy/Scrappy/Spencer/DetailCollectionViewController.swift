@@ -34,9 +34,16 @@ class DetailCollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNav()
         setupViews()
         setupViewData()
+        
     }
+    
+    func setupNav() {
+        self.navigationController?.navigationBar.tintColor = UIColor.orange
+    }
+    
     
     func setupViews() {
         
@@ -179,6 +186,7 @@ class DetailCollectionViewController: UIViewController {
     // Objective-C Selector Functions
     @objc func backButtonTapped() {
         print("back to collectionView tapped")
+//        dismiss(animated: true, completion: nil)
         self.navigationController?.popViewController(animated: true)
     }
     

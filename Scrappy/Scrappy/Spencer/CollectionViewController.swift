@@ -24,8 +24,6 @@ class CollectionViewController: UIViewController {
     
     func setupNav() {
         
-        self.accessibilityValue = "Home"
-        
         // Setup Nav Bar
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.barTintColor = UIColor.black
@@ -81,6 +79,7 @@ class CollectionViewController: UIViewController {
         // Unwrap Button ID
         guard let id = sender.accessibilityIdentifier else { return }
         guard let vcid = self.accessibilityValue else { return }
+
         
         // Switch On Button ID
         switch id {
@@ -94,6 +93,7 @@ class CollectionViewController: UIViewController {
             nextVC.accessibilityValue = "Birthday"
             self.navigationController?.show(nextVC, sender: self)
         case "Seasonal":
+            print("seasonal tapped")
             menuButtonTapped(menuBarButton)
             let nextVC = CollectionViewController()
             nextVC.accessibilityValue = "Seasonal"
@@ -190,10 +190,7 @@ class CollectionViewController: UIViewController {
     
     func setupViews() {
         
-        
-        
         setUpDelegates()
-        self.navigationController?.navigationBar.isHidden = true
         
         // Register Collection Views
         topCollectionView.register(TopSellerImagesCell.self, forCellWithReuseIdentifier: topSellerImagesID)
@@ -265,6 +262,7 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
             detailCollectionVC.raitingNumber = raiting
             detailCollectionVC.cardDescription = cardDescription
 //            show(detailCollectionVC, sender: self)
+//            present(detailCollectionVC, animated: true, completion: nil)
             navigationController?.show(detailCollectionVC, sender: self)
             
         } else {
