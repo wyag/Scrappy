@@ -13,135 +13,15 @@ class CollectionViewController: UIViewController {
     
     
     // Properties
+    let itemController = ItemController()
     
-    // Nav Menu UI
-    let menu = CustomNavView(frame: UIScreen.main.bounds)
-    let cartButton = UIBarButtonItem()
-    var menuBarButton = UIBarButtonItem()
-    var isMenuOpen: Bool = false
-    
-    ////////////////////////////////////////////////////// MARK: Setup Nav Function
-    
-    func setupNav() {
-        
-        // Setup Nav Bar
-        self.navigationController?.navigationBar.isHidden = false
-        self.navigationController?.navigationBar.barTintColor = UIColor.black
-        
-        // 'menuBarButton'
-        menuBarButton = UIBarButtonItem(image: UIImage(named: "hMenu"), style: .plain, target: self, action: #selector(self.menuButtonTapped(_:)))
-        menuBarButton.tintColor = UIColor.orange
-        self.navigationItem.setLeftBarButton(menuBarButton, animated: false)
-        
-        menu.closeMenuButton.addTarget(self, action: #selector(self.menuButtonTapped(_:)), for: .touchUpInside)
-        menu.homeMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-        menu.birthdayMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-        menu.seasonalMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-        menu.holidayMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-        menu.sportsMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-        menu.congratsMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-        menu.miscMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-        menu.cartMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-        menu.profileButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-    }
-    
-    @objc private func menuButtonTapped(_ sender: UIBarButtonItem) {
-        if !isMenuOpen {
-            self.view.addSubview(menu)
-            isMenuOpen = true
-            menu.closeMenuButton.setImage(UIImage(named: "whiteX"), for: .normal)
-            UIView.animate(withDuration: 1) {
-                self.menu.navMenuView.frame.origin.x = 0
-                self.menu.blurView.alpha = 1
-                self.menu.closeMenuButton.alpha = 1
-            }
-        } else {
-            print("Menu Closed")
-            isMenuOpen = false
-            menu.closeMenuButton.setImage(UIImage(named: "whiteX2"), for: .normal)
-            UIView.animate(withDuration: 1, animations: {
-                self.menu.blurView.alpha = 0
-                self.menu.closeMenuButton.alpha = 0
-                self.menu.navMenuView.frame.origin.x = ((self.view.frame.width/2) * -1)
-            }) { (success) in
-                if success {
-                    self.menu.removeFromSuperview()
-                }
-            }
-        }
-    }
-    
-    
-    @objc private func goToVC(_ sender: UIButton) {
-        
-        print("Nav Menu Button Pressed!!")
-        
-        // Unwrap Button ID
-        guard let id = sender.accessibilityIdentifier else { return }
-        guard let vcid = self.accessibilityValue else { return }
-
-        
-        // Switch On Button ID
-        switch id {
-        case vcid:
-            menuButtonTapped(self.menuBarButton)
-        case "Home":
-            self.navigationController?.popToRootViewController(animated: true)
-        case "Birthday":
-            menuButtonTapped(menuBarButton)
-            let nextVC = CollectionViewController()
-            nextVC.accessibilityValue = "Birthday"
-            self.navigationController?.show(nextVC, sender: self)
-        case "Seasonal":
-            print("seasonal tapped")
-            menuButtonTapped(menuBarButton)
-            let nextVC = CollectionViewController()
-            nextVC.accessibilityValue = "Seasonal"
-            self.navigationController?.show(nextVC, sender: self)
-        case "Holiday":
-            menuButtonTapped(menuBarButton)
-            let nextVC = CollectionViewController()
-            nextVC.accessibilityValue = "Holiday"
-            self.navigationController?.show(nextVC, sender: self)
-        case "Sports":
-            menuButtonTapped(menuBarButton)
-            let nextVC = CollectionViewController()
-            nextVC.accessibilityValue = "Sports"
-            self.navigationController?.show(nextVC, sender: self)
-        case "Congrats":
-            menuButtonTapped(menuBarButton)
-            let nextVC = CollectionViewController()
-            nextVC.accessibilityValue = "Congrats"
-            self.navigationController?.show(nextVC, sender: self)
-        case "Misc":
-            menuButtonTapped(menuBarButton)
-            let nextVC = CollectionViewController()
-            nextVC.accessibilityValue = "Misc"
-            self.navigationController?.show(nextVC, sender: self)
-        case "Profile":
-            menuButtonTapped(menuBarButton)
-            let nextVC = ProfileSettingViewController()
-            nextVC.accessibilityValue = "Profile"
-            self.navigationController?.show(nextVC, sender: self)
-        case "Cart":
-            menuButtonTapped(menuBarButton)
-            let nextVC = CartViewController()
-            nextVC.accessibilityValue = "Cart"
-            self.navigationController?.show(nextVC, sender: self)
-        case "Logout":
-            self.navigationController?.popToRootViewController(animated: true)
-        default:
-            menuButtonTapped(self.menuBarButton)
-        }
-    }
-    
-    let raiting = 4
     let allImageCellID = "ImageCellID"
     let topSellerImagesID = "TopSellerImagesID"
 
     let topImagesArray = ["Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day"]
     let allImagesArray = ["Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day"]
     let cardDescription = "'Sorry losers and haters, but my I.Q. is one of the highest - and you all know it! Please don't feel so stupid or insecure, it's not your fault' - The Donald"
+    let raiting = 4
     
     let TopSellerLabel: UILabel = {
        let label = UILabel()
@@ -235,8 +115,133 @@ class CollectionViewController: UIViewController {
         let addItemVC = AddItemViewController()
         show(addItemVC, sender: self)
     }
-    
    
+    // Mark: - Setting up Navigation Bar
+    let menu = CustomNavView(frame: UIScreen.main.bounds)
+    let cartButton = UIBarButtonItem()
+    var menuBarButton = UIBarButtonItem()
+    var isMenuOpen: Bool = false
+   
+}
+
+// Extension for Navigation Bar
+extension CollectionViewController {
+    // Nav Menu UI
+    
+    ////////////////////////////////////////////////////// MARK: Setup Nav Function
+    
+    func setupNav() {
+        
+        // Setup Nav Bar
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.barTintColor = UIColor.black
+        
+        // 'menuBarButton'
+        menuBarButton = UIBarButtonItem(image: UIImage(named: "hMenu"), style: .plain, target: self, action: #selector(self.menuButtonTapped(_:)))
+        menuBarButton.tintColor = UIColor.orange
+        self.navigationItem.setLeftBarButton(menuBarButton, animated: false)
+        
+        menu.closeMenuButton.addTarget(self, action: #selector(self.menuButtonTapped(_:)), for: .touchUpInside)
+        menu.homeMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.birthdayMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.seasonalMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.holidayMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.sportsMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.congratsMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.miscMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.cartMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.profileButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+    }
+    
+    @objc private func menuButtonTapped(_ sender: UIBarButtonItem) {
+        if !isMenuOpen {
+            self.view.addSubview(menu)
+            isMenuOpen = true
+            menu.closeMenuButton.setImage(UIImage(named: "whiteX"), for: .normal)
+            UIView.animate(withDuration: 1) {
+                self.menu.navMenuView.frame.origin.x = 0
+                self.menu.blurView.alpha = 1
+                self.menu.closeMenuButton.alpha = 1
+            }
+        } else {
+            print("Menu Closed")
+            isMenuOpen = false
+            menu.closeMenuButton.setImage(UIImage(named: "whiteX2"), for: .normal)
+            UIView.animate(withDuration: 1, animations: {
+                self.menu.blurView.alpha = 0
+                self.menu.closeMenuButton.alpha = 0
+                self.menu.navMenuView.frame.origin.x = ((self.view.frame.width/2) * -1)
+            }) { (success) in
+                if success {
+                    self.menu.removeFromSuperview()
+                }
+            }
+        }
+    }
+    
+    
+    @objc private func goToVC(_ sender: UIButton) {
+        
+        print("Nav Menu Button Pressed!!")
+        
+        // Unwrap Button ID
+        guard let id = sender.accessibilityIdentifier else { return }
+        guard let vcid = self.accessibilityValue else { return }
+        
+        
+        // Switch On Button ID
+        switch id {
+        case vcid:
+            menuButtonTapped(self.menuBarButton)
+        case "Home":
+            self.navigationController?.popToRootViewController(animated: true)
+        case "Birthday":
+            menuButtonTapped(menuBarButton)
+            let nextVC = CollectionViewController()
+            nextVC.accessibilityValue = "Birthday"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Seasonal":
+            print("seasonal tapped")
+            menuButtonTapped(menuBarButton)
+            let nextVC = CollectionViewController()
+            nextVC.accessibilityValue = "Seasonal"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Holiday":
+            menuButtonTapped(menuBarButton)
+            let nextVC = CollectionViewController()
+            nextVC.accessibilityValue = "Holiday"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Sports":
+            menuButtonTapped(menuBarButton)
+            let nextVC = CollectionViewController()
+            nextVC.accessibilityValue = "Sports"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Congrats":
+            menuButtonTapped(menuBarButton)
+            let nextVC = CollectionViewController()
+            nextVC.accessibilityValue = "Congrats"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Misc":
+            menuButtonTapped(menuBarButton)
+            let nextVC = CollectionViewController()
+            nextVC.accessibilityValue = "Misc"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Profile":
+            menuButtonTapped(menuBarButton)
+            let nextVC = ProfileSettingViewController()
+            nextVC.accessibilityValue = "Profile"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Cart":
+            menuButtonTapped(menuBarButton)
+            let nextVC = CartViewController()
+            nextVC.accessibilityValue = "Cart"
+            self.navigationController?.show(nextVC, sender: self)
+        case "Logout":
+            self.navigationController?.popToRootViewController(animated: true)
+        default:
+            menuButtonTapped(self.menuBarButton)
+        }
+    }
 }
 
 // Mark: - Extension for Delegate/Datasource
@@ -253,21 +258,19 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
     // Datasource Functions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 0  {
-            return topImagesArray.count
+            return itemController.sellingItems.count
         }
-        return allImagesArray.count
+        return itemController.sellingItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView.tag == 0 {
-            print(topImagesArray[indexPath.item])
+            print(itemController.sellingItems[indexPath.item])
             let detailCollectionVC = DetailCollectionViewController()
             detailCollectionVC.itemImage = UIImage(named: topImagesArray[indexPath.item])
             detailCollectionVC.itemTitle = topImagesArray[indexPath.item].capitalized
             detailCollectionVC.raitingNumber = raiting
             detailCollectionVC.cardDescription = cardDescription
-//            show(detailCollectionVC, sender: self)
-//            present(detailCollectionVC, animated: true, completion: nil)
             navigationController?.show(detailCollectionVC, sender: self)
             
         } else {
