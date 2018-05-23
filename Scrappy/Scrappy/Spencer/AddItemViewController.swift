@@ -152,7 +152,9 @@ class AddItemViewController: UIViewController {
     
     @objc func backButtonTapped() {
         print("back to collectionView tapped")
-        present(CollectionViewController(), animated: true, completion: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // selector function for 'addItemButton'
@@ -199,6 +201,12 @@ class AddItemViewController: UIViewController {
                 let itemsDictionary = [itemUID: dictionaryValues]
                 
                 Database.database().reference().child("users/\(uid)/selling").updateChildValues(itemsDictionary) { (error, _) in
+                    
+//                    let newItem = anotherItem(title: <#T##String#>, description: <#T##String#>, price: <#T##String#>, image: <#T##String#>)
+//                    ItemController.shared.addSellingItem(item: newItem)
+//                    ItemController.shared.addUserSellingItems(item: item)
+
+                    
                     if let error = error {
                         print("Error!: \(error.localizedDescription)")
                     }
@@ -246,7 +254,22 @@ extension AddItemViewController: UITextViewDelegate {
     }
 }
 
-
+class anotherItem {
+    var title: String
+    var description: String
+    var price: String
+    var image: String
+    
+    init(title: String, description: String, price: String, image: String) {
+        self.title = title
+        self.description = description
+        self.price = price
+        self.image = image
+        
+        
+    
+    }
+}
 
 
 
