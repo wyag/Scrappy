@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Stripe
 
 class TestingHermanViewController: UIViewController {
 
@@ -28,8 +29,7 @@ class TestingHermanViewController: UIViewController {
     
     @objc func testButtonTapped() {
         let stripePaymentVC = StripePaymentViewController()
-//        let navVC = UINavigationController(rootViewController: stripePaymentVC)
-        present(stripePaymentVC, animated: true, completion: nil)
+        navigationController?.pushViewController(stripePaymentVC, animated: true)
     }
     
     func setupViews() {
@@ -39,3 +39,36 @@ class TestingHermanViewController: UIViewController {
         testButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
 }
+
+extension TestingHermanViewController: STPAddCardViewControllerDelegate {
+    func addCardViewControllerDidCancel(_ addCardViewController: STPAddCardViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func addCardViewController(_ addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: @escaping STPErrorBlock) {
+//        StripeClient.shared.completeCharge(with: token, amount: 1000) { result in
+//            switch result {
+//            // 1
+//            case .success:
+//                completion(nil)
+//                print("token is", token)
+//
+//                let alertController = UIAlertController(title: "Congrats",
+//                                                        message: "Your payment was successful!",
+//                                                        preferredStyle: .alert)
+//                let alertAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
+//                    self.navigationController?.popViewController(animated: true)
+//                })
+//                alertController.addAction(alertAction)
+//                self.present(alertController, animated: true)
+//            // 2
+//            case .failure(let error):
+//                completion(error)
+//            }
+//        }
+    }
+}
+
+
+
+

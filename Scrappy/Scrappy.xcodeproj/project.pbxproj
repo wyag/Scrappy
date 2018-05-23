@@ -139,8 +139,8 @@
 				5D5BB1F520ADE09900EDA8C9 /* UserPaymentViewController.swift */,
 				5DC1FB1920AF64F60034A149 /* UserPaymentCompleteViewController.swift */,
 				5DC1FB3920AFE19B0034A149 /* SellerPaymentViewController.swift */,
-				5DBBD96120B0E29900B89A21 /* StripePaymentViewController.swift */,
 				5DAA2DB120B5DFBA00852195 /* TestingHermanViewController.swift */,
+				5DBBD96120B0E29900B89A21 /* StripePaymentViewController.swift */,
 			);
 			path = Payments;
 			sourceTree = "<group>";

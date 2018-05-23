@@ -38,8 +38,7 @@ class ProfileSettingViewController: UIViewController {
     }
     
     @objc func cardInfoButtonTapped() {
-        let stripePaymentVC = StripePaymentViewController()
-        present(stripePaymentVC, animated: true, completion: nil)
+        
     }
     
     @objc func handleImagePicker() {

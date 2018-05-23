@@ -20,7 +20,7 @@ class ItemController {
     var userCartItems = [Item]()
     var userPurchasedItems = [Item]()
     
-    func fetchSellingItems() {
+    func fetchAllSellingItems() {
         
         Database.database().reference().child("allSellingItems").observeSingleEvent(of: .value) { (snapshot) in
             
@@ -98,14 +98,23 @@ class ItemController {
         }
     }
     
-    func addSellingItem(item: Item) {
+    func addAllSellingItems(item: Item) {
         
         sellingItems.append(item)
         
-        let uid = UUID().uuidString
-        let values = ["sellingItems": sellingItems]
+        var dictionaryValues = [[String: Any]]()
         
-        Database.database().reference().child("allSellingItems").child(uid).updateChildValues(values) { (error, reference) in
+        for allSellingItemsDictionary in sellingItems {
+            
+            guard let description = allSellingItemsDictionary.description else { return }
+            
+            let dictionaryValue = ["title": allSellingItemsDictionary.title, "description": description, "price": allSellingItemsDictionary.price, "image": allSellingItemsDictionary.image]
+            dictionaryValues.append(dictionaryValue)
+        }
+        
+        let values = ["sellingItems": dictionaryValues]
+        
+        Database.database().reference().child("allSellingItems").updateChildValues(values) { (error, reference) in
             
             if let error = error {
                 print("Error saving to database:", error)
@@ -119,13 +128,21 @@ class ItemController {
         
         userSellingItems.append(item)
         
-        let uid = UUID().uuidString
+        var dictionaryValues = [[String: Any]]()
         
-        let values = ["userSellingItems": userSellingItems]
+        for userSellingItemsDictionary in userSellingItems {
+            
+            guard let description = userSellingItemsDictionary.description else { continue }
+            
+            let dictionaryValue = ["title": userSellingItemsDictionary.title, "description": description, "price": userSellingItemsDictionary.price, "image": userSellingItemsDictionary.image]
+            dictionaryValues.append(dictionaryValue)
+        }
+        
+        let values = ["userSellingItems": dictionaryValues]
         
         guard let currentUserUID = Auth.auth().currentUser?.uid else { return }
         
-        Database.database().reference().child("users").child(currentUserUID).child("userSellingItems").child(uid).updateChildValues(values) { (error, reference) in
+        Database.database().reference().child("users").child(currentUserUID).child("selling").updateChildValues(values) { (error, reference) in
             
             if let error = error {
                 print("Error saving to database:", error)
