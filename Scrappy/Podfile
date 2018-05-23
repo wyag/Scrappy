@@ -9,7 +9,8 @@ target 'Scrappy' do
   pod'Firebase/Storage'
   pod'SkyFloatingLabelTextField'
   pod 'Stripe'
-pod 'SVProgressHUD'
+  pod 'SVProgressHUD'
+pod 'Alamofire'
   
 
   # Pods for Scrappy
