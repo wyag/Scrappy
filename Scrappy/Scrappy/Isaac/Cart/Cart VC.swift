@@ -23,8 +23,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //////////////// MARK: Navigation Properties
     
-    //////////////// MARK: Navigation Properties
-    
     // Nav Menu UI
     let menu = CustomNavView(frame: UIScreen.main.bounds)
     let cartButton = UIBarButtonItem()

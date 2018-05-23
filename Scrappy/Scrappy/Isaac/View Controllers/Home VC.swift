@@ -23,6 +23,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         setupUI()
 
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        menu.removeFromSuperview()
+    }
 
     ////////////////////////////////////////////////////// MARK: Local Properties
     
@@ -112,42 +117,58 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         case "Home":
             self.navigationController?.popToRootViewController(animated: true)
         case "Birthday":
-            menuButtonTapped(menuBarButton)
+            if isMenuOpen {
+                menuButtonTapped(menuBarButton)
+            }
             let nextVC = CollectionViewController()
             nextVC.accessibilityValue = "Birthday"
             self.navigationController?.show(nextVC, sender: self)
         case "Seasonal":
-            menuButtonTapped(menuBarButton)
+            if isMenuOpen {
+                menuButtonTapped(menuBarButton)
+            }
             let nextVC = CollectionViewController()
             nextVC.accessibilityValue = "Seasonal"
             self.navigationController?.show(nextVC, sender: self)
         case "Holiday":
-            menuButtonTapped(menuBarButton)
+            if isMenuOpen {
+                menuButtonTapped(menuBarButton)
+            }
             let nextVC = CollectionViewController()
             nextVC.accessibilityValue = "Holiday"
             self.navigationController?.show(nextVC, sender: self)
         case "Sports":
-            menuButtonTapped(menuBarButton)
+            if isMenuOpen {
+                menuButtonTapped(menuBarButton)
+            }
             let nextVC = CollectionViewController()
             nextVC.accessibilityValue = "Sports"
             self.navigationController?.show(nextVC, sender: self)
         case "Congrats":
-            menuButtonTapped(menuBarButton)
+            if isMenuOpen {
+                menuButtonTapped(menuBarButton)
+            }
             let nextVC = CollectionViewController()
             nextVC.accessibilityValue = "Congrats"
             self.navigationController?.show(nextVC, sender: self)
         case "Misc":
-            menuButtonTapped(menuBarButton)
+            if isMenuOpen {
+                menuButtonTapped(menuBarButton)
+            }
             let nextVC = CollectionViewController()
             nextVC.accessibilityValue = "Misc"
             self.navigationController?.show(nextVC, sender: self)
         case "Profile":
-            menuButtonTapped(menuBarButton)
+            if isMenuOpen {
+                menuButtonTapped(menuBarButton)
+            }
             let nextVC = ProfileSettingViewController()
             nextVC.accessibilityValue = "Profile"
             self.navigationController?.show(nextVC, sender: self)
         case "Cart":
-            menuButtonTapped(menuBarButton)
+            if isMenuOpen {
+                menuButtonTapped(menuBarButton)
+            }
             let nextVC = CartViewController()
             nextVC.accessibilityValue = "Cart"
             self.navigationController?.show(nextVC, sender: self)
