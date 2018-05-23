@@ -23,7 +23,7 @@ struct Item {
         self.price = price
     }
     
-    init(withTitle title: String, description: String, image: String, price: String) {
+    init(withTitle title: String, description: String?, image: String, price: String) {
         self.title = title
         self.description = description
         self.image = image
