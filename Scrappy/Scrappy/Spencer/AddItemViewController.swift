@@ -160,22 +160,16 @@ class AddItemViewController: UIViewController {
     // selector function for 'addItemButton'
     @objc func addItemButtonTapped() {
         
-        guard let title = itemTitle.text, !title.isEmpty, let price = itemPrice.text, !price.isEmpty, let image = itemImageButton.currentImage, itemImageButton.currentImage != nil else {
-            
+        guard let currentTitle = itemTitle.text, !currentTitle.isEmpty, let currentPrice = itemPrice.text, !currentPrice.isEmpty, let currentImage = itemImageButton.currentImage, itemImageButton.currentImage != nil else {
             let alert = UIAlertController(title: "Error Adding Item", message: "Please make sure item has an image, title and price", preferredStyle: .alert)
-            
             let dismiss = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
-            
             alert.addAction(dismiss)
             present(alert, animated: true, completion: nil)
             return
-            
         }
         
         // add to firebase
-        
-        guard let currentImage = self.itemImageButton.currentImage else { return }
-        
+        guard let description = itemDescription.text else { return }
         guard let uploadData = UIImageJPEGRepresentation(currentImage, 0.3) else { return }
         
         let imageName = UUID().uuidString
@@ -191,28 +185,31 @@ class AddItemViewController: UIViewController {
                     print("Error!: \(error.localizedDescription)")
                 }
                 
-                let imageURL = url?.absoluteString
+                guard let imageURL = url?.absoluteString else { return }
                 
                 guard let uid = Auth.auth().currentUser?.uid else { return }
                 let itemUID = UUID().uuidString
                 print(itemUID)
                 
-                let dictionaryValues = ["title": title, "price": price, "image": imageURL]
-                let itemsDictionary = [itemUID: dictionaryValues]
+//                let dictionaryValues = ["title": currentTitle, "price": currentPrice, "image": imageURL, "description": description]
+//                let itemsDictionary = [itemUID: dictionaryValues]
                 
-                Database.database().reference().child("users/\(uid)/selling").updateChildValues(itemsDictionary) { (error, _) in
-                    
-//                    let newItem = anotherItem(title: <#T##String#>, description: <#T##String#>, price: <#T##String#>, image: <#T##String#>)
-//                    ItemController.shared.addSellingItem(item: newItem)
-//                    ItemController.shared.addUserSellingItems(item: item)
-
-                    
-                    if let error = error {
-                        print("Error!: \(error.localizedDescription)")
-                    }
-                    print("Successfully added item to selling database!")
-                    self.dismiss(animated: true, completion: nil)
-                }
+                let newItem = Item(withTitle: currentTitle, description: description, image: imageURL, price: currentPrice)
+                
+            
+//                Database.database().reference().child("users/\(uid)/selling").updateChildValues(itemsDictionary) { (error, _) in
+//                    let newItem = Item(withTitle: title, description: description, image: imageURL, price: price)
+////                    ItemController.shared.addSellingItem(item: newItem)
+//                    ItemController.shared.addUserSellingItems(item: newItem)
+//
+//                    if let error = error {
+//                        print("Error!: \(error.localizedDescription)")
+//                    }
+//                    print("Successfully added item to selling database!")
+//                    self.dismiss(animated: true, completion: nil)
+//                }
+                
+                
             })
         }
     }
@@ -251,23 +248,6 @@ extension AddItemViewController: UITextViewDelegate {
             return false
         }
         return true
-    }
-}
-
-class anotherItem {
-    var title: String
-    var description: String
-    var price: String
-    var image: String
-    
-    init(title: String, description: String, price: String, image: String) {
-        self.title = title
-        self.description = description
-        self.price = price
-        self.image = image
-        
-        
-    
     }
 }
 
