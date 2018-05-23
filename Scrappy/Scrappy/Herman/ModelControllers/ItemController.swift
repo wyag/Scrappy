@@ -61,8 +61,41 @@ class ItemController {
         
         guard let currentUserUID = Auth.auth().currentUser?.uid else { return }
         
+        Database.database().reference().child("users").child(currentUserUID).child("cartItems").observeSingleEvent(of: .value) { (snapshot) in
+            
+            guard let cartItemsDictionary = snapshot.value as? [[String: Any]] else { return }
+            
+            var innerCartItems = [Item]()
+            
+            for cartItemDictionary in cartItemsDictionary {
+                guard let cartItem = Item(withDictionary: cartItemDictionary) else { return }
+                innerCartItems.append(cartItem)
+            }
+            
+            self.userCartItems = innerCartItems
+        }
         
-        //        Database.database().reference().child("users").child(currentUserUID).child("userPurchasedItems").
+    }
+    
+    func fetchPurchasedItems() {
+        
+        guard let currentUserUID = Auth.auth().currentUser?.uid else { return }
+        
+        Database.database().reference().child("users").child(currentUserUID).child("userPurchasedItems").observeSingleEvent(of: .value) { (snapshot) in
+            
+            guard let purchasedItemsDictionary = snapshot.value as? [[String: Any]] else { return }
+            
+            var innerPurchasedItems = [Item]()
+            
+            for purchasedItemDictionary in purchasedItemsDictionary {
+                
+                guard let purchaseItem = Item(withDictionary: purchasedItemDictionary) else { return }
+                
+                innerPurchasedItems.append(purchaseItem)
+            }
+            
+            self.userPurchasedItems = innerPurchasedItems
+        }
     }
     
     func addSellingItem(item: Item) {
@@ -102,7 +135,7 @@ class ItemController {
         }
     }
     
-    func userCartItems(item: Item) {
+    func addUserCartItems(item: Item) {
         
         userCartItems.append(item)
         
