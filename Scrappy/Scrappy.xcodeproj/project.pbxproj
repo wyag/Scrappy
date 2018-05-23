@@ -34,6 +34,7 @@
 		BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA13F08920AA2B86004BF8FC /* Root Nav.swift */; };
 		BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA39998520A9E92200383CFB /* AppDelegate.swift */; };
 		BA39998D20A9E92300383CFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA39998C20A9E92300383CFB /* Assets.xcassets */; };
+		BA87D47520B605C200ED14A1 /* Checkout Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA87D47420B605C200ED14A1 /* Checkout Cell.swift */; };
 		BA97FED220AC95B1003BF19D /* Home VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA97FED120AC95B1003BF19D /* Home VC.swift */; };
 		BA97FED420ACA08B003BF19D /* UIImageViewEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA97FED320ACA08B003BF19D /* UIImageViewEx.swift */; };
 		BA97FED720ACBEEF003BF19D /* UIColorEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA97FED620ACBEEF003BF19D /* UIColorEx.swift */; };
@@ -83,6 +84,7 @@
 		BA39998520A9E92200383CFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA39998C20A9E92300383CFB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA39999120A9E92300383CFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BA87D47420B605C200ED14A1 /* Checkout Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Checkout Cell.swift"; sourceTree = "<group>"; };
 		BA97FED120AC95B1003BF19D /* Home VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home VC.swift"; sourceTree = "<group>"; };
 		BA97FED320ACA08B003BF19D /* UIImageViewEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewEx.swift; sourceTree = "<group>"; };
 		BA97FED620ACBEEF003BF19D /* UIColorEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorEx.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				BAF35B7920AEBEA700CE3A87 /* Checkout VC.swift */,
+				BA87D47420B605C200ED14A1 /* Checkout Cell.swift */,
 			);
 			path = Checkout;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 				5DC1FB5120B0AD340034A149 /* SellerPaymentInputViews.swift in Sources */,
 				5D43504320AB9486001132B6 /* ProfileSettingViewController.swift in Sources */,
 				5D43504520ACA5A2001132B6 /* ProfileSettingCollectionViewCell.swift in Sources */,
+				BA87D47520B605C200ED14A1 /* Checkout Cell.swift in Sources */,
 				5D5BB1F120ACDC2600EDA8C9 /* Category.swift in Sources */,
 				5DC1FB1A20AF64F60034A149 /* UserPaymentCompleteViewController.swift in Sources */,
 			);
