@@ -208,7 +208,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.cellButton.accessibilityIdentifier = name
         cell.cellButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
         cell.accessoryType = .disclosureIndicator
-        cell.cellButton.accessibilityIdentifier = "\(indexPath.row)"
         let cellFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 160)
         cell.setupCellUI(cellFrame: cellFrame)
         // Return Cell

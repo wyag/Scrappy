@@ -30,28 +30,21 @@ class DetailCollectionViewController: UIViewController {
         }
     }
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNav()
         setupViews()
         setupViewData()
-        
     }
     
     func setupNav() {
         self.navigationController?.navigationBar.tintColor = UIColor.orange
     }
     
-    
     func setupViews() {
         
         // Setup Main View
         self.view.backgroundColor = UIColor.white
-        
-       
-        
         
         // 'passedImageView'
         view.addSubview(passedImageView)

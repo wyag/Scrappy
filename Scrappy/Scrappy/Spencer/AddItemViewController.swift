@@ -14,7 +14,7 @@ class AddItemViewController: UIViewController {
     // Properties
     let itemImageButton: UIButton = {
         let imageButton = UIButton()
-        imageButton.setImage(#imageLiteral(resourceName: "Donald Trump B-Day"), for: .normal)
+        imageButton.setImage(#imageLiteral(resourceName: "addProfImage"), for: .normal)
         imageButton.translatesAutoresizingMaskIntoConstraints = false
         imageButton.addTarget(self, action: #selector(itemImageButtonTapped), for: .touchUpInside)
         return imageButton
@@ -41,7 +41,6 @@ class AddItemViewController: UIViewController {
     var itemPrice: UITextField = {
         let price = UITextField()
         price.translatesAutoresizingMaskIntoConstraints = false
-        price.keyboardType = .numbersAndPunctuation
         price.placeholder = "Enter the price amount"
         price.backgroundColor = .lightGray
         price.borderStyle = .roundedRect
@@ -73,8 +72,31 @@ class AddItemViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.tintColor = UIColor.orange
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide , object: nil)
+        itemTitle.delegate = self
+        itemPrice.delegate = self
+        itemDescription.delegate = self
         setupViews()
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        
+        if let keyboardFrame: NSValue = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            view.frame.origin.y += -(keyboardHeight)
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        
+        if let keyboardFrame: NSValue = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            view.frame.origin.y += keyboardHeight
+        }
     }
     
     func setupViews() {
@@ -202,7 +224,27 @@ extension AddItemViewController: UIImagePickerControllerDelegate, UINavigationCo
     }
 }
 
+extension AddItemViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        itemTitle.resignFirstResponder()
+        itemPrice.resignFirstResponder()
+        
+        return true
+    }
+}
 
+extension AddItemViewController: UITextViewDelegate {
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        if text == "\n" {
+            itemDescription.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+}
 
 
 
