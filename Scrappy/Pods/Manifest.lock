@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (4.7.2)
   - Firebase/Auth (4.13.0):
     - Firebase/Core
     - FirebaseAuth (= 4.6.1)
@@ -54,6 +55,7 @@ PODS:
   - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
+  - Alamofire
   - Firebase/Auth
   - Firebase/Database
   - Firebase/Storage
@@ -63,6 +65,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - Alamofire
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -79,6 +82,7 @@ SPEC REPOS:
     - SVProgressHUD
 
 SPEC CHECKSUMS:
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
   FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
   FirebaseAuth: bf22cacf22c60ab454bf2636f556d8892b10b53f
@@ -94,6 +98,6 @@ SPEC CHECKSUMS:
   Stripe: 542f2c4493ce31a99fa041fe4973206e8c868f29
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 74b5b250728afde07d6b75cfd91e91a7efe1d5d0
+PODFILE CHECKSUM: 7d76a9fc932f99295f0d367d124c1d1b58039863
 
 COCOAPODS: 1.5.0

@@ -13,5 +13,6 @@ class StripePaymentViewController: STPAddCardViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = false 
     }
 }
