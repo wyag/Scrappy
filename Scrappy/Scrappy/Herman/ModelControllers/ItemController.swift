@@ -32,8 +32,8 @@ class ItemController {
                 guard let sellingItem = Item(withDictionary: sellingItemDictionary) else { return }
                 innerSellingItems.append(sellingItem)
             }
-            
             self.sellingItems = innerSellingItems
+            print("Internal Selling Items", self.sellingItems.count)
         }
     }
     
@@ -49,8 +49,11 @@ class ItemController {
             var innerUserSellingItems = [Item]()
             
             for userSellingItemDictionary in userSellingItemsDictionary {
-                guard let userSellingItem = Item(withDictionary: userSellingItemDictionary) else { return }
-                innerUserSellingItems.append(userSellingItem)
+                
+//                let imageString = userSellingItemDictionary["image"] as? String
+//                guard let imageURL = URL(string: imageString), let data = Data(contentsOf: imageURL), let i
+//                guard let userSellingItem = Item(withDictionary: userSellingItemDictionary) else { return }
+//                innerUserSellingItems.append(userSellingItem)
             }
             
             self.userSellingItems = innerUserSellingItems
@@ -104,17 +107,17 @@ class ItemController {
         
         var dictionaryValues = [[String: Any]]()
         
-        for allSellingItemsDictionary in sellingItems {
+        for allSellingItems in sellingItems {
             
-            guard let description = allSellingItemsDictionary.description else { return }
+            guard let description = allSellingItems.description else { return }
             
-            let dictionaryValue = ["title": allSellingItemsDictionary.title, "description": description, "price": allSellingItemsDictionary.price, "image": allSellingItemsDictionary.image]
+            let dictionaryValue = ["title": allSellingItems.title, "description": description, "price": allSellingItems.price, "image": allSellingItems.image]
             dictionaryValues.append(dictionaryValue)
         }
         
-        let values = ["sellingItems": dictionaryValues]
+        let values = ["allSellingItems": dictionaryValues]
         
-        Database.database().reference().child("allSellingItems").updateChildValues(values) { (error, reference) in
+        Database.database().reference().updateChildValues(values) { (error, reference) in
             
             if let error = error {
                 print("Error saving to database:", error)
@@ -130,11 +133,11 @@ class ItemController {
         
         var dictionaryValues = [[String: Any]]()
         
-        for userSellingItemsDictionary in userSellingItems {
+        for userSellingItem in userSellingItems {
             
-            guard let description = userSellingItemsDictionary.description else { continue }
+            guard let description = userSellingItem.description else { continue }
             
-            let dictionaryValue = ["title": userSellingItemsDictionary.title, "description": description, "price": userSellingItemsDictionary.price, "image": userSellingItemsDictionary.image]
+            let dictionaryValue = ["title": userSellingItem.title, "description": description, "price": userSellingItem.price, "image": userSellingItem.image]
             dictionaryValues.append(dictionaryValue)
         }
         
@@ -142,7 +145,7 @@ class ItemController {
         
         guard let currentUserUID = Auth.auth().currentUser?.uid else { return }
         
-        Database.database().reference().child("users").child(currentUserUID).child("selling").updateChildValues(values) { (error, reference) in
+        Database.database().reference().child("users").child(currentUserUID).updateChildValues(values) { (error, reference) in
             
             if let error = error {
                 print("Error saving to database:", error)
@@ -199,3 +202,13 @@ class ItemController {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
