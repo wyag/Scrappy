@@ -14,12 +14,16 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadCartItems()
         setupNav()
         setupUI()
     }
 
     
     ///////////////////////////////////////////////////////////// MARK: Local Properties
+    
+    // Cart Array
+    var cartItems = [Item]()
     
     //////////////// MARK: Navigation Properties
     
@@ -37,16 +41,15 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     let cartHeaderLabel = UILabel()
     let checkoutButton = UIButton()
     
-    // Mock 'Item' Array Count
-    var mockCount = 5
     
-    // Mock 'Item' Data
-    let images = [UIImage(named: "Shoppinglist"), UIImage(named: "Shoppinglist"), UIImage(named: "Shoppinglist"), UIImage(named: "Shoppinglist"), UIImage(named: "Shoppinglist")]
-    let names = ["Holiday Reef", "Birthday Card", "Knitted Hotpads", "Handmade Drum", "Wood Glasses"]
-    let prices = [12.97, 7.51, 120.99, 1000.43, 67.89]
-    let descriptions = ["asdlkfnklsadfjaisdjf;klasdnl;asjrioejafdlksnasjdfl asdf jopwiefnlk;asd fasj faslkd fjlkas df;sd fsd fj sadfjkl;asdj fodf sd fsa jfdqpoweijfl;kasdnf dsf wa;efklasdf asjf qjwek;fnalk;sd f ioqwejfkla df jdf;lksa fn;lkasdnoiaeufqnflksad foaflkndflkasjio;enfl;ksnvkjahgoihejgdnakslfhqopuehfkdnasndf;oi  fas;ihf;asdjn.a  oijfasdj   jasl;kjfiqhdlaf fdjfsl.", "asdlkfnklsadfjaisdjf;klasdnl;asjrioejafdlksnasjdfl asdf jopwiefnlk;asd fasj faslkd fjlkas df;sd fsd fj sadfjkl;asdj fodf sd fsa jfdqpoweijfl;kasdnf dsf wa;efklasdf asjf qjwek;fnalk;sd f ioqwejfkla df jdf;lksa fn;lkasdnoiaeufqnflksad foaflkndflkasjio;enfl;ksnvkjahgoihejgdnakslfhqopuehfkdnasndf;oi  fas;ihf;asdjn.a  oijfasdj   jasl;kjfiqhdlaf fdjfsl.", "asdlkfnklsadfjaisdjf;klasdnl;asjrioejafdlksnasjdfl asdf jopwiefnlk;asd fasj faslkd fjlkas df;sd fsd fj sadfjkl;asdj fodf sd fsa jfdqpoweijfl;kasdnf dsf wa;efklasdf asjf qjwek;fnalk;sd f ioqwejfkla df jdf;lksa fn;lkasdnoiaeufqnflksad foaflkndflkasjio;enfl;ksnvkjahgoihejgdnakslfhqopuehfkdnasndf;oi  fas;ihf;asdjn.a  oijfasdj   jasl;kjfiqhdlaf fdjfsl.", "asdfad", "asdreagdgbad"]
+    ///////////////////////////////////////////////////////////// MARK: Load Cart Items
     
+    func loadCartItems() {
+        ItemController.shared.fetchuserCartItems()
+        cartItems = ItemController.shared.userCartItems
+    }
     
+
     ///////////////////////////////////////////////////////////// MARK: Setup Navigation Function's
     
     func setupNav() {
@@ -58,7 +61,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Regular", size: 22) as Any]
         self.navigationItem.title = " Cart "
     }
-    
     
     
     
@@ -83,7 +85,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         cartTableView.tableHeaderView = UIView()
         
         // 'checkoutButton'
-        let checkoutButtonAT = NSMutableAttributedString(string: "Checkout", attributes: [NSAttributedStringKey.foregroundColor: UIColor.orange, NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 24) as Any])
+        let checkoutButtonAT = NSMutableAttributedString(string: "Checkout", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 24) as Any])
         checkoutButton.setAttributedTitle(checkoutButtonAT, for: .normal)
         checkoutButton.backgroundColor = UIColor.clear
         checkoutButton.layer.borderColor = UIColor.orange.cgColor
@@ -107,18 +109,31 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     ///////////////////////////////////////////////////////////// MARK: Table View Delegate Functions
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mockCount
+        return cartItems.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Create/Cast Cell
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cartCell", for: indexPath) as? CartTableViewCell else { return CartTableViewCell() }
-        // Pretty Up Cell
-        cell.cellImage = images[indexPath.row]
-        cell.cellName = names[indexPath.row]
-        cell.cellPrice = prices[indexPath.row]
-        cell.cellDescription = descriptions[indexPath.row]
+        // Item Image
+        let imageString = cartItems[indexPath.row].image
+        if let imageURL = URL(string: imageString) {
+            guard let imageData = try? Data(contentsOf: imageURL) else { return cell }
+            guard let image = UIImage(data: imageData) else { return cell }
+            cell.cellImage = image
+        }
+        // Item Name
+        cell.cellName = cartItems[indexPath.row].title
+        // Item Price
+        if let price = Double(cartItems[indexPath.row].price) {
+            cell.cellPrice = price
+        }
+        // Item Description
+        if let d = cartItems[indexPath.row].description {
+            cell.cellDescription = d
+        }
+        // Cell Frame
         cell.backgroundColor = UIColor.black
         let cellFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 80)
         cell.setupCell(frame: cellFrame)
@@ -152,7 +167,9 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @objc private func goToCheckout(_ sender: UIButton) {
         
-        let nextVC = CheckoutViewController()
+        let settingsVC = SettingsViewController()
+
+        let nextVC = StripeCheckOutViewController(price: 0, settings: settingsVC.settings)
         self.navigationController?.show(nextVC, sender: self)
         
     }

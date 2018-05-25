@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let rootNav = RootNavigationViewController() 
 
-        rootNav.viewControllers = [DetailCollectionViewController()] // Home
+        rootNav.viewControllers = [LoginViewController()] // Home
 
         
         

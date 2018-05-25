@@ -56,6 +56,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Setup Nav Bar
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.barTintColor = UIColor.black
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 22) as Any]
+        self.navigationItem.title = " Home "
         
         // 'menuBarButton'
         menuBarButton = UIBarButtonItem(image: UIImage(named: "hMenu"), style: .plain, target: self, action: #selector(self.menuButtonTapped(_:)))
