@@ -21,7 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let rootNav = RootNavigationViewController() 
-        rootNav.viewControllers = [TestingHermanViewController()] // Home
+
+        rootNav.viewControllers = [DetailCollectionViewController()] // Home
+
         
         
         window?.rootViewController = rootNav
