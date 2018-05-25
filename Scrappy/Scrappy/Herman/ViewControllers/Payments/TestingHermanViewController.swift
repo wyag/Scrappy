@@ -28,7 +28,8 @@ class TestingHermanViewController: UIViewController {
     }()
     
     @objc func testButtonTapped() {
-        let stripePaymentVC = StripePaymentViewController()
+        let settingVC = SettingsViewController()
+        let stripePaymentVC = StripeCheckOutViewController(price: 10000, settings: settingVC.settings)
         navigationController?.pushViewController(stripePaymentVC, animated: true)
     }
     
@@ -46,26 +47,27 @@ extension TestingHermanViewController: STPAddCardViewControllerDelegate {
     }
     
     func addCardViewController(_ addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: @escaping STPErrorBlock) {
-//        StripeClient.shared.completeCharge(with: token, amount: 1000) { result in
-//            switch result {
-//            // 1
-//            case .success:
-//                completion(nil)
-//                print("token is", token)
-//
-//                let alertController = UIAlertController(title: "Congrats",
-//                                                        message: "Your payment was successful!",
-//                                                        preferredStyle: .alert)
-//                let alertAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
-//                    self.navigationController?.popViewController(animated: true)
-//                })
-//                alertController.addAction(alertAction)
-//                self.present(alertController, animated: true)
-//            // 2
-//            case .failure(let error):
-//                completion(error)
-//            }
-//        }
+        StripeClient.shared.completeCharge(with: token, amount: 1000) { result in
+            switch result {
+            // 1
+            case .success:
+                completion(nil)
+                print("token is", token)
+
+                let alertController = UIAlertController(title: "Congrats",
+                                                        message: "Your payment was successful!",
+                                                        preferredStyle: .alert)
+                let alertAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
+                    self.navigationController?.popViewController(animated: true)
+                })
+                alertController.addAction(alertAction)
+                self.present(alertController, animated: true)
+            // 2
+            case .failure(let error):
+                print("Error occurred", error)
+                completion(error)
+            }
+        }
     }
 }
 
