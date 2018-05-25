@@ -85,8 +85,9 @@ class LoginViewController: UIViewController {
                 print("Failed to sign in with email", error)
                 return
             }
-
-            self.show(HomeViewController(), sender: self)
+            let rootNav = RootNavigationViewController()
+            rootNav.viewControllers = [HomeViewController()]
+            self.show(rootNav, sender: self)
             print("Successfully logged back in with user:", user?.uid ?? "")
         }
     }

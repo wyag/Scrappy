@@ -29,6 +29,10 @@ class ItemController {
             var innerSellingItems = [Item]()
             
             for sellingItemDictionary in sellingItemsDictionary {
+                
+                
+                
+                
                 guard let sellingItem = Item(withDictionary: sellingItemDictionary) else { return }
                 innerSellingItems.append(sellingItem)
             }
@@ -66,6 +70,8 @@ class ItemController {
             guard let cartItemsDictionary = snapshot.value as? [[String: Any]] else { return }
             
             var innerCartItems = [Item]()
+            
+        
             
             for cartItemDictionary in cartItemsDictionary {
                 guard let cartItem = Item(withDictionary: cartItemDictionary) else { return }

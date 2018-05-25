@@ -141,19 +141,16 @@ class CustomNavView: UIView {
         profileButton.accessibilityIdentifier = "Profile"
         
         
-        // 'cartImageView'
-        cartImageView.image = UIImage(named: "whitetrolley")
-        cartImageView.frame = CGRect(x: 40, y: 400, width: 40, height: 40)
-        cartImageView.backgroundColor = UIColor.clear
-        
         // 'cartMenuButton'
-        cartMenuButton.frame = CGRect(x: 20, y: 400, width: 160, height: 50)
+        cartMenuButton.setImage(UIImage(named: "whitecartsmall"), for: .normal)
+        cartMenuButton.setImage(UIImage(named: "whitecartsmall"), for: .highlighted)
+        cartMenuButton.setImage(UIImage(named: "whitecartsmall"), for: .selected)
+        cartMenuButton.frame = CGRect(x: 20, y: 420, width: 160, height: 60)
         cartMenuButton.backgroundColor = UIColor.clear
         cartMenuButton.accessibilityIdentifier = "Cart"
         cartMenuButton.layer.borderColor = UIColor.white.cgColor
         cartMenuButton.layer.borderWidth = 2
         cartMenuButton.layer.cornerRadius = 16
-        
         
         
         // 'logOutMenuButton'
@@ -179,7 +176,6 @@ class CustomNavView: UIView {
         navMenuView.addSubview(sportsMenuButton)
         navMenuView.addSubview(congratsMenuButton)
         navMenuView.addSubview(miscMenuButton)
-        //navMenuView.addSubview(cartImageView)
         navMenuView.addSubview(cartMenuButton)
         navMenuView.addSubview(profileImage)
         navMenuView.addSubview(profileButton)
