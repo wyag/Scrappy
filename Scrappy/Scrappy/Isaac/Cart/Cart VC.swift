@@ -25,6 +25,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     // Cart Array
     var cartItems = [Item]()
     
+    
     //////////////// MARK: Navigation Properties
     
     // Nav Menu UI
