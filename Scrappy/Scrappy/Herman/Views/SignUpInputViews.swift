@@ -134,7 +134,6 @@ class SignUpInputViews: UIView {
         signUpButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50).isActive = true
         signUpButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25).isActive = true
         signUpButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
     }
 }
 

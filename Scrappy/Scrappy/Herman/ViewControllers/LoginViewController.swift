@@ -90,8 +90,7 @@ class LoginViewController: UIViewController {
             print("Successfully logged back in with user:", user?.uid ?? "")
         }
     }
-    
-    
+
     func displayTouchID() {
         let context: LAContext = LAContext()
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) {

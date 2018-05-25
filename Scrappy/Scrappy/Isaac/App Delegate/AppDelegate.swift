@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Stripe
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,7 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let rootNav = RootNavigationViewController() 
+
         rootNav.viewControllers = [DetailCollectionViewController()] // Home
+
         
         
         window?.rootViewController = rootNav
@@ -28,10 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
+        STPPaymentConfiguration.shared().publishableKey = Constants.publishableKey
+        
         return true
     }
-
-
-
 }
 

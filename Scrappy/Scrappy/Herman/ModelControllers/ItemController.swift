@@ -156,12 +156,21 @@ class ItemController {
         
         userCartItems.append(item)
         
-        let uid = UUID().uuidString
+        var dictionaryValues = [[String: Any]]()
+        
+        for userCartItemsDictionary in userCartItems {
+            
+            guard let description = userCartItemsDictionary.description else { continue }
+            
+            let dictionaryValue = ["title": userCartItemsDictionary.title, "description": description, "price": userCartItemsDictionary.price, "image": userCartItemsDictionary.image]
+            dictionaryValues.append(dictionaryValue)
+        }
+        
         let values = ["userCartItems": userCartItems]
         
         guard let currentUserUID = Auth.auth().currentUser?.uid else { return }
         
-        Database.database().reference().child("users").child(currentUserUID).child("cartItems").child(uid).updateChildValues(values) { (error, reference) in
+        Database.database().reference().child("users").child(currentUserUID).child("cartItems").updateChildValues(values) { (error, reference) in
             
             if let error = error {
                 print("Error saving cart items into database:", error)
