@@ -13,13 +13,7 @@ class BottomImagesCell: UICollectionViewCell {
     var raitingStackView = UIStackView()
     var raitingButtons = [UIButton()]
     var itemRaiting = 3
-    var images: String? {
-        didSet {
-            if let imageName = images {
-                imageView.image = UIImage(named: imageName)
-            }
-        }
-    }
+    var images: UIImage? 
     
     var imageView: UIImageView = {
         let iv = UIImageView()

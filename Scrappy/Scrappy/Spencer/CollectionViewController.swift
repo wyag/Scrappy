@@ -13,10 +13,10 @@ class CollectionViewController: UIViewController {
     
     
     // Properties
-    let itemController = ItemController()
+    let itemController = ItemController.shared
     
-    let allImageCellID = "ImageCellID"
     let topSellerImagesID = "TopSellerImagesID"
+    let allImageCellID = "ImageCellID"
 
     let topImagesArray = ["Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day"]
     let allImagesArray = ["Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day", "Donald Trump B-Day"]
@@ -64,6 +64,8 @@ class CollectionViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         menu.removeFromSuperview()
+
+        print("---Number of SellingItems", itemController.sellingItems.count)
     }
     
     override func viewDidLoad() {
@@ -287,16 +289,22 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        let imageString = ItemController.shared.sellingItems[indexPath.row].image
+        var image: UIImage?
+        guard let imageURL = URL(string: imageString) else { return UICollectionViewCell() }
+        if let data = try? Data(contentsOf: imageURL) {
+            image = UIImage(data: data)
+        }
+        
         if collectionView.tag == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: topSellerImagesID, for: indexPath) as! TopSellerImagesCell
-            cell.images = topImagesArray[indexPath.item]
-//            cell.cellLabel = allImagesArray[indexPath.item].capitalized
-//            cell.itemRaiting = raiting
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: topSellerImagesID, for: indexPath) as? TopSellerImagesCell else { return UICollectionViewCell() }
+ 
+            cell.images = image
             return cell
         }
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: allImageCellID, for: indexPath) as! BottomImagesCell
-        cell.images = allImagesArray[indexPath.item]
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: allImageCellID, for: indexPath) as? BottomImagesCell else { return UICollectionViewCell() }
+        cell.images = image
         return cell
     }
     
@@ -314,3 +322,8 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
         return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
 }
+
+
+
+
+

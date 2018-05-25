@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         FirebaseApp.configure()
+        ItemController.shared.fetchAllSellingItems()
         
         STPPaymentConfiguration.shared().publishableKey = Constants.publishableKey
         

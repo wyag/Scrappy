@@ -14,13 +14,7 @@ class TopSellerImagesCell: UICollectionViewCell {
     let raitingStackView = UIStackView()
     var raitingButtons = [UIButton()]
     var itemRaiting = 4
-    var images: String? {
-        didSet {
-            if let imageName = images {
-                imageView.image = UIImage(named: imageName)
-            }
-        }
-    }
+    var images: UIImage?
     
     var imageView: UIImageView = {
         let iv = UIImageView()
@@ -107,15 +101,15 @@ class TopSellerImagesCell: UICollectionViewCell {
                 raitingButtons[2].isSelected = true
                 raitingButtons[3].isSelected = true
                 raitingButtons[4].isSelected = true
-            }
-            
-            if itemRaiting == 5 {
-                raitingButtons[1].isSelected = true
-                raitingButtons[2].isSelected = true
-                raitingButtons[3].isSelected = true
-                raitingButtons[4].isSelected = true
-                raitingButtons[5].isSelected = true
-            }
+        }
+        
+        if itemRaiting == 5 {
+            raitingButtons[1].isSelected = true
+            raitingButtons[2].isSelected = true
+            raitingButtons[3].isSelected = true
+            raitingButtons[4].isSelected = true
+            raitingButtons[5].isSelected = true
+        }
     }
 }
 

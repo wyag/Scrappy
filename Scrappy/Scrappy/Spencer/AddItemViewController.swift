@@ -187,28 +187,9 @@ class AddItemViewController: UIViewController {
                 
                 guard let imageURL = url?.absoluteString else { return }
                 
-                guard let uid = Auth.auth().currentUser?.uid else { return }
-                let itemUID = UUID().uuidString
-                print(itemUID)
-                
-//                let dictionaryValues = ["title": currentTitle, "price": currentPrice, "image": imageURL, "description": description]
-//                let itemsDictionary = [itemUID: dictionaryValues]
-                
                 let newItem = Item(withTitle: currentTitle, description: description, image: imageURL, price: currentPrice)
-                
-            
-//                Database.database().reference().child("users/\(uid)/selling").updateChildValues(itemsDictionary) { (error, _) in
-//                    let newItem = Item(withTitle: title, description: description, image: imageURL, price: price)
-////                    ItemController.shared.addSellingItem(item: newItem)
-//                    ItemController.shared.addUserSellingItems(item: newItem)
-//
-//                    if let error = error {
-//                        print("Error!: \(error.localizedDescription)")
-//                    }
-//                    print("Successfully added item to selling database!")
-//                    self.dismiss(animated: true, completion: nil)
-//                }
-                
+                ItemController.shared.addUserSellingItems(item: newItem)
+                ItemController.shared.addAllSellingItems(item: newItem)
                 
             })
         }
