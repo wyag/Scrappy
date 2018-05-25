@@ -51,8 +51,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func setupNav() {
         
-        self.accessibilityValue = "Home"
-        
         // Setup Nav Bar
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.barTintColor = UIColor.black
@@ -85,10 +83,10 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         cartTableView.tableHeaderView = UIView()
         
         // 'checkoutButton'
-        let checkoutButtonAT = NSMutableAttributedString(string: "Checkout", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 24) as Any])
+        let checkoutButtonAT = NSMutableAttributedString(string: "Checkout", attributes: [NSAttributedStringKey.foregroundColor: UIColor.orange, NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 24) as Any])
         checkoutButton.setAttributedTitle(checkoutButtonAT, for: .normal)
-        checkoutButton.backgroundColor = UIColor.black
-        checkoutButton.layer.borderColor = UIColor.white.cgColor
+        checkoutButton.backgroundColor = UIColor.clear
+        checkoutButton.layer.borderColor = UIColor.orange.cgColor
         checkoutButton.layer.borderWidth = 3
         checkoutButton.layer.cornerRadius = 26
         checkoutButton.layer.shadowColor = UIColor.white.cgColor
@@ -155,7 +153,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     @objc private func goToCheckout(_ sender: UIButton) {
         
         let nextVC = CheckoutViewController()
-        self.navigationController?.present(nextVC, animated: true, completion: nil)
+        self.navigationController?.show(nextVC, sender: self)
         
     }
     
