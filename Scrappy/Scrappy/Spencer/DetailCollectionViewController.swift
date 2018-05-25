@@ -194,6 +194,15 @@ class DetailCollectionViewController: UIViewController {
     }
     
     @objc func shoppingButtonTapped() {
+        
+        guard let name = itemTitle else { return }
+        guard let image = itemImage else { return }
+        guard let description = cardDescription else { return }
+        
+        let newCartItem = Item(withTitle: name, description: description, image: "Image As String", price: "0.0")
+        
+        ItemController.shared.addUserCartItems(item: newCartItem)
+        
         print("shopping button tapped")
     }
 }
