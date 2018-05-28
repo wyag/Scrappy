@@ -29,9 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = rootNav
         window?.makeKeyAndVisible()
         
-        FirebaseApp.configure()
-        ItemController.shared.fetchAllSellingItems()
-        
+        FirebaseApp.configure()        
         STPPaymentConfiguration.shared().publishableKey = Constants.publishableKey
         
         return true
