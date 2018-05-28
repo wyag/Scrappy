@@ -44,6 +44,8 @@
 		BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA13F08920AA2B86004BF8FC /* Root Nav.swift */; };
 		BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA39998520A9E92200383CFB /* AppDelegate.swift */; };
 		BA39998D20A9E92300383CFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA39998C20A9E92300383CFB /* Assets.xcassets */; };
+		BA6D985420BC8B88006CCD39 /* Convo Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6D985320BC8B88006CCD39 /* Convo Cell.swift */; };
+		BA6D985620BC98C6006CCD39 /* Message VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6D985520BC98C6006CCD39 /* Message VC.swift */; };
 		BA87D47520B605C200ED14A1 /* Checkout Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA87D47420B605C200ED14A1 /* Checkout Cell.swift */; };
 		BA97990320B7403900A6D822 /* Address VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA97990220B7403900A6D822 /* Address VC.swift */; };
 		BA97FED220AC95B1003BF19D /* Home VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA97FED120AC95B1003BF19D /* Home VC.swift */; };
@@ -52,6 +54,7 @@
 		BA97FED920ACC2AA003BF19D /* Home Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA97FED820ACC2AA003BF19D /* Home Cell.swift */; };
 		BA9E7C3B20B4D29600F03AA7 /* Custom Nav Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9E7C3A20B4D29600F03AA7 /* Custom Nav Menu.swift */; };
 		BAB0DE1120AB88840020C200 /* Copy & Paste.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB0DE1020AB88840020C200 /* Copy & Paste.swift */; };
+		BAC3948020BC7DF100BD2CCA /* Convo VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC3947F20BC7DF100BD2CCA /* Convo VC.swift */; };
 		BAF35B7520AD6C0400CE3A87 /* CircularTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF35B7420AD6C0400CE3A87 /* CircularTransition.swift */; };
 		BAF35B7720AEBE8900CE3A87 /* Cart VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF35B7620AEBE8900CE3A87 /* Cart VC.swift */; };
 		BAF35B7A20AEBEA700CE3A87 /* Checkout VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF35B7920AEBEA700CE3A87 /* Checkout VC.swift */; };
@@ -105,6 +108,8 @@
 		BA39998520A9E92200383CFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA39998C20A9E92300383CFB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA39999120A9E92300383CFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BA6D985320BC8B88006CCD39 /* Convo Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Convo Cell.swift"; sourceTree = "<group>"; };
+		BA6D985520BC98C6006CCD39 /* Message VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message VC.swift"; sourceTree = "<group>"; };
 		BA87D47420B605C200ED14A1 /* Checkout Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Checkout Cell.swift"; sourceTree = "<group>"; };
 		BA97990220B7403900A6D822 /* Address VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Address VC.swift"; sourceTree = "<group>"; };
 		BA97FED120AC95B1003BF19D /* Home VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home VC.swift"; sourceTree = "<group>"; };
@@ -113,6 +118,7 @@
 		BA97FED820ACC2AA003BF19D /* Home Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home Cell.swift"; sourceTree = "<group>"; };
 		BA9E7C3A20B4D29600F03AA7 /* Custom Nav Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom Nav Menu.swift"; sourceTree = "<group>"; };
 		BAB0DE1020AB88840020C200 /* Copy & Paste.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Copy & Paste.swift"; sourceTree = "<group>"; };
+		BAC3947F20BC7DF100BD2CCA /* Convo VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Convo VC.swift"; sourceTree = "<group>"; };
 		BAF35B7420AD6C0400CE3A87 /* CircularTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTransition.swift; sourceTree = "<group>"; };
 		BAF35B7620AEBE8900CE3A87 /* Cart VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cart VC.swift"; sourceTree = "<group>"; };
 		BAF35B7920AEBEA700CE3A87 /* Checkout VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Checkout VC.swift"; sourceTree = "<group>"; };
@@ -415,6 +421,7 @@
 				BAF35B7820AEBE9200CE3A87 /* Cart */,
 				BAF35B7B20AEC59800CE3A87 /* Checkout */,
 				5D1BBF4520B33B87007DA928 /* Payments */,
+				BAC3948120BC7DF600BD2CCA /* Messaging */,
 			);
 			path = "WORKING APP";
 			sourceTree = "<group>";
@@ -531,6 +538,16 @@
 				BAB0DE1020AB88840020C200 /* Copy & Paste.swift */,
 			);
 			path = "Custom Nav";
+			sourceTree = "<group>";
+		};
+		BAC3948120BC7DF600BD2CCA /* Messaging */ = {
+			isa = PBXGroup;
+			children = (
+				BAC3947F20BC7DF100BD2CCA /* Convo VC.swift */,
+				BA6D985320BC8B88006CCD39 /* Convo Cell.swift */,
+				BA6D985520BC98C6006CCD39 /* Message VC.swift */,
+			);
+			path = Messaging;
 			sourceTree = "<group>";
 		};
 		BAF35B7820AEBE9200CE3A87 /* Cart */ = {
@@ -709,6 +726,7 @@
 				BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */,
 				5D13F58720B3869C00FCB87E /* ItemController.swift in Sources */,
 				5D0FD43B20AB3E2200E90F0E /* ForgotPasswordViewController.swift in Sources */,
+				BA6D985420BC8B88006CCD39 /* Convo Cell.swift in Sources */,
 				5D54DB9B20AA585B00CACAF7 /* SignUpViewController.swift in Sources */,
 				5DECCCDC20B7D429007444CB /* StripePaymentContextFooterView.swift in Sources */,
 				5DECCCE020B7D72D007444CB /* UserPaymentFailedViewController.swift in Sources */,
@@ -719,6 +737,8 @@
 				BAF35B7720AEBE8900CE3A87 /* Cart VC.swift in Sources */,
 				BA97FED420ACA08B003BF19D /* UIImageViewEx.swift in Sources */,
 				5D27909C20B46E7100A8779B /* Constants.swift in Sources */,
+				BAC3948020BC7DF100BD2CCA /* Convo VC.swift in Sources */,
+				BA6D985620BC98C6006CCD39 /* Message VC.swift in Sources */,
 				5DEEF75420BB608200D415C9 /* EditItemInputViews.swift in Sources */,
 				BAF35B7D20AEC7B900CE3A87 /* Cart Cell.swift in Sources */,
 				BAF35B7520AD6C0400CE3A87 /* CircularTransition.swift in Sources */,
