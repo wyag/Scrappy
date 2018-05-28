@@ -161,7 +161,6 @@ class CustomNavView: UIView {
         logOutMenuButton.layer.borderColor = UIColor.white.cgColor
         logOutMenuButton.layer.borderWidth = 2
         logOutMenuButton.frame = CGRect(x: 20, y: 660, width: ((frame.width/2) - 40), height: 40)
-        //logOutMenuButton.sizeToFit()
         logOutMenuButton.accessibilityIdentifier = "Logout"
         
         
