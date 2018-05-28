@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class DetailCollectionViewController: UIViewController {
     
@@ -17,6 +18,7 @@ class DetailCollectionViewController: UIViewController {
     var cardDescription: String?
     var passedImageView = UIImageView()
     var passedImageTitle = UILabel()
+    var passedpriceLabel = UILabel()
     var passedCardDescription = UILabel()
     var shoppingButton = UIButton()
     var backButton = UIButton(type: .system)
@@ -49,9 +51,9 @@ class DetailCollectionViewController: UIViewController {
         
         // 'passedImageView'
         view.addSubview(passedImageView)
-        passedImageView.frame = CGRect(x: 0, y: 125, width: (view.frame.width) - 100, height: 300)
+        passedImageView.frame = CGRect(x: 0, y: 125, width: view.frame.width, height: 300)
         passedImageView.clipsToBounds = true
-        passedImageView.backgroundColor = .black
+        passedImageView.contentMode = .scaleAspectFit
         passedImageView.center.x = self.view.center.x
         
         // Star Raiting Stack View
@@ -68,22 +70,38 @@ class DetailCollectionViewController: UIViewController {
         passedImageTitle.textColor = .black
         passedImageTitle.font = UIFont.boldSystemFont(ofSize: 25)
         
+        // 'passedPriceLabel'
+        view.addSubview(passedpriceLabel)
+        passedpriceLabel.translatesAutoresizingMaskIntoConstraints = false
+        passedpriceLabel.textAlignment = .center
+        passedpriceLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        passedpriceLabel.topAnchor.constraint(equalTo: passedImageTitle.bottomAnchor, constant: 3).isActive = true
+        passedpriceLabel.heightAnchor.constraint(equalToConstant: 15)
+        passedpriceLabel.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        passedpriceLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        passedpriceLabel.textColor = .black
+        
         // 'passedImageDescription'
         view.addSubview(passedCardDescription)
         passedCardDescription.translatesAutoresizingMaskIntoConstraints = false
         passedCardDescription.textAlignment = .center
         passedCardDescription.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        passedCardDescription.topAnchor.constraint(equalTo: passedImageTitle.bottomAnchor, constant: 10).isActive = true
+        passedCardDescription.topAnchor.constraint(equalTo: passedpriceLabel.bottomAnchor, constant: 5).isActive = true
         passedCardDescription.widthAnchor.constraint(equalToConstant: (view.frame.width) - 100).isActive = true
-        passedCardDescription.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        passedCardDescription.numberOfLines = 10
+        passedCardDescription.numberOfLines = 0
         passedCardDescription.textColor = .black
-        
+
         // 'shoppingButton'
         view.addSubview(shoppingButton)
-        shoppingButton.frame = CGRect(x: 0, y: (self.view.frame.maxY - 75), width: 50, height: 50)
-        shoppingButton.setImage(#imageLiteral(resourceName: "Shoppinglist"), for: .normal)
-        shoppingButton.center.x = self.view.center.x
+        shoppingButton.translatesAutoresizingMaskIntoConstraints = false
+        shoppingButton.topAnchor.constraint(equalTo: passedCardDescription.bottomAnchor, constant: 5).isActive = true
+        shoppingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        shoppingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
+        shoppingButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        shoppingButton.setTitle("Add Item To Cart", for: .normal)
+        shoppingButton.tintColor = UIColor.white
+        shoppingButton.backgroundColor = UIColor.orange
+        shoppingButton.layer.cornerRadius = 3
         shoppingButton.addTarget(self, action: #selector(shoppingButtonTapped), for: .touchUpInside)
         
         // 'backButton'
@@ -102,12 +120,14 @@ class DetailCollectionViewController: UIViewController {
         // Unwrap Optional properties
         guard let image = itemImage else { return }
         guard let title = itemTitle else { return }
+        guard let price = itemPrice else { return }
         guard let cardDescript = cardDescription else { return }
         
         // Updating passed data
         passedImageView.image = image
         passedImageTitle.text = title
         passedCardDescription.text = cardDescript
+        passedpriceLabel.text = "$\(price)"
     }
     
      // Star Raiting function
@@ -195,15 +215,15 @@ class DetailCollectionViewController: UIViewController {
     }
     
     @objc func shoppingButtonTapped() {
+        SVProgressHUD.show(withStatus: "Adding Item To Cart...")
         
         guard let name = itemTitle else { return }
         guard let image = itemImage else { return }
         guard let description = cardDescription else { return }
         guard let price = itemPrice else { return }
-        
         let newCartItem = Item(withTitle: name, description: description, image: image, price: price)
         ItemController.shared.addUserCartItems(item: newCartItem)
         
-        print("shopping button tapped")
+        SVProgressHUD.dismiss(withDelay: 2)
     }
 }
