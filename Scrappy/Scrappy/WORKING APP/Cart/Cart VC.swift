@@ -110,6 +110,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     ///////////////////////////////////////////////////////////// MARK: Table View Delegate Functions
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(ItemController.shared.userCartItems.count)
         return ItemController.shared.userCartItems.count
     }
     
