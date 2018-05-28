@@ -35,6 +35,7 @@ class DetailCollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupNav()
         setupViews()
         setupViewData()
