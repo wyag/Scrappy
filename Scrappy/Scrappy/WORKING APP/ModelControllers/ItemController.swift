@@ -130,6 +130,8 @@ class ItemController {
     // MARK: - Saving User Selling Item into DB
     func addUserSellingItems(item: Item) {
         
+        self.userSellingItems.append(item)
+        
         guard let currentUID = Auth.auth().currentUser?.uid else { return }
         
         guard let uploadData = UIImageJPEGRepresentation(item.image, 0.3) else { return }
@@ -155,6 +157,8 @@ class ItemController {
     
     // MARK: - Saving All Items to DB
     func addAllSellingItems(item: Item) {
+        
+        self.allSellingItems.append(item)
 
         guard let uploadData = UIImageJPEGRepresentation(item.image, 0.3) else { return }
         let imageID = UUID().uuidString
@@ -196,6 +200,8 @@ class ItemController {
     
     // MARK: - Save User Selling Items into DB
     func addUserCartItems(item: Item) {
+        
+        self.userCartItems.append(item)
         
         guard let currentUID = Auth.auth().currentUser?.uid else { return }
         guard let uploadData = UIImageJPEGRepresentation(item.image, 0.3) else { return }
