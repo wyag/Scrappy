@@ -68,36 +68,35 @@ class LoginViewController: UIViewController {
     
     @objc func signInButtonTapped() {
         SVProgressHUD.show(withStatus: "Logging In...")
-        handleUserLogIn()
-        SVProgressHUD.dismiss(withDelay: 0.5)
-        
-        loginInputViews.emailTextField.resignFirstResponder()
-        loginInputViews.passwordTextField.resignFirstResponder()
-    }
-    
-    func handleUserLogIn() {
-        
+
         guard let email = loginInputViews.emailTextField.text, !email.isEmpty else { return }
         guard let password = loginInputViews.passwordTextField.text, !password.isEmpty else { return }
-        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
-            if let error = error {
-                SVProgressHUD.showError(withStatus: "Error logging in. Please try again.")
-                print("Failed to sign in with email", error)
-                return
+        ItemController.shared.fetchUserData()
+        
+        DispatchQueue.global(qos: .background).async {
+            Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+                if let error = error {
+                    SVProgressHUD.showError(withStatus: "Error logging in. Please try again.")
+                    print("Failed to sign in with email", error)
+                    return
+                }
             }
             
-            ItemController.shared.fetchProfileImage()
-            ItemController.shared.fetchUserSellingItems()
-            ItemController.shared.fetchAllSellingItems()
-            ItemController.shared.fetchuserCartItems()
-        }
-        
-        DispatchQueue.main.async {
-            let navigationController = UINavigationController(rootViewController: CollectionViewController())
-            self.present(navigationController, animated: true, completion: nil)
-            
+            DispatchQueue.main.async {
+                SVProgressHUD.dismiss()
+                
+                self.loginInputViews.emailTextField.resignFirstResponder()
+                self.loginInputViews.passwordTextField.resignFirstResponder()
+                let navigationController = UINavigationController(rootViewController: CollectionViewController())
+                self.present(navigationController, animated: true, completion: nil)
+            }
         }
     }
+    
+   
+    
+    
+    
 
     func displayTouchID() {
         let context: LAContext = LAContext()

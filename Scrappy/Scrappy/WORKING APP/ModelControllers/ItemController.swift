@@ -17,10 +17,59 @@ class ItemController {
     static let shared = ItemController()
     
     var profileImage: UIImage?
+    var profileName: String?
     var userSellingItems = [Item]()
     var allSellingItems = [Item]()
     var userCartItems = [Item]()
     var userPurchasedItems = [Item]()
+    
+    func fetchUserData() {
+        
+        guard let currentUserUID = Auth.auth().currentUser?.uid else { return }
+        
+        Database.database().reference().child("users").child(currentUserUID).observeSingleEvent(of: .value) { (snapshot) in
+            
+            guard let dictionaryValues = snapshot.value as? [String: Any] else { return }
+            
+            dictionaryValues.forEach({ (key, value) in
+                
+                guard let userName = dictionaryValues["username"] as? String else { return }
+                guard let cartItem = dictionaryValues["cartItems"] as? [String: Any] else { return }
+                guard let userSellingItems = dictionaryValues["userSellingItems"] as? [String: Any] else { return }
+                guard let profImage = ProfileImage(withDictionary: dictionaryValues) else { return }
+                
+                self.profileName = userName
+                self.profileImage = profImage.image
+                
+                cartItem.forEach({ (key, value) in
+                    
+                    guard let cartItemDictionary = value as? [String: Any] else { return }
+                    guard let item = Item(withDictionary: cartItemDictionary) else { return }
+                    self.userCartItems.append(item)
+                })
+                
+                userSellingItems.forEach({ (key, value) in
+                    guard let sellingItemDictionary = value as? [String: Any] else { return }
+                    guard let item = Item(withDictionary: sellingItemDictionary) else { return }
+                    self.userSellingItems.append(item)
+                })
+            })
+        }
+    }
+    
+    func fetchAllSellingItems() {
+        
+        Database.database().reference().child("allSellingItems").observeSingleEvent(of: .value) { (snapshot) in
+            
+            guard let dictionaryValues = snapshot.value as? [String: Any] else { return }
+            
+            dictionaryValues.forEach({ (key, value) in
+                guard let itemDictionary = value as? [String: Any] else { return }
+                guard let item = Item(withDictionary: itemDictionary) else { return }
+                self.allSellingItems.append(item)
+            })
+        }
+    }
     
     func fetchProfileImage() {
         
@@ -36,7 +85,6 @@ class ItemController {
             
         }
         print("Successfully fetched image", self.profileImage)
-     
     }
     
     func addProfileImage(image: UIImage) {
@@ -77,16 +125,7 @@ class ItemController {
         }
     }
     
-    func fetchAll() {
-        guard let currentUserUID = Auth.auth().currentUser?.uid else { return }
-        
-        Database.database().reference().child("users").child(currentUserUID).observe(.childAdded) { (snapshot) in
-            
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            guard let cartItems = dictionary["cartItems"] as? [String: Any] else { return }
-            
-        }
-    }
+    
     
     // MARK: - Saving User Selling Item into DB
     func addUserSellingItems(item: Item) {
@@ -111,17 +150,6 @@ class ItemController {
                     print("Error saving values to db", error)
                 }
             })
-        }
-    }
-
-    // MARK: - Fetch All Selling Items into DB
-    func fetchAllSellingItems() {
-        
-        Database.database().reference().child("allSellingItems").observe(.childAdded) { (snapshot) in
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            guard let item = Item(withDictionary: dictionary) else { return }
-            self.allSellingItems.append(item)
-            print("appending selling Items Shit",self.allSellingItems.count)
         }
     }
     

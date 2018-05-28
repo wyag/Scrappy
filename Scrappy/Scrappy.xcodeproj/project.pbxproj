@@ -16,8 +16,9 @@
 		5D54DB9920AA584A00CACAF7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D54DB9820AA584A00CACAF7 /* LoginViewController.swift */; };
 		5D54DB9B20AA585B00CACAF7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D54DB9A20AA585B00CACAF7 /* SignUpViewController.swift */; };
 		5D5BB1EF20ACDC1F00EDA8C9 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5BB1EE20ACDC1F00EDA8C9 /* Item.swift */; };
-		5D5BB1F120ACDC2600EDA8C9 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5BB1F020ACDC2600EDA8C9 /* Category.swift */; };
 		5D5BB1F620ADE09900EDA8C9 /* UserPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5BB1F520ADE09900EDA8C9 /* UserPaymentViewController.swift */; };
+		5D7918BA20BC687B00B06231 /* UserSellingItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7918B920BC687B00B06231 /* UserSellingItems.swift */; };
+		5D7918BC20BCAD1A00B06231 /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7918BB20BCAD1A00B06231 /* ProfileImage.swift */; };
 		5DAA2DB020B5DBF500852195 /* StripeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAA2DAF20B5DBF500852195 /* StripeClient.swift */; };
 		5DC1FB1A20AF64F60034A149 /* UserPaymentCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1FB1920AF64F60034A149 /* UserPaymentCompleteViewController.swift */; };
 		5DC1FB3C20AFE22C0034A149 /* LoginInputViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1FB3B20AFE22C0034A149 /* LoginInputViews.swift */; };
@@ -38,7 +39,6 @@
 		5DECCCE220B7D752007444CB /* UserPaymentFailedInputViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DECCCE120B7D752007444CB /* UserPaymentFailedInputViews.swift */; };
 		5DEEF75220BB606B00D415C9 /* EditItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEEF75120BB606B00D415C9 /* EditItemViewController.swift */; };
 		5DEEF75420BB608200D415C9 /* EditItemInputViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEEF75320BB608200D415C9 /* EditItemInputViews.swift */; };
-		5DEEF76D20BB65A600D415C9 /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEEF76C20BB65A600D415C9 /* ProfileImage.swift */; };
 		5DEEF76F20BC4E2C00D415C9 /* CartItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEEF76E20BC4E2C00D415C9 /* CartItems.swift */; };
 		BA05CFE020AA35EB00021565 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA05CFDF20AA35EB00021565 /* GoogleService-Info.plist */; };
 		BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA13F08920AA2B86004BF8FC /* Root Nav.swift */; };
@@ -72,8 +72,9 @@
 		5D54DB9820AA584A00CACAF7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5D54DB9A20AA585B00CACAF7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		5D5BB1EE20ACDC1F00EDA8C9 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
-		5D5BB1F020ACDC2600EDA8C9 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		5D5BB1F520ADE09900EDA8C9 /* UserPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPaymentViewController.swift; sourceTree = "<group>"; };
+		5D7918B920BC687B00B06231 /* UserSellingItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSellingItems.swift; sourceTree = "<group>"; };
+		5D7918BB20BCAD1A00B06231 /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
 		5DAA2DAF20B5DBF500852195 /* StripeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeClient.swift; sourceTree = "<group>"; };
 		5DC1FB1920AF64F60034A149 /* UserPaymentCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPaymentCompleteViewController.swift; sourceTree = "<group>"; };
 		5DC1FB3B20AFE22C0034A149 /* LoginInputViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInputViews.swift; sourceTree = "<group>"; };
@@ -94,7 +95,6 @@
 		5DECCCE120B7D752007444CB /* UserPaymentFailedInputViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPaymentFailedInputViews.swift; sourceTree = "<group>"; };
 		5DEEF75120BB606B00D415C9 /* EditItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemViewController.swift; sourceTree = "<group>"; };
 		5DEEF75320BB608200D415C9 /* EditItemInputViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemInputViews.swift; sourceTree = "<group>"; };
-		5DEEF76C20BB65A600D415C9 /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
 		5DEEF76E20BC4E2C00D415C9 /* CartItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItems.swift; sourceTree = "<group>"; };
 		628AE67FCF76F9488F2909E0 /* Pods-Scrappy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scrappy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Scrappy/Pods-Scrappy.release.xcconfig"; sourceTree = "<group>"; };
 		67BC927EB3D895ABB51477AD /* Pods_Scrappy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scrappy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,9 +177,9 @@
 			isa = PBXGroup;
 			children = (
 				5D5BB1EE20ACDC1F00EDA8C9 /* Item.swift */,
+				5D7918BB20BCAD1A00B06231 /* ProfileImage.swift */,
 				5DEEF76E20BC4E2C00D415C9 /* CartItems.swift */,
-				5DEEF76C20BB65A600D415C9 /* ProfileImage.swift */,
-				5D5BB1F020ACDC2600EDA8C9 /* Category.swift */,
+				5D7918B920BC687B00B06231 /* UserSellingItems.swift */,
 				5D27909B20B46E7100A8779B /* Constants.swift */,
 				5DAA2DAF20B5DBF500852195 /* StripeClient.swift */,
 				5DECCCD120B7D11B007444CB /* MyAPIClient.swift */,
@@ -710,6 +710,7 @@
 				5D13F58720B3869C00FCB87E /* ItemController.swift in Sources */,
 				5D0FD43B20AB3E2200E90F0E /* ForgotPasswordViewController.swift in Sources */,
 				5D54DB9B20AA585B00CACAF7 /* SignUpViewController.swift in Sources */,
+				5D7918BA20BC687B00B06231 /* UserSellingItems.swift in Sources */,
 				5DECCCDC20B7D429007444CB /* StripePaymentContextFooterView.swift in Sources */,
 				5DECCCE020B7D72D007444CB /* UserPaymentFailedViewController.swift in Sources */,
 				BF31588C20AB9195008EA7E5 /* DetailCollectionViewController.swift in Sources */,
@@ -726,13 +727,13 @@
 				5DC1FB4420AFEC7E0034A149 /* ProfileSettingInputViews.swift in Sources */,
 				5D5BB1F620ADE09900EDA8C9 /* UserPaymentViewController.swift in Sources */,
 				5DC1FB4220AFEA4B0034A149 /* ForgotPasswordInputViews.swift in Sources */,
+				5D7918BC20BCAD1A00B06231 /* ProfileImage.swift in Sources */,
 				BF31588D20AB9195008EA7E5 /* BottomImagesCell.swift in Sources */,
 				5DC1FB4B20B0A9050034A149 /* UserPaymentInputViews.swift in Sources */,
 				5DC1FB3C20AFE22C0034A149 /* LoginInputViews.swift in Sources */,
 				BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */,
 				BA97990320B7403900A6D822 /* Address VC.swift in Sources */,
 				5DC1FB3E20AFE73F0034A149 /* SignUpInputViews.swift in Sources */,
-				5DEEF76D20BB65A600D415C9 /* ProfileImage.swift in Sources */,
 				5D54DB9920AA584A00CACAF7 /* LoginViewController.swift in Sources */,
 				5DECCCD820B7D2A8007444CB /* StripeButtons.swift in Sources */,
 				5DECCCDA20B7D3F6007444CB /* StripeCheckOutRows.swift in Sources */,
@@ -742,7 +743,6 @@
 				5DEEF75220BB606B00D415C9 /* EditItemViewController.swift in Sources */,
 				BA87D47520B605C200ED14A1 /* Checkout Cell.swift in Sources */,
 				5DECCCD620B7D18D007444CB /* StripeCheckOutViewController.swift in Sources */,
-				5D5BB1F120ACDC2600EDA8C9 /* Category.swift in Sources */,
 				5DC1FB1A20AF64F60034A149 /* UserPaymentCompleteViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

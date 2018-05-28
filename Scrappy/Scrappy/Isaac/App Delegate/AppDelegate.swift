@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()        
         STPPaymentConfiguration.shared().publishableKey = Constants.publishableKey
+        ItemController.shared.fetchAllSellingItems()
         
         return true
     }
