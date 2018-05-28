@@ -52,12 +52,17 @@ class CollectionViewController: UIViewController {
         return cv
     }()
     
-//    let addItemButton: UIButton = {
-//        let button = UIButton()
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.setImage(#imageLiteral(resourceName: "addButton"), for: .normal)
-//        return button
-//    }()
+    let refresher: UIRefreshControl = {
+       let refresh = UIRefreshControl()
+        refresh.tintColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
+        refresh.addTarget(self, action: #selector(pullToFetchData), for: .valueChanged)
+        return refresh
+    }()
+    
+    @objc func pullToFetchData() {
+        bottomCollectionView.reloadData()
+        refresher.endRefreshing()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -79,6 +84,7 @@ class CollectionViewController: UIViewController {
 //        setupNav()
         setupViews()
         setupMenuView()
+        bottomCollectionView.refreshControl = refresher
         blurEffectView.frame = view.frame
         
         navigationItem.title = "Sale Items"
@@ -89,6 +95,7 @@ class CollectionViewController: UIViewController {
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 255/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
     }
     
+    // MARK: Navbar
     let menuView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -126,6 +133,18 @@ class CollectionViewController: UIViewController {
         button.addTarget(self, action: #selector(sellAnItemButtonTapped), for: .touchUpInside)
         return button
     }()
+    
+    let messengerButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setBackgroundImage(#imageLiteral(resourceName: "messageIcon"), for: .normal)
+        button.addTarget(self, action: #selector(messageButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+       return button
+    }()
+    
+    @objc func messageButtonTapped() {
+        print("messages tapped!!")
+    }
     
     @objc func sellAnItemButtonTapped() {
         navigationController?.pushViewController(AddItemViewController(), animated: true)
@@ -169,6 +188,7 @@ class CollectionViewController: UIViewController {
         return blurEffectView
     }()
     
+    // MARK: Nav Bar Constraints
     func setupMenuView() {
         view.addSubview(menuView)
         menuView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -181,6 +201,13 @@ class CollectionViewController: UIViewController {
         profileImageButton.topAnchor.constraint(equalTo: menuView.topAnchor, constant: 20).isActive = true
         profileImageButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         profileImageButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        
+        menuView.addSubview(messengerButton)
+        messengerButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        messengerButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        messengerButton.leadingAnchor.constraint(equalTo: profileImageButton.trailingAnchor).isActive = true
+        messengerButton.bottomAnchor.constraint(equalTo: profileImageButton.bottomAnchor).isActive = true
+        
         
         menuView.addSubview(profileName)
         profileName.centerXAnchor.constraint(equalTo: menuView.centerXAnchor).isActive = true
@@ -227,7 +254,6 @@ class CollectionViewController: UIViewController {
         setUpDelegates()
         
         // Register Collection Views
-//        topCollectionView.register(TopSellerImagesCell.self, forCellWithReuseIdentifier: topSellerImagesID)
         bottomCollectionView.register(BottomImagesCell.self, forCellWithReuseIdentifier: allImageCellID)
         
         // 'bottomCollectionView'
@@ -236,28 +262,6 @@ class CollectionViewController: UIViewController {
         bottomCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         bottomCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         bottomCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
-        // 'topCollectionView'
-//        view.addSubview(topCollectionView)
-//        topCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-//        topCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.4).isActive = true
-//        topCollectionView.bottomAnchor.constraint(equalTo: bottomCollectionView.topAnchor).isActive = true
-//        topCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-        
-        // 'addItemButton'
-//        view.addSubview(addItemButton)
-//        addItemButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
-//        addItemButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-//        addItemButton.leadingAnchor.constraint(equalTo: topCollectionView.leadingAnchor, constant: 20).isActive = true
-//        addItemButton.bottomAnchor.constraint(equalTo: topCollectionView.topAnchor, constant: -10).isActive = true
-//        addItemButton.addTarget(self, action: #selector(addItem(_:)), for: .touchUpInside)
-        
-        // 'topSellerLabel'
-//        view.addSubview(TopSellerLabel)
-//        TopSellerLabel.topAnchor.constraint(equalTo: customNavBarView.bottomAnchor, constant: 10).isActive = true
-//        TopSellerLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
-////        TopSellerLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
-//        TopSellerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     @objc private func addItem(_ sender: UIButton) {
@@ -405,14 +409,11 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
     
     // Datasource Functions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView.tag == 0  {
-            return itemController.allSellingItems.count
-        }
         return itemController.allSellingItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView.tag == 0 {
+
             let item = ItemController.shared.allSellingItems[indexPath.row]
             let detailCollectionVC = DetailCollectionViewController()
             detailCollectionVC.itemImage = item.image
@@ -421,48 +422,23 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
             detailCollectionVC.raitingNumber = raiting
             detailCollectionVC.cardDescription = item.description
             navigationController?.show(detailCollectionVC, sender: self)
-            
-        } else {
-            let item = ItemController.shared.allSellingItems[indexPath.row]
-            let detailCollectionVC = DetailCollectionViewController()
-            detailCollectionVC.itemImage = item.image
-            detailCollectionVC.itemTitle = item.title
-            detailCollectionVC.itemPrice = item.price
-            detailCollectionVC.raitingNumber = raiting
-            detailCollectionVC.cardDescription = item.description
-            //            show(detailCollectionVC, sender: self)
-            navigationController?.show(detailCollectionVC, sender: self)
-        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if collectionView.tag == 0 {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: topSellerImagesID, for: indexPath) as? TopSellerImagesCell else { return UICollectionViewCell() }
-            cell.cellLabel.text = ItemController.shared.allSellingItems[indexPath.row].title
-            cell.imageView.image = ItemController.shared.allSellingItems[indexPath.row].image
-            return cell
-        }
-        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: allImageCellID, for: indexPath) as? BottomImagesCell else { return UICollectionViewCell() }
+        
         cell.cellLabel.text = ItemController.shared.allSellingItems[indexPath.row].title
-
         cell.imageView.image = ItemController.shared.allSellingItems[indexPath.row].image
+        cell.priceLabel.text = "$\(ItemController.shared.allSellingItems[indexPath.row].price)"
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView.tag == 0 {
-            return CGSize(width: (view.frame.width / 2) - 5, height: 160)
-        }
-        return CGSize(width: (view.frame.width / 2.5), height: 160)
+        return CGSize(width: (view.frame.width / 2.5), height: 200)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if collectionView.tag == 0 {
-            return UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 14)
-        }
-        return UIEdgeInsets(top: 15, left: 10, bottom: 10, right: 15)
+        return UIEdgeInsets(top: 15, left: 25, bottom: 25, right: 15)
     }
 }
 
