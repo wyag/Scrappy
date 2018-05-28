@@ -1,5 +1,5 @@
 //
-//  CartItems.swift
+//  UserSellingItems.swift
 //  Scrappy
 //
 //  Created by Herman Kwan on 5/28/18.
@@ -8,7 +8,8 @@
 
 import UIKit
 
-class CartItems {
+class UserSellingItems {
+    
     var title: String
     var description: String
     var image: UIImage
@@ -21,7 +22,9 @@ class CartItems {
             let imageString = dictionary["image"] as? String,
             let price = dictionary["price"] as? Int else { return nil }
         
-        guard let imageURL = URL(string: imageString), let imageData = try? Data(contentsOf: imageURL), let image = UIImage(data: imageData) else { return nil }
+        guard let imageURL = URL(string: imageString) else { return nil }
+        guard let imageData = try? Data(contentsOf: imageURL) else { return nil }
+        guard let image = UIImage(data: imageData) else { return nil }
         
         self.title = title
         self.description = description

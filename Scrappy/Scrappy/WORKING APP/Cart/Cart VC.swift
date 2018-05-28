@@ -163,7 +163,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         var totalPrice = 0
         for item in ItemController.shared.userCartItems {
-            let price = item.price
+            let price = item.price * 100
             totalPrice += price
         }
 
