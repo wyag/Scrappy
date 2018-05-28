@@ -83,20 +83,16 @@ class LoginViewController: UIViewController {
             }
             
             DispatchQueue.main.async {
-                SVProgressHUD.dismiss()
                 
                 self.loginInputViews.emailTextField.resignFirstResponder()
                 self.loginInputViews.passwordTextField.resignFirstResponder()
                 let navigationController = UINavigationController(rootViewController: CollectionViewController())
-                self.present(navigationController, animated: true, completion: nil)
+                self.present(navigationController, animated: true, completion: {
+                    SVProgressHUD.dismiss()
+                })
             }
         }
     }
-    
-   
-    
-    
-    
 
     func displayTouchID() {
         let context: LAContext = LAContext()
