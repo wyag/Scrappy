@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -17,11 +18,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         
         // Setup Nav
-        setupNav()
+//        setupNav()
         
         // Setup UI
         setupUI()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,7 +55,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Setup Nav Bar
         self.navigationController?.navigationBar.isHidden = false
-        self.navigationController?.navigationBar.barTintColor = UIColor.black
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 22) as Any]
         self.navigationItem.title = " Home "
         
@@ -74,6 +73,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         menu.miscMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
         menu.cartMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
         menu.profileButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
+        menu.logOutMenuButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func logoutButtonTapped() {
+        do {
+            try Auth.auth().signOut()
+            ItemController.shared.allSellingItems.removeAll()
+            ItemController.shared.userSellingItems.removeAll()
+            ItemController.shared.userCartItems.removeAll()
+            self.dismiss(animated: true, completion: nil)
+        } catch {
+            print("Error signing out", error)
+        }
     }
 
     
@@ -82,13 +94,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.view.addSubview(menu)
             isMenuOpen = true
             menu.closeMenuButton.setImage(UIImage(named: "whiteX"), for: .normal)
+            menu.profileImage.image = ItemController.shared.profileImage
             UIView.animate(withDuration: 1) {
                 self.menu.navMenuView.frame.origin.x = 0
                 self.menu.blurView.alpha = 1
                 self.menu.closeMenuButton.alpha = 1
             }
         } else {
-            print("Menu Closed")
             isMenuOpen = false
             menu.closeMenuButton.setImage(UIImage(named: "whiteX2"), for: .normal)
             UIView.animate(withDuration: 1, animations: {
@@ -105,8 +117,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     @objc private func goToVC(_ sender: UIButton) {
-        
-        print("Nav Menu Button Pressed!!")
         
         // Unwrap Button ID
         guard let id = sender.accessibilityIdentifier else { return }
@@ -241,7 +251,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     //////////////////////////////////////////////////////////////////// MARK: Cell Button Function
     
     @objc func cellWasTapped(_ sender: UIButton) {
-        print("Cell Was Tapped!")
         
         var nextVC: UIViewController!
         let identifiers = ["0", "1", "2", "3", "4", "5"]

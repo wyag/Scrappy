@@ -7,6 +7,8 @@ class CustomNavView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI(frame: frame)
+        profileImage.image = ItemController.shared.profileImage
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -127,7 +129,7 @@ class CustomNavView: UIView {
         miscMenuButton.accessibilityIdentifier = "Misc"
         
         // 'profileImage'
-        profileImage.image = UIImage(named: "mock6")
+        
         profileImage.backgroundColor = UIColor.darkGray
         profileImage.frame = CGRect(x: 20, y: 520, width: 80, height: 80)
         profileImage.clipsToBounds = true
@@ -168,8 +170,8 @@ class CustomNavView: UIView {
         /////////////// Add Subviews
         self.addSubview(blurView)
         self.addSubview(navMenuView)
-        self.addSubview(closeMenuButton)
-        navMenuView.addSubview(homeMenuButton)
+//        self.addSubview(closeMenuButton)
+//        navMenuView.addSubview(homeMenuButton)
         navMenuView.addSubview(birthdayMenuButton)
         navMenuView.addSubview(seasonalMenuButton)
         navMenuView.addSubview(holidayMenuButton)
@@ -182,7 +184,13 @@ class CustomNavView: UIView {
         navMenuView.addSubview(logOutMenuButton)
     }
     
-    
-    
-    
 }
+
+
+
+
+
+
+
+
+
