@@ -74,23 +74,25 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Table View
         
         // 'cartTableView'
-        cartTableView.backgroundColor = UIColor.black
-        cartTableView.frame = CGRect(x: 0, y: 60, width: self.view.frame.width, height: (self.view.frame.height - 60))
-        cartTableView.rowHeight = 90
+        cartTableView.backgroundColor = UIColor.white
+        cartTableView.frame = CGRect(x: 0, y: 60, width: self.view.frame.width, height: (self.view.frame.height - 120))
+        cartTableView.rowHeight = 100
         cartTableView.delegate = self
         cartTableView.dataSource = self
         cartTableView.register(CartTableViewCell.self, forCellReuseIdentifier: "cartCell")
         cartTableView.separatorColor = UIColor.clear
         cartTableView.tableHeaderView = UIView()
+        cartTableView.allowsSelection = false
+        
         
         // 'checkoutButton'
-        let checkoutButtonAT = NSMutableAttributedString(string: "Checkout", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 24) as Any])
+        let checkoutButtonAT = NSMutableAttributedString(string: "Checkout", attributes: [NSAttributedStringKey.foregroundColor: UIColor.orange, NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 24) as Any])
         checkoutButton.setAttributedTitle(checkoutButtonAT, for: .normal)
-        checkoutButton.backgroundColor = UIColor.clear
+        checkoutButton.backgroundColor = UIColor.white
         checkoutButton.layer.borderColor = UIColor.orange.cgColor
         checkoutButton.layer.borderWidth = 3
         checkoutButton.layer.cornerRadius = 26
-        checkoutButton.layer.shadowColor = UIColor.white.cgColor
+        checkoutButton.layer.shadowColor = UIColor.black.cgColor
         checkoutButton.layer.shadowRadius = 4
         checkoutButton.layer.shadowOpacity = 1
         checkoutButton.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -116,7 +118,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Create/Cast Cell
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cartCell", for: indexPath) as? CartTableViewCell else { return CartTableViewCell() }
         // Item Image
-        
         cell.cellImage = ItemController.shared.userCartItems[indexPath.row].image
         // Item Name
         cell.cellName = ItemController.shared.userCartItems[indexPath.row].title
@@ -125,8 +126,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Item Description
         cell.cellDescription = ItemController.shared.userCartItems[indexPath.row].description
         // Cell Frame
-        cell.backgroundColor = UIColor.black
-        let cellFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 80)
+        cell.backgroundColor = UIColor.white
+        let cellFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 100)
         cell.setupCell(frame: cellFrame)
         // Return Cell
         return cell
@@ -135,7 +136,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         // Header View
-        cartHeaderView.backgroundColor = UIColor.black
+        cartHeaderView.backgroundColor = UIColor.orange
         cartHeaderView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 30)
         
         // Header Label
