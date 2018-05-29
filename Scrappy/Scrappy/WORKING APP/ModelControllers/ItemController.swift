@@ -30,30 +30,25 @@ class ItemController {
         Database.database().reference().child("users").child(currentUserUID).observeSingleEvent(of: .value) { (snapshot) in
             
             guard let dictionaryValues = snapshot.value as? [String: Any] else { return }
+            guard let profImage = ProfileImage(withDictionary: dictionaryValues) else { return }
+            guard let username = ProfileName(withDictionary: dictionaryValues) else { return }
+            self.profileImage = profImage.image
+            self.profileName = username.name
             
-            dictionaryValues.forEach({ (key, value) in
-                
-                guard let userName = dictionaryValues["username"] as? String else { return }
-                guard let cartItem = dictionaryValues["cartItems"] as? [String: Any] else { return }
-                guard let userSellingItems = dictionaryValues["userSellingItems"] as? [String: Any] else { return }
-                guard let profImage = ProfileImage(withDictionary: dictionaryValues) else { return }
-                
-                self.profileName = userName
-                self.profileImage = profImage.image
-                
-                cartItem.forEach({ (key, value) in
-                    
-                    guard let cartItemDictionary = value as? [String: Any] else { return }
-                    guard let item = Item(withDictionary: cartItemDictionary) else { return }
-                    self.userCartItems.append(item)
-                })
-                
-                userSellingItems.forEach({ (key, value) in
-                    guard let sellingItemDictionary = value as? [String: Any] else { return }
-                    guard let item = Item(withDictionary: sellingItemDictionary) else { return }
-                    self.userSellingItems.append(item)
-                })
+            guard let cartItem = dictionaryValues["cartItems"] as? [String: Any] else { return }
+            cartItem.forEach({ (key, value) in
+                guard let cartItemDictionary = value as? [String: Any] else { return }
+                guard let item = Item(withDictionary: cartItemDictionary) else { return }
+                self.userCartItems.append(item)
             })
+            
+            guard let userSellingItem = dictionaryValues["userSellingItems"] as? [String: Any] else { return }
+            userSellingItem.forEach({ (key, value) in
+                guard let sellingItemDictionary = value as? [String: Any] else { return }
+                guard let item = Item(withDictionary: sellingItemDictionary) else { return }
+                self.userSellingItems.append(item)
+            })
+            
         }
     }
     
@@ -89,6 +84,7 @@ class ItemController {
     
     func addProfileImage(image: UIImage) {
         
+        self.profileImage = image
         guard let currentUID = Auth.auth().currentUser?.uid else { return }
         
         guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }

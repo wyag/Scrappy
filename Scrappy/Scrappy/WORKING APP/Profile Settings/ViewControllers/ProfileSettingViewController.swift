@@ -85,16 +85,19 @@ extension ProfileSettingViewController: UIImagePickerControllerDelegate, UINavig
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
-
-                self.profileSettingInputViews.profileImage.image = editedImage.withRenderingMode(.alwaysOriginal)
-                self.delegate?.profileButtonTapped(image: editedImage.withRenderingMode(.alwaysOriginal))
-        
+            
+            
+            self.profileSettingInputViews.profileImage.image = editedImage.withRenderingMode(.alwaysOriginal)
+            
+            self.delegate?.profileButtonTapped(image: editedImage.withRenderingMode(.alwaysOriginal))
+            
             
         } else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             
-                self.profileSettingInputViews.profileImage.image = originalImage.withRenderingMode(.alwaysOriginal)
-                self.delegate?.profileButtonTapped(image: originalImage.withRenderingMode(.alwaysOriginal))
-
+            self.profileSettingInputViews.profileImage.image = originalImage.withRenderingMode(.alwaysOriginal)
+            
+            self.delegate?.profileButtonTapped(image: originalImage.withRenderingMode(.alwaysOriginal))
+            
         }
         
         handleImageDownload()

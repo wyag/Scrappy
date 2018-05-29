@@ -133,6 +133,7 @@ class ProfileSettingInputViews: UIView {
         collection.register(ProfileSettingCollectionViewCell.self, forCellWithReuseIdentifier: "profileSettingCell")
         return collection
     }()
+            
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -170,12 +171,6 @@ class ProfileSettingInputViews: UIView {
         textfieldStackView.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 78).isActive = true
         textfieldStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25).isActive = true
         textfieldStackView.bottomAnchor.constraint(equalTo: labelStackView.bottomAnchor).isActive = true
-        
-//        addSubview(cardInfoButton)
-//        cardInfoButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-//        cardInfoButton.topAnchor.constraint(equalTo: textfieldStackView.bottomAnchor, constant: 5).isActive = true
-//        cardInfoButton.widthAnchor.constraint(equalToConstant: frame.width * 0.7).isActive = true
-//        cardInfoButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         addSubview(collectionView)
         collectionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
