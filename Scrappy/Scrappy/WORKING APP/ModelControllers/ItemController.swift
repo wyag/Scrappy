@@ -18,11 +18,13 @@ class ItemController {
     
     var profileImage: UIImage?
     var profileName: String?
+    var sellerImageAsString: String?
     var userSellingItems = [Item]()
     var allSellingItems = [Item]()
     var userCartItems = [Item]()
     var userPurchasedItems = [Item]()
     
+    // MARK: - GET Current User's Data
     func fetchUserData() {
         
         guard let currentUserUID = Auth.auth().currentUser?.uid else { return }
@@ -52,6 +54,7 @@ class ItemController {
         }
     }
     
+    // MARK: - GET All Selling Items
     func fetchAllSellingItems() {
         
         Database.database().reference().child("allSellingItems").observeSingleEvent(of: .value) { (snapshot) in
@@ -66,6 +69,7 @@ class ItemController {
         }
     }
     
+    // MARK: - GET Profile Image
     func fetchProfileImage() {
         
         guard let currentUID = Auth.auth().currentUser?.uid else { return }
@@ -74,14 +78,13 @@ class ItemController {
         Database.database().reference().child("users").child(currentUID).observeSingleEvent(of: .value) { (snapshot) in
             
             guard let dictionary = snapshot.value as? [String: Any] else { return }
-            
             guard let profImage = ProfileImage(withDictionary: dictionary) else { return }
             self.profileImage = profImage.image
-            
+            self.sellerImageAsString = "sellerProfImage"
         }
-        print("Successfully fetched image", self.profileImage)
     }
     
+    // MARK: - POST Profile Image
     func addProfileImage(image: UIImage) {
         
         self.profileImage = image
@@ -97,6 +100,7 @@ class ItemController {
             }
             
             guard let imageURL = metadata?.downloadURL()?.absoluteString else { return }
+            self.sellerImageAsString = imageURL
             
             let values = ["profileImage": imageURL] as [String: Any]
             Database.database().reference().child("users").child(currentUID).updateChildValues(values, withCompletionBlock: { (error, _) in
@@ -108,22 +112,7 @@ class ItemController {
         }
     }
     
-    // MARK: - Fetching Users Selling Items
-    func fetchUserSellingItems() {
-        
-        guard let currentUserUID = Auth.auth().currentUser?.uid else { return }
-        
-        Database.database().reference().child("users").child(currentUserUID).child("userSellingItems").observe(.childAdded) { (snapshot) in
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            guard let item = Item(withDictionary: dictionary) else { return }
-            self.userSellingItems.append(item)
-            print("appended user selling shit", ItemController.shared.userSellingItems.count)
-        }
-    }
-    
-    
-    
-    // MARK: - Saving User Selling Item into DB
+    // MARK: - GET User's Sellint Items
     func addUserSellingItems(item: Item) {
         
         self.userSellingItems.append(item)
@@ -151,7 +140,7 @@ class ItemController {
         }
     }
     
-    // MARK: - Saving All Items to DB
+    // MARK: - POST All Selling Items
     func addAllSellingItems(item: Item) {
         
         self.allSellingItems.append(item)
@@ -167,7 +156,9 @@ class ItemController {
             
             guard let image = metadata?.downloadURL()?.absoluteString else { return }
             
-            let dictionaryValues = ["title": item.title, "description": item.description, "image": image, "price": item.price] as [String: Any]
+            guard let currentUID = Auth.auth().currentUser?.uid else { return }
+            
+            let dictionaryValues = ["title": item.title, "description": item.description, "image": image, "price": item.price, "sellerName": self.profileName ?? "", "sellerUID": currentUID, "sellerProfImage": self.sellerImageAsString ?? ""] as [String: Any]
             
             Database.database().reference().child("allSellingItems").childByAutoId().updateChildValues(dictionaryValues) { (error, reference) in
                 
@@ -180,21 +171,7 @@ class ItemController {
         }
     }
     
-    // MARK: - Fetch User Cart Items
-    func fetchuserCartItems() {
-        
-        guard let currentUserUID = Auth.auth().currentUser?.uid else { return }
-        
-        Database.database().reference().child("users").child(currentUserUID).child("cartItems").observe(.childAdded) { (snapshot) in
-            
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            guard let item = Item(withDictionary: dictionary) else { return }
-            self.userCartItems.append(item)
-            print("User cart added!", self.userCartItems.count)
-        }
-    }
-    
-    // MARK: - Save User Selling Items into DB
+    // MARK: - POST User Cart Items
     func addUserCartItems(item: Item) {
         
         self.userCartItems.append(item)
@@ -219,48 +196,6 @@ class ItemController {
         }
         
         print("User cart item added", ItemController.shared.userCartItems.count)
-    }
-    
-    func fetchPurchasedItems() {
-        
-        guard let currentUserUID = Auth.auth().currentUser?.uid else { return }
-        
-        Database.database().reference().child("users").child(currentUserUID).child("userPurchasedItems").observeSingleEvent(of: .value) { (snapshot) in
-            
-            guard let purchasedItemsDictionary = snapshot.value as? [[String: Any]] else { return }
-            
-            var innerPurchasedItems = [Item]()
-            
-            for purchasedItemDictionary in purchasedItemsDictionary {
-                
-                guard let purchaseItem = Item(withDictionary: purchasedItemDictionary) else { return }
-                
-                innerPurchasedItems.append(purchaseItem)
-            }
-            
-            self.userPurchasedItems = innerPurchasedItems
-        }
-    }
-    
-    
-    
-    func addUserPurchasedItems(item: Item) {
-        
-        userPurchasedItems.append(item)
-        
-        let uid = UUID().uuidString
-        let values = ["userPurchasedItems": userPurchasedItems]
-        
-        guard let currentUserUID = Auth.auth().currentUser?.uid else { return }
-        
-        Database.database().reference().child("users").child(currentUserUID).child("userPurchasedItems").child(uid).updateChildValues(values) { (error, reference) in
-            
-            if let error = error {
-                print("Error saving user purhcased items into Database:", error)
-            }
-            
-            print("Successfully saved user purchased items into database")
-        }
     }
 }
 
