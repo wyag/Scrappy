@@ -10,6 +10,12 @@ import Foundation
 
 class Message: Codable, Equatable {
     
+    
+    static func == (lhs: Message, rhs: Message) -> Bool {
+        return lhs.message == rhs.message
+    }
+    
+    
     // - MARK: Local Properties
     let message: String
     
