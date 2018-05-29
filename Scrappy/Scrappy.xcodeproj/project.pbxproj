@@ -44,6 +44,7 @@
 		5DEEF76F20BC4E2C00D415C9 /* CartItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEEF76E20BC4E2C00D415C9 /* CartItems.swift */; };
 		BA05CFE020AA35EB00021565 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA05CFDF20AA35EB00021565 /* GoogleService-Info.plist */; };
 		BA0CE25120BDB5A600C5F14C /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CE25020BDB5A600C5F14C /* Message.swift */; };
+		BA0CE25420BDB93000C5F14C /* MessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CE25320BDB93000C5F14C /* MessageController.swift */; };
 		BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA13F08920AA2B86004BF8FC /* Root Nav.swift */; };
 		BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA39998520A9E92200383CFB /* AppDelegate.swift */; };
 		BA39998D20A9E92300383CFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA39998C20A9E92300383CFB /* Assets.xcassets */; };
@@ -109,6 +110,7 @@
 		A357D38E9E88116E4DD23C03 /* Pods-Scrappy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scrappy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Scrappy/Pods-Scrappy.debug.xcconfig"; sourceTree = "<group>"; };
 		BA05CFDF20AA35EB00021565 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BA0CE25020BDB5A600C5F14C /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		BA0CE25320BDB93000C5F14C /* MessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageController.swift; sourceTree = "<group>"; };
 		BA13F08920AA2B86004BF8FC /* Root Nav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Root Nav.swift"; sourceTree = "<group>"; };
 		BA39998220A9E92200383CFB /* Scrappy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrappy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA39998520A9E92200383CFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -483,6 +485,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		BA0CE25520BDB93900C5F14C /* Model Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BA0CE25320BDB93000C5F14C /* MessageController.swift */,
+			);
+			path = "Model Controller";
+			sourceTree = "<group>";
+		};
 		BA13F08620AA26EF004BF8FC /* App Delegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -577,6 +587,7 @@
 			isa = PBXGroup;
 			children = (
 				BA0CE25220BDB5B100C5F14C /* Model */,
+				BA0CE25520BDB93900C5F14C /* Model Controller */,
 				BA0CE24E20BDB57200C5F14C /* Messages */,
 				BA0CE24F20BDB58A00C5F14C /* Message Detail */,
 			);
@@ -796,6 +807,7 @@
 				5DC1FB5120B0AD340034A149 /* SellerPaymentInputViews.swift in Sources */,
 				5D43504320AB9486001132B6 /* ProfileSettingViewController.swift in Sources */,
 				5D43504520ACA5A2001132B6 /* ProfileSettingCollectionViewCell.swift in Sources */,
+				BA0CE25420BDB93000C5F14C /* MessageController.swift in Sources */,
 				5DEEF75220BB606B00D415C9 /* EditItemViewController.swift in Sources */,
 				BA87D47520B605C200ED14A1 /* Checkout Cell.swift in Sources */,
 				5DECCCD620B7D18D007444CB /* StripeCheckOutViewController.swift in Sources */,
