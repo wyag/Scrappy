@@ -67,14 +67,15 @@ class CollectionViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         menu.removeFromSuperview()
+        
+        profileName.text = ItemController.shared.profileName
+        profileImageButton.setImage(ItemController.shared.profileImage, for: .normal)
+        print(ItemController.shared.userCartItems.count)
+        print(ItemController.shared.profileName)
         topCollectionView.reloadData()
         bottomCollectionView.reloadData()
-        print("---Number of SellingItems", itemController.allSellingItems.count)
         
         self.bottomCollectionView.reloadData()
-        
-        profileName.text = Auth.auth().currentUser?.email
-        profileImageButton.setImage(ItemController.shared.profileImage, for: .normal)
         
     }
     

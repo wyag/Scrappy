@@ -19,6 +19,8 @@
 		5D5BB1F620ADE09900EDA8C9 /* UserPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5BB1F520ADE09900EDA8C9 /* UserPaymentViewController.swift */; };
 		5D7918BA20BC687B00B06231 /* UserSellingItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7918B920BC687B00B06231 /* UserSellingItems.swift */; };
 		5D7918BC20BCAD1A00B06231 /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7918BB20BCAD1A00B06231 /* ProfileImage.swift */; };
+		5D7918BE20BD1C7300B06231 /* ProfileName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7918BD20BD1C7300B06231 /* ProfileName.swift */; };
+		5D7918C320BD2FC000B06231 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D7918C120BD2FA500B06231 /* LaunchScreen.storyboard */; };
 		5DAA2DB020B5DBF500852195 /* StripeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAA2DAF20B5DBF500852195 /* StripeClient.swift */; };
 		5DC1FB1A20AF64F60034A149 /* UserPaymentCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1FB1920AF64F60034A149 /* UserPaymentCompleteViewController.swift */; };
 		5DC1FB3C20AFE22C0034A149 /* LoginInputViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1FB3B20AFE22C0034A149 /* LoginInputViews.swift */; };
@@ -78,6 +80,8 @@
 		5D5BB1F520ADE09900EDA8C9 /* UserPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPaymentViewController.swift; sourceTree = "<group>"; };
 		5D7918B920BC687B00B06231 /* UserSellingItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSellingItems.swift; sourceTree = "<group>"; };
 		5D7918BB20BCAD1A00B06231 /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
+		5D7918BD20BD1C7300B06231 /* ProfileName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileName.swift; sourceTree = "<group>"; };
+		5D7918C120BD2FA500B06231 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5DAA2DAF20B5DBF500852195 /* StripeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeClient.swift; sourceTree = "<group>"; };
 		5DC1FB1920AF64F60034A149 /* UserPaymentCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPaymentCompleteViewController.swift; sourceTree = "<group>"; };
 		5DC1FB3B20AFE22C0034A149 /* LoginInputViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInputViews.swift; sourceTree = "<group>"; };
@@ -184,6 +188,7 @@
 			children = (
 				5D5BB1EE20ACDC1F00EDA8C9 /* Item.swift */,
 				5D7918BB20BCAD1A00B06231 /* ProfileImage.swift */,
+				5D7918BD20BD1C7300B06231 /* ProfileName.swift */,
 				5DEEF76E20BC4E2C00D415C9 /* CartItems.swift */,
 				5D7918B920BC687B00B06231 /* UserSellingItems.swift */,
 				5D27909B20B46E7100A8779B /* Constants.swift */,
@@ -465,6 +470,7 @@
 				5DC5904D20AA942D00992A33 /* fa-solid-900.ttf */,
 				BA39998C20A9E92300383CFB /* Assets.xcassets */,
 				BA39999120A9E92300383CFB /* Info.plist */,
+				5D7918C120BD2FA500B06231 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -647,6 +653,7 @@
 			files = (
 				5DC5904E20AA942D00992A33 /* fa-solid-900.ttf in Resources */,
 				BA39998D20A9E92300383CFB /* Assets.xcassets in Resources */,
+				5D7918C320BD2FC000B06231 /* LaunchScreen.storyboard in Resources */,
 				BA05CFE020AA35EB00021565 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -735,6 +742,7 @@
 				BF31588F20AB9195008EA7E5 /* TopSellerImageCell.swift in Sources */,
 				5DEEF76F20BC4E2C00D415C9 /* CartItems.swift in Sources */,
 				5DECCCD220B7D11B007444CB /* MyAPIClient.swift in Sources */,
+				5D7918BE20BD1C7300B06231 /* ProfileName.swift in Sources */,
 				BAF35B7720AEBE8900CE3A87 /* Cart VC.swift in Sources */,
 				BA97FED420ACA08B003BF19D /* UIImageViewEx.swift in Sources */,
 				5D27909C20B46E7100A8779B /* Constants.swift in Sources */,
@@ -900,7 +908,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.isaac.Scrappy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -920,7 +928,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.isaac.Scrappy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
