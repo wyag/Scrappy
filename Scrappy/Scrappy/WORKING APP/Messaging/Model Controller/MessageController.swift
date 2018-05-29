@@ -22,7 +22,7 @@ class MessageController {
         guard let user = Auth.auth().currentUser?.uid else { return }
         Database.database().reference().child("users").child(user).observe(.value, with: { (Snapshot) in
             guard let ms = Snapshot.value as? [String : Any] else { return }
-            guard let mArray = ms["messages"] as? [ else { return }
+            //guard let mArray = ms["messages"] as? [ else { return }
             
         })
     }
@@ -45,7 +45,7 @@ class MessageController {
         var messageValues = ["message" : message.message, "owner" : message.owner]
         var messageKey = ["messageKey" : messageValues]
         
-        dRef.updateChildValues([messageKey : messageValues], withCompletionBlock: <#T##(Error?, DatabaseReference) -> Void#>)
+        //dRef.updateChildValues([messageKey : messageValues], withCompletionBlock: <#T##(Error?, DatabaseReference) -> Void#>)
         
         
     }
@@ -62,7 +62,7 @@ class MessageController {
         var messageDictionary: [String : Any]?
         
         
-        dRef.updateChildValues(<#T##values: [AnyHashable : Any]##[AnyHashable : Any]#>, withCompletionBlock: <#T##(Error?, DatabaseReference) -> Void#>)
+        //dRef.updateChildValues(<#T##values: [AnyHashable : Any]##[AnyHashable : Any]#>, withCompletionBlock: <#T##(Error?, DatabaseReference) -> Void#>)
         
         
         
