@@ -20,7 +20,7 @@ class BottomImagesCell: UICollectionViewCell {
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.layer.cornerRadius = 15
+//        iv.layer.cornerRadius = 15
         return iv
     }()
     
@@ -39,14 +39,16 @@ class BottomImagesCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.text = "$100"
-        label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.textColor = UIColor.black
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.textColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        let view = UIView(frame: frame)
+        layer.borderWidth = 0.5
+        layer.borderColor = UIColor.black.cgColor
+        
         setupViews()
     }
     
@@ -58,7 +60,7 @@ class BottomImagesCell: UICollectionViewCell {
         imageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
         addSubview(cellLabel)
-        cellLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 5).isActive = true
+        cellLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 3).isActive = true
         cellLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
         cellLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
         cellLabel.widthAnchor.constraint(equalToConstant: 125).isActive = true

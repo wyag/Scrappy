@@ -89,7 +89,7 @@ class DetailCollectionViewController: UIViewController {
         passedCardDescription.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         passedCardDescription.topAnchor.constraint(equalTo: passedpriceLabel.bottomAnchor, constant: 5).isActive = true
         passedCardDescription.widthAnchor.constraint(equalToConstant: (view.frame.width) - 100).isActive = true
-        passedCardDescription.numberOfLines = 0
+        passedCardDescription.numberOfLines = 7
         passedCardDescription.textColor = .black
 
         // 'shoppingButton'

@@ -8,13 +8,17 @@
 
 import UIKit
 import Firebase
+import SkyFloatingLabelTextField
 
 class AddItemViewController: UIViewController {
     
     // Properties
     let itemImageButton: UIButton = {
         let imageButton = UIButton()
+//        imageButton.setBackgroundImage(#imageLiteral(resourceName: "addProfImage"), for: .normal)
+//        imageButton.setBackgroundImage(#imageLiteral(resourceName: "addProfImageTapped"), for: .highlighted)
         imageButton.setImage(#imageLiteral(resourceName: "addProfImage"), for: .normal)
+        imageButton.setBackgroundImage(#imageLiteral(resourceName: "addProfileBackground"), for: .highlighted)
         imageButton.translatesAutoresizingMaskIntoConstraints = false
         imageButton.addTarget(self, action: #selector(itemImageButtonTapped), for: .touchUpInside)
         return imageButton
@@ -47,6 +51,18 @@ class AddItemViewController: UIViewController {
         price.keyboardType = .numberPad
         return price
     }()
+    
+    let doneToolBar: UIToolbar = {
+        let tb = UIToolbar()
+        tb.sizeToFit()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneToolBarTapped))
+        tb.setItems([doneButton], animated: true)
+        return tb
+    }()
+    
+    @objc func doneToolBarTapped() {
+        itemPrice.resignFirstResponder()
+    }
     
     var itemDescription: UITextView = {
         let des = UITextView()
@@ -125,6 +141,7 @@ class AddItemViewController: UIViewController {
         itemPrice.heightAnchor.constraint(equalToConstant: 20).isActive = true
         itemPrice.centerXAnchor.constraint(equalTo: itemImageButton.centerXAnchor).isActive = true
         itemPrice.topAnchor.constraint(equalTo: itemTitle.bottomAnchor, constant: 20).isActive = true
+        itemPrice.inputAccessoryView = doneToolBar
         
         // 'itemDescription'
         view.addSubview(itemDescription)
