@@ -25,7 +25,7 @@ class ConvoViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     ////////////////////////////////////////////////////////// MARK: Local Properties
     
-    let testLabel = UILabel()
+    let backgroundLabel = UILabel()
     
     let convoTableView = UITableView()
     
@@ -33,7 +33,7 @@ class ConvoViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func setupNav() {
         
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.orange]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 16) as Any]
         self.navigationItem.title = "Convos"
     }
     
@@ -46,11 +46,11 @@ class ConvoViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.view.backgroundColor = .orange
         
         // 'testLabel'
-        let testLabelAT = NSMutableAttributedString(string: "Convos", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Regular", size: 36) as Any])
-        testLabel.attributedText = testLabelAT
-        testLabel.sizeToFit()
-        testLabel.center.x = self.view.center.x
-        testLabel.center.y = self.view.center.y
+        let backgroundLabelAT = NSMutableAttributedString(string: "Messages", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Regular", size: 36) as Any])
+        backgroundLabel.attributedText = backgroundLabelAT
+        backgroundLabel.sizeToFit()
+        backgroundLabel.center.x = self.view.center.x
+        backgroundLabel.center.y = self.view.center.y
         
         // 'convoTableView'
         convoTableView.backgroundColor = UIColor.clear
@@ -63,7 +63,7 @@ class ConvoViewController: UIViewController, UITableViewDelegate, UITableViewDat
         convoTableView.allowsSelection = false
         
         ////// Add Subviews
-        self.view.addSubview(testLabel)
+        self.view.addSubview(backgroundLabel)
         self.view.addSubview(convoTableView)
     }
     
