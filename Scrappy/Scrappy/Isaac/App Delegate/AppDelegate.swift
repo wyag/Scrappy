@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let rootNav = RootNavigationViewController() 
 
-        rootNav.viewControllers = [ConvoViewController()] // Home
+        rootNav.viewControllers = [LoginViewController()] // Home
 
         
         
@@ -30,8 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         FirebaseApp.configure()        
-        STPPaymentConfiguration.shared().publishableKey = Constants.publishableKey
         ItemController.shared.fetchAllSellingItems()
+        STPPaymentConfiguration.shared().publishableKey = Constants.publishableKey
         
         return true
     }

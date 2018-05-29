@@ -13,24 +13,41 @@ struct Item {
     var description: String
     var image: UIImage
     var price: Int
+    var sellerName: String
+    var sellerProfImage: UIImage?
+    var sellerUID: String
     
     init?(withDictionary dictionary: [String: Any]) {
-        guard let title = dictionary["title"] as? String, let description = dictionary["description"] as? String, let imageString = dictionary["image"] as? String, let price = dictionary["price"] as? Int else { return nil }
+        guard let title = dictionary["title"] as? String, let description = dictionary["description"] as? String, let imageString = dictionary["image"] as? String, let price = dictionary["price"] as? Int, let sellerName = dictionary["sellerName"] as? String, let sellerImageString = dictionary["sellerProfImage"] as? String, let sellerUID = dictionary["sellerUID"] as? String else { return nil }
         
-        guard let imageURL = URL(string: imageString) else { return nil }
-        guard let imageData = try? Data(contentsOf: imageURL) else { return nil }
-        guard let image = UIImage(data: imageData) else { return nil }
+        guard let itemImageURL = URL(string: imageString), let sellerImageURL = URL(string: sellerImageString)  else { return nil }
+        guard let itemImageData = try? Data(contentsOf: itemImageURL), let sellerImageData = try? Data(contentsOf: sellerImageURL) else { return nil }
+        guard let itemImage = UIImage(data: itemImageData), let sellerImage = UIImage(data: sellerImageData) else { return nil }
+        
+        self.title = title
+        self.description = description
+        self.image = itemImage
+        self.price = price
+        self.sellerName = sellerName
+        self.sellerProfImage = sellerImage
+        self.sellerUID = sellerUID
+    }
+    
+    init(withTitle title: String, description: String, image: UIImage, price: Int, sellerName: String = "title", sellerProfImage: UIImage? = #imageLiteral(resourceName: "xMark"), sellerUID: String = "SOMETHING") {
         
         self.title = title
         self.description = description
         self.image = image
         self.price = price
-    }
-    
-    init(withTitle title: String, description: String, image: UIImage, price: Int) {
-        self.title = title
-        self.description = description
-        self.image = image
-        self.price = price 
+        self.sellerName = sellerUID
+        self.sellerProfImage = sellerProfImage
+        self.sellerUID = sellerUID
     }
 }
+
+
+
+
+
+
+
