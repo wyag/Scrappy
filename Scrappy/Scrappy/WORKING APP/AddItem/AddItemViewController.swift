@@ -32,23 +32,37 @@ class AddItemViewController: UIViewController {
         present(imagePicker, animated: true, completion: nil)
     }
     
-    var itemTitle: UITextField = {
-        let title = UITextField()
+    var itemTitle: SkyFloatingLabelTextFieldWithIcon = {
+        let title = SkyFloatingLabelTextFieldWithIcon()
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.placeholder = "Enter the title of the item..."
-        title.backgroundColor = .lightGray
-        title.borderStyle = .roundedRect
+        title.placeholder = "Title of Item"
+        title.textColor = UIColor.black
+        title.autocorrectionType = UITextAutocorrectionType.yes
+        title.iconText = "\u{f303}"
+        title.iconFont = UIFont(name: "Font Awesome 5 Free", size: 14)
+        title.iconColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
+        title.titleColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
+        title.selectedTitleColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
+        title.lineColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 0.4)
+        title.selectedLineColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
         return title
         
     }()
     
-    var itemPrice: UITextField = {
-        let price = UITextField()
+    var itemPrice: SkyFloatingLabelTextFieldWithIcon = {
+        let price = SkyFloatingLabelTextFieldWithIcon()
         price.translatesAutoresizingMaskIntoConstraints = false
-        price.placeholder = "Enter the price amount"
-        price.backgroundColor = .lightGray
-        price.borderStyle = .roundedRect
+        price.placeholder = "Price Amount"
+        price.textColor = UIColor.black
+        price.iconText = "\u{f155}"
+        price.iconFont = UIFont(name: "Font Awesome 5 Free", size: 14)
+        price.iconColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
         price.keyboardType = .numberPad
+        price.autocorrectionType = UITextAutocorrectionType.yes
+        price.titleColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
+        price.selectedTitleColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
+        price.lineColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 0.4)
+        price.selectedLineColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
         return price
     }()
     
@@ -67,16 +81,19 @@ class AddItemViewController: UIViewController {
     var itemDescription: UITextView = {
         let des = UITextView()
         des.translatesAutoresizingMaskIntoConstraints = false
-        des.backgroundColor = .lightGray
+//        des.text = "Optional: Add Description for Item"
+//        des.textColor = UIColor.gray
+        des.layer.borderWidth = 0.4
+        des.layer.borderColor = UIColor.black.cgColor
         return des
     }()
     
     var addItemButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Add Item", for: .normal)
+        button.setTitle("Start Selling Item", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
-        button.backgroundColor = .blue
+        button.backgroundColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
         return button
     }()
     
@@ -131,14 +148,14 @@ class AddItemViewController: UIViewController {
         // 'itemTitle'
         view.addSubview(itemTitle)
         itemTitle.widthAnchor.constraint(equalTo: itemImageButton.widthAnchor).isActive = true
-        itemTitle.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        itemTitle.heightAnchor.constraint(equalToConstant: 40).isActive = true
         itemTitle.centerXAnchor.constraint(equalTo: itemImageButton.centerXAnchor).isActive = true
         itemTitle.topAnchor.constraint(equalTo: itemImageButton.bottomAnchor, constant: 20).isActive = true
         
         // 'itemPrice'
         view.addSubview(itemPrice)
         itemPrice.widthAnchor.constraint(equalTo: itemImageButton.widthAnchor).isActive = true
-        itemPrice.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        itemPrice.heightAnchor.constraint(equalToConstant: 40).isActive = true
         itemPrice.centerXAnchor.constraint(equalTo: itemImageButton.centerXAnchor).isActive = true
         itemPrice.topAnchor.constraint(equalTo: itemTitle.bottomAnchor, constant: 20).isActive = true
         itemPrice.inputAccessoryView = doneToolBar
@@ -152,8 +169,10 @@ class AddItemViewController: UIViewController {
         
         // 'addItemButton'
         view.addSubview(addItemButton)
-        addItemButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        addItemButton.heightAnchor.constraint(equalToConstant: 35).isActive = true
+//        addItemButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        addItemButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        addItemButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        addItemButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
         addItemButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
         addItemButton.centerXAnchor.constraint(equalTo: itemImageButton.centerXAnchor).isActive = true
         addItemButton.addTarget(self, action: #selector(addItemButtonTapped), for: .touchUpInside)
@@ -178,7 +197,6 @@ class AddItemViewController: UIViewController {
     
     // selector function for 'addItemButton'
     @objc func addItemButtonTapped() {
-        
         guard let currentTitle = itemTitle.text, !currentTitle.isEmpty, let currentDesc = itemDescription.text, !currentDesc.isEmpty, let currentPrice = itemPrice.text, !currentPrice.isEmpty, let currentPriceInt = Int(currentPrice), let currentImage = itemImageButton.currentImage, itemImageButton.currentImage != nil else {
             
             let alert = UIAlertController(title: "Error Adding Item", message: "Please make sure item has an image, title and price", preferredStyle: .alert)
@@ -191,6 +209,7 @@ class AddItemViewController: UIViewController {
         let item = Item(withTitle: currentTitle, description: currentDesc, image: currentImage, price: currentPriceInt)
         ItemController.shared.addUserSellingItems(item: item)
         ItemController.shared.addAllSellingItems(item: item)
+        show(CollectionViewController(), sender: self)
     }
 }
 

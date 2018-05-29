@@ -11,18 +11,6 @@ import SVProgressHUD
 
 class DetailCollectionViewController: UIViewController {
     
-    // Properties
-    var itemImage: UIImage?
-    var itemTitle: String?
-    var itemPrice: Int? 
-    var cardDescription: String?
-    var passedImageView = UIImageView()
-    var passedImageTitle = UILabel()
-    var passedpriceLabel = UILabel()
-    var passedCardDescription = UILabel()
-    var shoppingButton = UIButton()
-    var backButton = UIButton(type: .system)
-    
     // Raiting Properties
     var raitingStackView = UIStackView()
     var raitingButtons = [UIButton()]
@@ -33,16 +21,59 @@ class DetailCollectionViewController: UIViewController {
         }
     }
     
+    // Properties
+    var itemImage: UIImage?
+    var itemTitle: String?
+    var itemPrice: Int?
+    var cardDescription: String?
+    
+    var passedImageView: UIImageView = {
+       let image =  UIImageView()
+        image.clipsToBounds = true
+        image.contentMode = .scaleAspectFill
+        return image
+    }()
+    var passedImageTitle: UILabel = {
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.textAlignment = .center
+        title.textColor = .black
+        title.font = UIFont.boldSystemFont(ofSize: 25)
+       return title
+    }()
+    var passedpriceLabel: UILabel = {
+       let price = UILabel()
+        price.translatesAutoresizingMaskIntoConstraints = false
+        price.textAlignment = .center
+        price.font = UIFont.boldSystemFont(ofSize: 17)
+        price.textColor = .black
+        return price
+    }()
+    var passedCardDescription: UILabel = {
+        let card = UILabel()
+        card.translatesAutoresizingMaskIntoConstraints = false
+        card.textAlignment = .center
+        card.numberOfLines = 7
+        card.textColor = .black
+        return card
+    }()
+    var shoppingButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Add Item To Cart", for: .normal)
+        button.tintColor = UIColor.white
+        button.backgroundColor = UIColor.orange
+        button.layer.cornerRadius = 3
+        return button
+    }()
+    var backButton = UIButton(type: .system)
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupNav()
+        navigationController?.navigationBar.tintColor = UIColor.orange
         setupViews()
         setupViewData()
-    }
-    
-    func setupNav() {
-        self.navigationController?.navigationBar.tintColor = UIColor.orange
     }
     
     func setupViews() {
@@ -53,8 +84,6 @@ class DetailCollectionViewController: UIViewController {
         // 'passedImageView'
         view.addSubview(passedImageView)
         passedImageView.frame = CGRect(x: 0, y: 125, width: view.frame.width, height: 300)
-        passedImageView.clipsToBounds = true
-        passedImageView.contentMode = .scaleAspectFit
         passedImageView.center.x = self.view.center.x
         
         // Star Raiting Stack View
@@ -62,58 +91,31 @@ class DetailCollectionViewController: UIViewController {
         
         // 'passedImageTitle'
         view.addSubview(passedImageTitle)
-        passedImageTitle.translatesAutoresizingMaskIntoConstraints = false
-        passedImageTitle.textAlignment = .center
         passedImageTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         passedImageTitle.topAnchor.constraint(equalTo: passedImageView.bottomAnchor, constant: 50).isActive = true
         passedImageTitle.widthAnchor.constraint(equalToConstant: 250)
         passedImageTitle.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        passedImageTitle.textColor = .black
-        passedImageTitle.font = UIFont.boldSystemFont(ofSize: 25)
         
         // 'passedPriceLabel'
         view.addSubview(passedpriceLabel)
-        passedpriceLabel.translatesAutoresizingMaskIntoConstraints = false
-        passedpriceLabel.textAlignment = .center
         passedpriceLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         passedpriceLabel.topAnchor.constraint(equalTo: passedImageTitle.bottomAnchor, constant: 3).isActive = true
         passedpriceLabel.heightAnchor.constraint(equalToConstant: 15)
         passedpriceLabel.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        passedpriceLabel.font = UIFont.boldSystemFont(ofSize: 17)
-        passedpriceLabel.textColor = .black
         
         // 'passedImageDescription'
         view.addSubview(passedCardDescription)
-        passedCardDescription.translatesAutoresizingMaskIntoConstraints = false
-        passedCardDescription.textAlignment = .center
         passedCardDescription.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         passedCardDescription.topAnchor.constraint(equalTo: passedpriceLabel.bottomAnchor, constant: 5).isActive = true
         passedCardDescription.widthAnchor.constraint(equalToConstant: (view.frame.width) - 100).isActive = true
-        passedCardDescription.numberOfLines = 7
-        passedCardDescription.textColor = .black
 
         // 'shoppingButton'
         view.addSubview(shoppingButton)
-        shoppingButton.translatesAutoresizingMaskIntoConstraints = false
         shoppingButton.topAnchor.constraint(equalTo: passedCardDescription.bottomAnchor, constant: 5).isActive = true
         shoppingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
         shoppingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
         shoppingButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        shoppingButton.setTitle("Add Item To Cart", for: .normal)
-        shoppingButton.tintColor = UIColor.white
-        shoppingButton.backgroundColor = UIColor.orange
-        shoppingButton.layer.cornerRadius = 3
         shoppingButton.addTarget(self, action: #selector(shoppingButtonTapped), for: .touchUpInside)
-        
-        // 'backButton'
-        view.addSubview(backButton)
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-        backButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 15).isActive = true
-        backButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
-        backButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        backButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        backButton.setImage(#imageLiteral(resourceName: "xMark").withRenderingMode(.alwaysOriginal), for: .normal)
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
     
     func setupViewData() {
@@ -188,21 +190,12 @@ class DetailCollectionViewController: UIViewController {
             }
         }
     
-    
     // Update Raiting function
     func updateButtonSelection() {
         guard let raiting = raitingNumber else { return }
         for (index, button) in raitingButtons.enumerated() {
             button.isSelected = index < raiting
         }
-    }
-    
-    
-    // Objective-C Selector Functions
-    @objc func backButtonTapped() {
-        print("back to collectionView tapped")
-//        dismiss(animated: true, completion: nil)
-        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func raitingButtonTapped(button: UIButton) {
@@ -224,7 +217,8 @@ class DetailCollectionViewController: UIViewController {
         guard let price = itemPrice else { return }
         let newCartItem = Item(withTitle: name, description: description, image: image, price: price)
         ItemController.shared.addUserCartItems(item: newCartItem)
+        SVProgressHUD.dismiss(withDelay: 0.5)
         
-        SVProgressHUD.dismiss(withDelay: 2)
+        navigationController?.popViewController(animated: true)
     }
 }

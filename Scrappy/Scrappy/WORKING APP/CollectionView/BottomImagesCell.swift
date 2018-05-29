@@ -29,7 +29,7 @@ class BottomImagesCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.text = "test"
-        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textColor = UIColor.black
         return label
     }()
@@ -39,15 +39,21 @@ class BottomImagesCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.text = "$100"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 13)
         label.textColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layer.borderWidth = 0.5
-        layer.borderColor = UIColor.black.cgColor
+//        layer.borderWidth = 0.5
+//        layer.borderColor = UIColor.black.cgColor
+        backgroundColor = UIColor.white
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        layer.shadowRadius = 2.0
+        layer.shadowOpacity = 0.5
+        
         
         setupViews()
     }
@@ -63,10 +69,11 @@ class BottomImagesCell: UICollectionViewCell {
         cellLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 3).isActive = true
         cellLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
         cellLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
-        cellLabel.widthAnchor.constraint(equalToConstant: 125).isActive = true
+        cellLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        cellLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
         addSubview(priceLabel)
-        priceLabel.topAnchor.constraint(equalTo: cellLabel.bottomAnchor, constant: 5).isActive = true
+        priceLabel.topAnchor.constraint(equalTo: cellLabel.bottomAnchor, constant: 2).isActive = true
         priceLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
         priceLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
