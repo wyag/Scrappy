@@ -41,6 +41,7 @@
 		5DEEF75420BB608200D415C9 /* EditItemInputViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEEF75320BB608200D415C9 /* EditItemInputViews.swift */; };
 		5DEEF76F20BC4E2C00D415C9 /* CartItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEEF76E20BC4E2C00D415C9 /* CartItems.swift */; };
 		BA05CFE020AA35EB00021565 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA05CFDF20AA35EB00021565 /* GoogleService-Info.plist */; };
+		BA0CE25120BDB5A600C5F14C /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CE25020BDB5A600C5F14C /* Message.swift */; };
 		BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA13F08920AA2B86004BF8FC /* Root Nav.swift */; };
 		BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA39998520A9E92200383CFB /* AppDelegate.swift */; };
 		BA39998D20A9E92300383CFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA39998C20A9E92300383CFB /* Assets.xcassets */; };
@@ -103,6 +104,7 @@
 		67BC927EB3D895ABB51477AD /* Pods_Scrappy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scrappy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A357D38E9E88116E4DD23C03 /* Pods-Scrappy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scrappy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Scrappy/Pods-Scrappy.debug.xcconfig"; sourceTree = "<group>"; };
 		BA05CFDF20AA35EB00021565 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BA0CE25020BDB5A600C5F14C /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		BA13F08920AA2B86004BF8FC /* Root Nav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Root Nav.swift"; sourceTree = "<group>"; };
 		BA39998220A9E92200383CFB /* Scrappy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrappy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA39998520A9E92200383CFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -451,6 +453,31 @@
 			path = AddItem;
 			sourceTree = "<group>";
 		};
+		BA0CE24E20BDB57200C5F14C /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				BAC3947F20BC7DF100BD2CCA /* Convo VC.swift */,
+				BA6D985320BC8B88006CCD39 /* Convo Cell.swift */,
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
+		BA0CE24F20BDB58A00C5F14C /* Message Detail */ = {
+			isa = PBXGroup;
+			children = (
+				BA6D985520BC98C6006CCD39 /* Message VC.swift */,
+			);
+			path = "Message Detail";
+			sourceTree = "<group>";
+		};
+		BA0CE25220BDB5B100C5F14C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BA0CE25020BDB5A600C5F14C /* Message.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		BA13F08620AA26EF004BF8FC /* App Delegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -543,9 +570,9 @@
 		BAC3948120BC7DF600BD2CCA /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
-				BAC3947F20BC7DF100BD2CCA /* Convo VC.swift */,
-				BA6D985320BC8B88006CCD39 /* Convo Cell.swift */,
-				BA6D985520BC98C6006CCD39 /* Message VC.swift */,
+				BA0CE25220BDB5B100C5F14C /* Model */,
+				BA0CE24E20BDB57200C5F14C /* Messages */,
+				BA0CE24F20BDB58A00C5F14C /* Message Detail */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -732,6 +759,7 @@
 				5DECCCDC20B7D429007444CB /* StripePaymentContextFooterView.swift in Sources */,
 				5DECCCE020B7D72D007444CB /* UserPaymentFailedViewController.swift in Sources */,
 				BF31588C20AB9195008EA7E5 /* DetailCollectionViewController.swift in Sources */,
+				BA0CE25120BDB5A600C5F14C /* Message.swift in Sources */,
 				BF31588F20AB9195008EA7E5 /* TopSellerImageCell.swift in Sources */,
 				5DEEF76F20BC4E2C00D415C9 /* CartItems.swift in Sources */,
 				5DECCCD220B7D11B007444CB /* MyAPIClient.swift in Sources */,
