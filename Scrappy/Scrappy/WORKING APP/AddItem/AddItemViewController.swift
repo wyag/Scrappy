@@ -81,8 +81,6 @@ class AddItemViewController: UIViewController {
     var itemDescription: UITextView = {
         let des = UITextView()
         des.translatesAutoresizingMaskIntoConstraints = false
-//        des.text = "Optional: Add Description for Item"
-//        des.textColor = UIColor.gray
         des.layer.borderWidth = 0.4
         des.layer.borderColor = UIColor.black.cgColor
         return des
@@ -103,6 +101,8 @@ class AddItemViewController: UIViewController {
         return button
     }()
     
+    var keyboardIsShown = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -121,7 +121,12 @@ class AddItemViewController: UIViewController {
         if let keyboardFrame: NSValue = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
-            view.frame.origin.y += -(keyboardHeight)
+            
+            if keyboardIsShown == false {
+                
+                view.frame.origin.y += -(keyboardHeight)
+                keyboardIsShown = true
+            }
         }
     }
     
@@ -130,7 +135,12 @@ class AddItemViewController: UIViewController {
         if let keyboardFrame: NSValue = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
-            view.frame.origin.y += keyboardHeight
+            
+            if keyboardIsShown == true {
+                
+                view.frame.origin.y += keyboardHeight 
+                keyboardIsShown = false
+            }
         }
     }
     
@@ -235,6 +245,11 @@ extension AddItemViewController: UITextFieldDelegate {
         
         return true
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        itemTitle.resignFirstResponder()
+        itemPrice.resignFirstResponder()
+    }
 }
 
 extension AddItemViewController: UITextViewDelegate {
@@ -246,6 +261,10 @@ extension AddItemViewController: UITextViewDelegate {
             return false
         }
         return true
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        itemDescription.resignFirstResponder()
     }
 }
 

@@ -20,27 +20,6 @@ class CollectionViewController: UIViewController {
     
     var isMenuTapped = false
     
-    
-    let TopSellerLabel: UILabel = {
-       let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Top Sellers"
-        label.textAlignment = .center
-//        label.font.withSize(25)
-        return label
-    }()
-    
-    let topCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 30
-        layout.scrollDirection = .horizontal
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .clear
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.tag = 0
-        return cv
-    }()
-    
     let bottomCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 16
@@ -60,8 +39,13 @@ class CollectionViewController: UIViewController {
     }()
     
     @objc func pullToFetchData() {
-        bottomCollectionView.reloadData()
-        refresher.endRefreshing()
+        
+        itemController.allSellingItems.removeAll()
+        itemController.fetchAllSellingItems()
+        
+        self.bottomCollectionView.reloadData()
+        self.refresher.endRefreshing()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,7 +54,6 @@ class CollectionViewController: UIViewController {
         
         profileName.text = ItemController.shared.profileName
         profileImageButton.setImage(ItemController.shared.profileImage, for: .normal)
-        topCollectionView.reloadData()
         bottomCollectionView.reloadData()
         
         self.bottomCollectionView.reloadData()
@@ -86,7 +69,8 @@ class CollectionViewController: UIViewController {
         bottomCollectionView.refreshControl = refresher
         blurEffectView.frame = view.frame
         
-        navigationItem.title = "Sale Items"
+        navigationController?.navigationBar.tintColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
+        navigationItem.title = "Todays Sales"
         let textAttributes = [NSAttributedStringKey.foregroundColor:UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "hMenu").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(menuViewButtonTapped))
@@ -276,132 +260,11 @@ class CollectionViewController: UIViewController {
    
 }
 
-// Extension for Navigation Bar
-//extension CollectionViewController {
-//    // Nav Menu UI
-//
-//    ////////////////////////////////////////////////////// MARK: Setup Nav Function
-//
-//    func setupNav() {
-//
-//        // Setup Nav Bar
-//        self.navigationController?.navigationBar.isHidden = false
-//
-//        // 'menuBarButton'
-//        menuBarButton = UIBarButtonItem(image: UIImage(named: "hMenu"), style: .plain, target: self, action: #selector(self.menuButtonTapped(_:)))
-//        menuBarButton.tintColor = UIColor.orange
-//        self.navigationItem.setLeftBarButton(menuBarButton, animated: false)
-//
-//        menu.closeMenuButton.addTarget(self, action: #selector(self.menuButtonTapped(_:)), for: .touchUpInside)
-////        menu.homeMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-//        menu.birthdayMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-//        menu.seasonalMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-//        menu.holidayMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-//        menu.sportsMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-//        menu.congratsMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-//        menu.miscMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-//        menu.cartMenuButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-//        menu.profileButton.addTarget(self, action: #selector(self.goToVC(_:)), for: .touchUpInside)
-//    }
-//
-//    @objc private func menuButtonTapped(_ sender: UIBarButtonItem) {
-//        if !isMenuOpen {
-//            self.view.addSubview(menu)
-//            isMenuOpen = true
-//            menu.closeMenuButton.setImage(UIImage(named: "whiteX"), for: .normal)
-//            UIView.animate(withDuration: 1) {
-//                self.menu.navMenuView.frame.origin.x = 0
-//                self.menu.blurView.alpha = 1
-//                self.menu.closeMenuButton.alpha = 0.5
-//            }
-//        } else {
-//            print("Menu Closed")
-//            isMenuOpen = false
-//            menu.closeMenuButton.setImage(UIImage(named: "whiteX2"), for: .normal)
-//            UIView.animate(withDuration: 1, animations: {
-//                self.menu.blurView.alpha = 0
-//                self.menu.closeMenuButton.alpha = 0
-//                self.menu.navMenuView.frame.origin.x = ((self.view.frame.width/2) * -1)
-//            }) { (success) in
-//                if success {
-//                    self.menu.removeFromSuperview()
-//                }
-//            }
-//        }
-//    }
-//
-//
-//    @objc private func goToVC(_ sender: UIButton) {
-//
-//        print("Nav Menu Button Pressed!!")
-//
-//        // Unwrap Button ID
-//        guard let id = sender.accessibilityIdentifier else { return }
-//        guard let vcid = self.accessibilityValue else { return }
-//
-//
-//        // Switch On Button ID
-//        switch id {
-//        case vcid:
-//            menuButtonTapped(self.menuBarButton)
-//        case "Home":
-//            self.navigationController?.popToRootViewController(animated: true)
-//        case "Birthday":
-//            menuButtonTapped(menuBarButton)
-//            let nextVC = CollectionViewController()
-//            nextVC.accessibilityValue = "Birthday"
-//            self.navigationController?.show(nextVC, sender: self)
-//        case "Seasonal":
-//            print("seasonal tapped")
-//            menuButtonTapped(menuBarButton)
-//            let nextVC = CollectionViewController()
-//            nextVC.accessibilityValue = "Seasonal"
-//            self.navigationController?.show(nextVC, sender: self)
-//        case "Holiday":
-//            menuButtonTapped(menuBarButton)
-//            let nextVC = CollectionViewController()
-//            nextVC.accessibilityValue = "Holiday"
-//            self.navigationController?.show(nextVC, sender: self)
-//        case "Sports":
-//            menuButtonTapped(menuBarButton)
-//            let nextVC = CollectionViewController()
-//            nextVC.accessibilityValue = "Sports"
-//            self.navigationController?.show(nextVC, sender: self)
-//        case "Congrats":
-//            menuButtonTapped(menuBarButton)
-//            let nextVC = CollectionViewController()
-//            nextVC.accessibilityValue = "Congrats"
-//            self.navigationController?.show(nextVC, sender: self)
-//        case "Misc":
-//            menuButtonTapped(menuBarButton)
-//            let nextVC = CollectionViewController()
-//            nextVC.accessibilityValue = "Misc"
-//            self.navigationController?.show(nextVC, sender: self)
-//        case "Profile":
-//            menuButtonTapped(menuBarButton)
-//            let nextVC = ProfileSettingViewController()
-//            nextVC.accessibilityValue = "Profile"
-//            self.navigationController?.show(nextVC, sender: self)
-//        case "Cart":
-//            menuButtonTapped(menuBarButton)
-//            let nextVC = CartViewController()
-//            nextVC.accessibilityValue = "Cart"
-//            self.navigationController?.show(nextVC, sender: self)
-//        case "Logout":
-//            self.navigationController?.popToRootViewController(animated: true)
-//        default:
-//            menuButtonTapped(self.menuBarButton)
-//        }
-//    }
-//}
-
 // Mark: - Extension for Delegate/Datasource
 extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     // Delegates
     func setUpDelegates() {
-        topCollectionView.delegate = self
-        topCollectionView.dataSource = self
         bottomCollectionView.delegate = self
         bottomCollectionView.dataSource = self
     }
