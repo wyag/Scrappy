@@ -14,6 +14,7 @@ import SVProgressHUD
 class SignUpViewController: UIViewController {
     
     let signUpInputViews = SignUpInputViews(frame: UIScreen.main.bounds)
+    var keyboardIsShown = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +39,11 @@ class SignUpViewController: UIViewController {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
             
-            view.frame.origin.y += -(keyboardHeight)
+            if keyboardIsShown == false {
+                
+                view.frame.origin.y += -(keyboardHeight / 3)
+                keyboardIsShown = true
+            }
         }
     }
     
@@ -47,7 +52,11 @@ class SignUpViewController: UIViewController {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
             
-            view.frame.origin.y += keyboardHeight
+            if keyboardIsShown == true {
+                
+                view.frame.origin.y += (keyboardHeight / 3)
+            }
+            
         }
     }
     
@@ -103,6 +112,7 @@ extension SignUpViewController: UITextFieldDelegate {
         signUpInputViews.usernameTextField.resignFirstResponder()
         signUpInputViews.emailTextField.resignFirstResponder()
         signUpInputViews.passwordTextField.resignFirstResponder()
+        keyboardIsShown = false 
         return true
     }
 }

@@ -169,15 +169,24 @@ class CollectionViewController: UIViewController {
     }
     
     @objc private func logoutButtonTapped() {
-        do {
-            try Auth.auth().signOut()
-            ItemController.shared.allSellingItems.removeAll()
-            ItemController.shared.userSellingItems.removeAll()
-            ItemController.shared.userCartItems.removeAll()
-            self.dismiss(animated: true, completion: nil)
-        } catch {
-            print("Error signing out", error)
-        }
+        handleLogOut()
+    }
+    
+    func handleLogOut() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "Log out", style: .destructive, handler: { (_) in
+            do {
+                try Auth.auth().signOut()
+                ItemController.shared.allSellingItems.removeAll()
+                ItemController.shared.userSellingItems.removeAll()
+                ItemController.shared.userCartItems.removeAll()
+                self.dismiss(animated: true, completion: nil)
+            } catch {
+                print("Error signing out", error)
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alertController, animated: true, completion: nil)
     }
     
     let blurEffectView: UIVisualEffectView = {

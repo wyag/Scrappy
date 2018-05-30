@@ -17,8 +17,8 @@ struct Item {
     var sellerProfImage: UIImage?
     var sellerUID: String
     
-    init?(withDictionary dictionary: [String: Any]) {
-        guard let title = dictionary["title"] as? String, let description = dictionary["description"] as? String, let imageString = dictionary["image"] as? String, let price = dictionary["price"] as? Int, let sellerName = dictionary["sellerName"] as? String, let sellerImageString = dictionary["sellerProfImage"] as? String, let sellerUID = dictionary["sellerUID"] as? String else { return nil }
+    init?(withDictionary itemDictionary: [String: Any]) {
+        guard let title = itemDictionary["title"] as? String, let description = itemDictionary["description"] as? String, let imageString = itemDictionary["image"] as? String, let price = itemDictionary["price"] as? Int, let sellerName = itemDictionary["sellerName"] as? String, let sellerImageString = itemDictionary["sellerProfImage"] as? String, let sellerUID = itemDictionary["sellerUID"] as? String else { return nil }
         
         guard let itemImageURL = URL(string: imageString), let sellerImageURL = URL(string: sellerImageString)  else { return nil }
         guard let itemImageData = try? Data(contentsOf: itemImageURL), let sellerImageData = try? Data(contentsOf: sellerImageURL) else { return nil }

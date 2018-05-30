@@ -70,23 +70,25 @@ class LoginViewController: UIViewController {
         guard let email = loginInputViews.emailTextField.text, !email.isEmpty else { return }
         guard let password = loginInputViews.passwordTextField.text, !password.isEmpty else { return }
         
+        
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             if let error = error {
-                SVProgressHUD.showError(withStatus: "Error logging in. Please try again.")
+                SVProgressHUD.showError(withStatus: "Incorrect Email/Password. Please try again.")
                 print("Failed to sign in with email", error)
                 return
             }
             
+            ItemController.shared.fetchUserData()
+            ItemController.shared.fetchProfileImage()
             
-            DispatchQueue.main.async {
-                ItemController.shared.fetchUserData()
-                self.loginInputViews.emailTextField.resignFirstResponder()
-                self.loginInputViews.passwordTextField.resignFirstResponder()
-                let navigationController = UINavigationController(rootViewController: CollectionViewController())
-                self.present(navigationController, animated: true, completion: {
+            self.loginInputViews.emailTextField.resignFirstResponder()
+            self.loginInputViews.passwordTextField.resignFirstResponder()
+            let navigationController = UINavigationController(rootViewController: CollectionViewController())
+            self.present(navigationController, animated: true, completion: {
                     SVProgressHUD.dismiss()
                 })
-            }
+            
+            
         }
     }
     

@@ -207,7 +207,8 @@ class AddItemViewController: UIViewController {
         }
         
         let item = Item(withTitle: currentTitle, description: currentDesc, image: currentImage, price: currentPriceInt)
-        ItemController.shared.addUserSellingItems(item: item)
+        let userSellingItem = UserSellingItem(withTitle: currentPrice, description: currentDesc, image: currentImage, price: currentPriceInt)
+        ItemController.shared.addUserSellingItems(item: userSellingItem)
         ItemController.shared.addAllSellingItems(item: item)
         show(CollectionViewController(), sender: self)
     }
