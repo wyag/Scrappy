@@ -11,7 +11,6 @@ import Foundation
 import UIKit
 import Firebase
 
-
 class ItemController {
     
     static let shared = ItemController()
@@ -19,7 +18,7 @@ class ItemController {
     var profileImage: UIImage?
     var profileName: String?
     var sellerImageAsString: String?
-    var userSellingItems = [Item]()
+    var userSellingItems = [UserSellingItem]()
     var allSellingItems = [Item]()
     var userCartItems = [Item]()
     var userPurchasedItems = [Item]()
@@ -37,18 +36,18 @@ class ItemController {
             self.profileImage = profImage.image
             self.profileName = username.name
             
-            guard let cartItem = dictionaryValues["cartItems"] as? [String: Any] else { return }
-            cartItem.forEach({ (key, value) in
-                guard let cartItemDictionary = value as? [String: Any] else { return }
-                guard let item = Item(withDictionary: cartItemDictionary) else { return }
-                self.userCartItems.append(item)
-            })
-            
             guard let userSellingItem = dictionaryValues["userSellingItems"] as? [String: Any] else { return }
             userSellingItem.forEach({ (key, value) in
                 guard let sellingItemDictionary = value as? [String: Any] else { return }
-                guard let item = Item(withDictionary: sellingItemDictionary) else { return }
+                guard let item = UserSellingItem(withDictionary: sellingItemDictionary) else { return }
                 self.userSellingItems.append(item)
+            })
+            
+            guard let cartItems = dictionaryValues["cartItems"] as? [String: Any] else { return }
+            cartItems.forEach({ (key, value) in
+                guard let cartItemsDictionary = value as? [String: Any] else { return }
+                guard let item = Item(withDictionary: cartItemsDictionary) else { return }
+                self.userCartItems.append(item)
             })
             
         }
@@ -70,6 +69,7 @@ class ItemController {
     }
     
     // MARK: - GET Profile Image
+    // FIXME: - Fix the fetch to get seller's uid
     func fetchProfileImage() {
         
         guard let currentUID = Auth.auth().currentUser?.uid else { return }
@@ -79,8 +79,9 @@ class ItemController {
             
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             guard let profImage = ProfileImage(withDictionary: dictionary) else { return }
+            guard let imageAsString = SellerImageAsString(withDictionary: dictionary) else { return }
             self.profileImage = profImage.image
-            self.sellerImageAsString = "sellerProfImage"
+            self.sellerImageAsString = imageAsString.sellerImageAsString
         }
     }
     
@@ -112,8 +113,8 @@ class ItemController {
         }
     }
     
-    // MARK: - GET User's Sellint Items
-    func addUserSellingItems(item: Item) {
+    // MARK: - GET User's Selling Items
+    func addUserSellingItems(item: UserSellingItem) {
         
         self.userSellingItems.append(item)
         
@@ -141,6 +142,7 @@ class ItemController {
     }
     
     // MARK: - POST All Selling Items
+    // FIXME: - Adding an item does not add seller's image to DB. *Check when user FETCH profile image
     func addAllSellingItems(item: Item) {
         
         self.allSellingItems.append(item)
