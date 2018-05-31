@@ -18,6 +18,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        SVProgressHUD.setForegroundColor(Constants.orangeColor)
         self.navigationController?.navigationBar.isHidden = true 
         
         view.backgroundColor = UIColor.white
@@ -35,6 +36,12 @@ class LoginViewController: UIViewController {
         loginInputViews.signInButton.addTarget(self, action: #selector(signInButtonTapped), for: .touchUpInside)
         loginInputViews.createNewAccButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(emptyTextFields), name: NSNotification.Name(rawValue: "LogOutNotification"), object: nil)
+    }
+    
+    @objc func emptyTextFields() {
+        loginInputViews.emailTextField.text = ""
+        loginInputViews.passwordTextField.text = ""
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
@@ -48,11 +55,7 @@ class LoginViewController: UIViewController {
     
     @objc func keyboardWillHide(_ notification: Notification) {
         
-        if let keyboardFrame: NSValue = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            view.frame.origin.y += (keyboardHeight / 3)
-        }
+        view.frame.origin.y = 0
     }
     
     @objc func forgotPasswordButtonTapped() {
@@ -78,17 +81,12 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            ItemController.shared.fetchUserData()
-            ItemController.shared.fetchProfileImage()
-            
             self.loginInputViews.emailTextField.resignFirstResponder()
             self.loginInputViews.passwordTextField.resignFirstResponder()
             let navigationController = UINavigationController(rootViewController: CollectionViewController())
             self.present(navigationController, animated: true, completion: {
                     SVProgressHUD.dismiss()
                 })
-            
-            
         }
     }
     

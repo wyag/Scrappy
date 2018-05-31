@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import Firebase
 
 class DetailCollectionViewController: UIViewController {
     
@@ -273,7 +274,8 @@ class DetailCollectionViewController: UIViewController {
         guard let image = itemImage else { return }
         guard let description = cardDescription else { return }
         guard let price = itemPrice else { return }
-        let newCartItem = Item(withTitle: name, description: description, image: image, price: price)
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let newCartItem = Item(withTitle: name, description: description, image: image, price: price, sellerUID: uid)
         ItemController.shared.addUserCartItems(item: newCartItem)
         SVProgressHUD.dismiss(withDelay: 0.5)
         

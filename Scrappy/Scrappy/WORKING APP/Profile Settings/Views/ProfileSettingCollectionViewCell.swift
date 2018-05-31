@@ -27,8 +27,16 @@ class ProfileSettingCollectionViewCell: UICollectionViewCell {
         some.translatesAutoresizingMaskIntoConstraints = false
         some.backgroundColor = UIColor.yellow
         some.contentMode = .scaleAspectFill
+        some.layer.cornerRadius = 8
         some.clipsToBounds = true 
         return some
+    }()
+    
+    let itemLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = Constants.orangeColor
+        return label
     }()
     
     override func layoutSubviews() {
@@ -36,9 +44,15 @@ class ProfileSettingCollectionViewCell: UICollectionViewCell {
         
         contentView.addSubview(image)
         image.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        image.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        image.heightAnchor.constraint(equalToConstant: contentView.frame.height * 0.6).isActive = true
-        image.widthAnchor.constraint(equalToConstant: contentView.frame.width).isActive = true 
+        image.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        image.heightAnchor.constraint(equalToConstant: contentView.frame.height * 0.8).isActive = true
+        image.widthAnchor.constraint(equalToConstant: contentView.frame.width).isActive = true
+        
+        contentView.addSubview(itemLabel)
+        itemLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        itemLabel.topAnchor.constraint(equalTo: image.bottomAnchor).isActive = true
+        itemLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        itemLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true 
     }
 }
 

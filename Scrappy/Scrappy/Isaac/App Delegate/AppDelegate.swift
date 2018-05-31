@@ -12,27 +12,30 @@ import Stripe
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
+    
 
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
-        ItemController.shared.fetchAllSellingItems()
-
-            self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let loginVC = LoginViewController()
+        let navigationController = UINavigationController(rootViewController: loginVC)
+        window?.rootViewController = navigationController
+        
+        if Auth.auth().currentUser != nil {
             
-            let rootNav = RootNavigationViewController()
-            
-            rootNav.viewControllers = [LoginViewController()] // Home
-            
-            
-            
-            self.window?.rootViewController = rootNav
-            self.window?.makeKeyAndVisible()
-            
-            STPPaymentConfiguration.shared().publishableKey = Constants.publishableKey
+            ItemController.shared.fetchUserData()
+            DispatchQueue.main.async {
+                let navController = UINavigationController(rootViewController: CollectionViewController())
+                loginVC.present(navController, animated: true, completion: nil)
+            }
+        }
+        
+        self.window?.makeKeyAndVisible()
+        
+        STPPaymentConfiguration.shared().publishableKey = Constants.publishableKey
         
         return true
     }

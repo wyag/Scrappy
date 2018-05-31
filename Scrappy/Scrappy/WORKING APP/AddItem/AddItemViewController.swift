@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import SkyFloatingLabelTextField
+import SVProgressHUD
 
 class AddItemViewController: UIViewController {
     
@@ -217,11 +218,15 @@ class AddItemViewController: UIViewController {
             return
         }
         
-        let item = Item(withTitle: currentTitle, description: currentDesc, image: currentImage, price: currentPriceInt)
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let item = Item(withTitle: currentTitle, description: currentDesc, image: currentImage, price: currentPriceInt, sellerUID: uid)
         let userSellingItem = UserSellingItem(withTitle: currentPrice, description: currentDesc, image: currentImage, price: currentPriceInt)
         ItemController.shared.addUserSellingItems(item: userSellingItem)
         ItemController.shared.addAllSellingItems(item: item)
-        show(CollectionViewController(), sender: self)
+        SVProgressHUD.show(withStatus: "Adding item...")
+        SVProgressHUD.dismiss(withDelay: 0.5) {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }
 

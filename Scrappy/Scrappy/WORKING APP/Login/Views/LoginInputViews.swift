@@ -22,7 +22,7 @@ class LoginInputViews: UIView {
     let scrappyLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "SCRAPPY"
+        label.text = "SCRAPPI"
         label.font = UIFont.boldSystemFont(ofSize: 40)
         label.textColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
         label.textAlignment = .center
@@ -41,6 +41,7 @@ class LoginInputViews: UIView {
     let emailTextField: SkyFloatingLabelTextFieldWithIcon = {
         let email = SkyFloatingLabelTextFieldWithIcon()
         email.translatesAutoresizingMaskIntoConstraints = false
+        email.textContentType = UITextContentType("")
         email.placeholder = "Email"
         email.textColor = UIColor.black
         email.autocorrectionType = UITextAutocorrectionType.no
@@ -58,6 +59,7 @@ class LoginInputViews: UIView {
     let passwordTextField: SkyFloatingLabelTextFieldWithIcon = {
         let password = SkyFloatingLabelTextFieldWithIcon()
         password.translatesAutoresizingMaskIntoConstraints = false
+        password.textContentType = UITextContentType("")
         password.placeholder = "Password"
         password.textColor = UIColor.black
         password.isSecureTextEntry = true
@@ -98,7 +100,7 @@ class LoginInputViews: UIView {
         label.text = "Don't have an \naccount?"
         label.textAlignment = .center
         label.numberOfLines = 2
-        label.font = UIFont(name: "Avenir", size: 10)
+        label.font = UIFont(name: "Avenir", size: 13)
         return label
     }()
     
@@ -106,7 +108,7 @@ class LoginInputViews: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Create new account", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir", size: 10)
+        button.titleLabel?.font = UIFont(name: "Avenir", size: 13)
         button.setTitleColor(UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0), for: .normal)
         return button
     }()
@@ -139,14 +141,15 @@ class LoginInputViews: UIView {
         signInButton.trailingAnchor.constraint(equalTo: textfieldStackView.trailingAnchor).isActive = true
         signInButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
-        addSubview(dontHaveAccLabel)
-        dontHaveAccLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        dontHaveAccLabel.topAnchor.constraint(equalTo: signInButton.bottomAnchor, constant: 100).isActive = true
-        dontHaveAccLabel.widthAnchor.constraint(equalToConstant: frame.width).isActive = true
-        
         addSubview(createNewAccButton)
         createNewAccButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        createNewAccButton.topAnchor.constraint(equalTo: dontHaveAccLabel.bottomAnchor, constant: 1).isActive = true
+        createNewAccButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
+        
+        addSubview(dontHaveAccLabel)
+        dontHaveAccLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        dontHaveAccLabel.bottomAnchor.constraint(equalTo: createNewAccButton.topAnchor, constant: -5).isActive = true
+        dontHaveAccLabel.widthAnchor.constraint(equalToConstant: frame.width).isActive = true
+        
     }
 }
 
