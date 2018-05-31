@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             ItemController.shared.fetchUserData()
             DispatchQueue.main.async {
-                let navController = UINavigationController(rootViewController: SellerPageViewController())
+                let navController = UINavigationController(rootViewController: CollectionViewController())
                 loginVC.present(navController, animated: true, completion: nil)
             }
         }
