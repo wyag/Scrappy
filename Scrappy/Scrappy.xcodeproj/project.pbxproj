@@ -70,6 +70,8 @@
 		BF31588D20AB9195008EA7E5 /* BottomImagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31588820AB9195008EA7E5 /* BottomImagesCell.swift */; };
 		BF31588F20AB9195008EA7E5 /* TopSellerImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31588A20AB9195008EA7E5 /* TopSellerImageCell.swift */; };
 		BF31589020AB9195008EA7E5 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31588B20AB9195008EA7E5 /* CollectionViewController.swift */; };
+		BF73E70420C05D0300BF7818 /* SellerPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73E70320C05D0300BF7818 /* SellerPageViewController.swift */; };
+		BF73E70720C05F6D00BF7818 /* SellerPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73E70620C05F6D00BF7818 /* SellerPageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,6 +142,8 @@
 		BF31588820AB9195008EA7E5 /* BottomImagesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomImagesCell.swift; sourceTree = "<group>"; };
 		BF31588A20AB9195008EA7E5 /* TopSellerImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopSellerImageCell.swift; sourceTree = "<group>"; };
 		BF31588B20AB9195008EA7E5 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		BF73E70320C05D0300BF7818 /* SellerPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerPageViewController.swift; sourceTree = "<group>"; };
+		BF73E70620C05F6D00BF7818 /* SellerPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerPageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -433,6 +437,7 @@
 				5DEEF77320BC53C800D415C9 /* AddItem */,
 				5DEEF75520BB608800D415C9 /* Edit Items */,
 				5DEEF77220BC533C00D415C9 /* DetailItemPage */,
+				BF73E70520C05D1500BF7818 /* Seller Page */,
 				BAF35B7820AEBE9200CE3A87 /* Cart */,
 				BAF35B7B20AEC59800CE3A87 /* Checkout */,
 				5D1BBF4520B33B87007DA928 /* Payments */,
@@ -627,6 +632,15 @@
 			path = Spencer;
 			sourceTree = "<group>";
 		};
+		BF73E70520C05D1500BF7818 /* Seller Page */ = {
+			isa = PBXGroup;
+			children = (
+				BF73E70320C05D0300BF7818 /* SellerPageViewController.swift */,
+				BF73E70620C05F6D00BF7818 /* SellerPageCell.swift */,
+			);
+			path = "Seller Page";
+			sourceTree = "<group>";
+		};
 		FE5767F0BE3954553E377259 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -778,6 +792,7 @@
 				BA13F08A20AA2B86004BF8FC /* Root Nav.swift in Sources */,
 				5D13F58720B3869C00FCB87E /* ItemController.swift in Sources */,
 				5D0FD43B20AB3E2200E90F0E /* ForgotPasswordViewController.swift in Sources */,
+				BF73E70420C05D0300BF7818 /* SellerPageViewController.swift in Sources */,
 				BA6D985420BC8B88006CCD39 /* Convo Cell.swift in Sources */,
 				5D54DB9B20AA585B00CACAF7 /* SignUpViewController.swift in Sources */,
 				5D7918BA20BC687B00B06231 /* UserSellingItems.swift in Sources */,
@@ -797,6 +812,7 @@
 				BA6D985620BC98C6006CCD39 /* Message VC.swift in Sources */,
 				5DEEF75420BB608200D415C9 /* EditItemInputViews.swift in Sources */,
 				BAF35B7D20AEC7B900CE3A87 /* Cart Cell.swift in Sources */,
+				BF73E70720C05F6D00BF7818 /* SellerPageCell.swift in Sources */,
 				BAF35B7520AD6C0400CE3A87 /* CircularTransition.swift in Sources */,
 				BA97FED920ACC2AA003BF19D /* Home Cell.swift in Sources */,
 				5DC1FB4420AFEC7E0034A149 /* ProfileSettingInputViews.swift in Sources */,

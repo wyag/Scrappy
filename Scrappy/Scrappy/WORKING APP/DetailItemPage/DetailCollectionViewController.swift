@@ -33,6 +33,31 @@ class DetailCollectionViewController: UIViewController {
         image.contentMode = .scaleAspectFill
         return image
     }()
+    
+    var sellerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    var sellerProfileImage: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        image.layer.cornerRadius = 15
+        image.clipsToBounds = true
+        return image
+    }()
+    
+    var sellerUsername: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Username Test"
+        label.textColor = UIColor.black
+        return label
+    }()
+    
     var passedImageTitle: UILabel = {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -72,8 +97,18 @@ class DetailCollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = UIColor.orange
+        let tapped = UITapGestureRecognizer(target: self, action: #selector(uiViewTapped))
+        sellerView.addGestureRecognizer(tapped)
         setupViews()
         setupViewData()
+    }
+    
+    @objc func uiViewTapped() {
+        
+        let vc = SellerPageViewController()
+        vc.sellerProfileImage.image = sellerProfileImage.image
+        vc.sellerUsername.text = sellerUsername.text
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func setupViews() {
@@ -83,8 +118,31 @@ class DetailCollectionViewController: UIViewController {
         
         // 'passedImageView'
         view.addSubview(passedImageView)
-        passedImageView.frame = CGRect(x: 0, y: 125, width: view.frame.width, height: 300)
+        passedImageView.frame = CGRect(x: 0, y: 105, width: view.frame.width, height: 300)
         passedImageView.center.x = self.view.center.x
+        
+        // 'sellerView'
+        view.addSubview(sellerView)
+        sellerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        sellerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        sellerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        sellerView.bottomAnchor.constraint(equalTo: passedImageView.topAnchor).isActive = true
+        
+        
+        // 'sellersProfimeImage'
+        sellerView.addSubview(sellerProfileImage)
+        sellerProfileImage.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        sellerProfileImage.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        sellerProfileImage.bottomAnchor.constraint(equalTo: sellerView.bottomAnchor, constant: -5).isActive = true
+        sellerProfileImage.leadingAnchor.constraint(equalTo: sellerView.leadingAnchor, constant: 5).isActive = true
+        sellerProfileImage.topAnchor.constraint(equalTo: sellerView.topAnchor, constant: 5).isActive = true
+
+        // 'sellerUsername'
+        sellerView.addSubview(sellerUsername)
+        sellerUsername.centerYAnchor.constraint(equalTo: sellerProfileImage.centerYAnchor).isActive = true
+        sellerUsername.leadingAnchor.constraint(equalTo: sellerProfileImage.trailingAnchor, constant: 5).isActive = true
+        sellerUsername.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
         
         // Star Raiting Stack View
         setupRaitingStackView()

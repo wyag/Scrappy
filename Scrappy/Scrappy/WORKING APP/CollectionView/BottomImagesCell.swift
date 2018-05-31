@@ -77,59 +77,7 @@ class BottomImagesCell: UICollectionViewCell {
         priceLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
         priceLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        
-//        setupRaitingStackView()
     }
-    
-//    func setupRaitingStackView() {
-//
-//        addSubview(raitingStackView)
-//        raitingStackView.translatesAutoresizingMaskIntoConstraints = false
-//        raitingStackView.axis = .horizontal
-//        raitingStackView.distribution = .fillEqually
-//        raitingStackView.bottomAnchor.constraint(equalTo: cellLabel.topAnchor).isActive = true
-//        raitingStackView.widthAnchor.constraint(equalToConstant: 80).isActive = true
-//        raitingStackView.heightAnchor.constraint(equalToConstant: 20).isActive = true
-//        raitingStackView.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
-//
-//        for _ in 0..<5 {
-//            let starButton = UIButton()
-//            starButton.setImage(#imageLiteral(resourceName: "emptyStar"), for: .normal)
-//            starButton.setImage(#imageLiteral(resourceName: "fullStar"), for: .selected)
-//            starButton.translatesAutoresizingMaskIntoConstraints = false
-//            raitingStackView.addArrangedSubview(starButton)
-//            raitingButtons.append(starButton)
-//        }
-//        if itemRaiting == 1 {
-//            raitingButtons[1].isSelected = true
-//        }
-//
-//        if itemRaiting == 2 {
-//            raitingButtons[1].isSelected = true
-//            raitingButtons[2].isSelected = true
-//        }
-//
-//        if itemRaiting == 3 {
-//            raitingButtons[1].isSelected = true
-//            raitingButtons[2].isSelected = true
-//            raitingButtons[3].isSelected = true
-//        }
-//
-//        if itemRaiting == 4 {
-//            raitingButtons[1].isSelected = true
-//            raitingButtons[2].isSelected = true
-//            raitingButtons[3].isSelected = true
-//            raitingButtons[4].isSelected = true
-//        }
-//
-//        if itemRaiting == 5 {
-//            raitingButtons[1].isSelected = true
-//            raitingButtons[2].isSelected = true
-//            raitingButtons[3].isSelected = true
-//            raitingButtons[4].isSelected = true
-//            raitingButtons[5].isSelected = true
-//        }
-//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

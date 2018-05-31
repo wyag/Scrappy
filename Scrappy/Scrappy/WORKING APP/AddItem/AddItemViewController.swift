@@ -35,6 +35,7 @@ class AddItemViewController: UIViewController {
     var itemTitle: SkyFloatingLabelTextFieldWithIcon = {
         let title = SkyFloatingLabelTextFieldWithIcon()
         title.translatesAutoresizingMaskIntoConstraints = false
+        title.textContentType = UITextContentType("")
         title.placeholder = "Title of Item"
         title.textColor = UIColor.black
         title.autocorrectionType = UITextAutocorrectionType.yes
@@ -46,12 +47,12 @@ class AddItemViewController: UIViewController {
         title.lineColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 0.4)
         title.selectedLineColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
         return title
-        
     }()
     
     var itemPrice: SkyFloatingLabelTextFieldWithIcon = {
         let price = SkyFloatingLabelTextFieldWithIcon()
         price.translatesAutoresizingMaskIntoConstraints = false
+        price.textContentType = UITextContentType("")
         price.placeholder = "Price Amount"
         price.textColor = UIColor.black
         price.iconText = "\u{f155}"
@@ -138,7 +139,7 @@ class AddItemViewController: UIViewController {
             
             if keyboardIsShown == true {
                 
-                view.frame.origin.y += keyboardHeight 
+                view.frame.origin.y = 0
                 keyboardIsShown = false
             }
         }
