@@ -48,15 +48,11 @@ class SignUpViewController: UIViewController {
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        if let keyboardFrame: NSValue = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
             
             if keyboardIsShown == true {
                 
-                view.frame.origin.y += (keyboardHeight / 3)
-            }
-            
+                view.frame.origin.y = 0
+                
         }
     }
     

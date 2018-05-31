@@ -17,7 +17,6 @@ class ItemController {
     
     var profileImage: UIImage?
     var profileName: String?
-    var sellerImageAsString: String?
     var userSellingItems = [UserSellingItem]()
     var allSellingItems = [Item]()
     var userCartItems = [Item]()
@@ -28,7 +27,7 @@ class ItemController {
         
         guard let currentUserUID = Auth.auth().currentUser?.uid else { return }
         
-        Database.database().reference().child("users").child(currentUserUID).observeSingleEvent(of: .value) { (snapshot) in
+        Database.database().reference().child("users/\(currentUserUID)").observeSingleEvent(of: .value) { (snapshot) in
             
             guard let dictionaryValues = snapshot.value as? [String: Any] else { return }
             guard let profImage = ProfileImage(withDictionary: dictionaryValues) else { return }
@@ -53,38 +52,6 @@ class ItemController {
         }
     }
     
-    // MARK: - GET All Selling Items
-    func fetchAllSellingItems() {
-        
-        Database.database().reference().child("allSellingItems").observeSingleEvent(of: .value) { (snapshot) in
-            
-            guard let dictionaryValues = snapshot.value as? [String: Any] else { return }
-            
-            dictionaryValues.forEach({ (key, value) in
-                guard let itemDictionary = value as? [String: Any] else { return }
-                guard let item = Item(withDictionary: itemDictionary) else { return }
-                self.allSellingItems.append(item)
-            })
-        }
-    }
-    
-    // MARK: - GET Profile Image
-    // FIXME: - Fix the fetch to get seller's uid
-    func fetchProfileImage() {
-        
-        guard let currentUID = Auth.auth().currentUser?.uid else { return }
-        
-
-        Database.database().reference().child("users").child(currentUID).observeSingleEvent(of: .value) { (snapshot) in
-            
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            guard let profImage = ProfileImage(withDictionary: dictionary) else { return }
-            guard let imageAsString = SellerImageAsString(withDictionary: dictionary) else { return }
-            self.profileImage = profImage.image
-            self.sellerImageAsString = imageAsString.sellerImageAsString
-        }
-    }
-    
     // MARK: - POST Profile Image
     func addProfileImage(image: UIImage) {
         
@@ -101,7 +68,6 @@ class ItemController {
             }
             
             guard let imageURL = metadata?.downloadURL()?.absoluteString else { return }
-            self.sellerImageAsString = imageURL
             
             let values = ["profileImage": imageURL] as [String: Any]
             Database.database().reference().child("users").child(currentUID).updateChildValues(values, withCompletionBlock: { (error, _) in
@@ -131,7 +97,7 @@ class ItemController {
             
             guard let image = metadata?.downloadURL()?.absoluteString else { return }
 
-            let dictionaryValue = ["title": item.title, "description": item.description, "image": image, "price": item.price] as [String: Any]
+            let dictionaryValue = ["title": item.title, "description": item.description, "image": image, "price": item.price,"sellerUID": currentUID] as [String: Any]
             
             Database.database().reference().child("users").child(currentUID).child("userSellingItems").childByAutoId().updateChildValues(dictionaryValue, withCompletionBlock: { (error, _) in
                 if let error = error {
@@ -160,7 +126,7 @@ class ItemController {
             
             guard let currentUID = Auth.auth().currentUser?.uid else { return }
             
-            let dictionaryValues = ["title": item.title, "description": item.description, "image": image, "price": item.price, "sellerName": self.profileName ?? "", "sellerUID": currentUID, "sellerProfImage": self.sellerImageAsString ?? ""] as [String: Any]
+            let dictionaryValues = ["title": item.title, "description": item.description, "image": image, "price": item.price, "sellerUID": currentUID] as [String: Any]
             
             Database.database().reference().child("allSellingItems").childByAutoId().updateChildValues(dictionaryValues) { (error, reference) in
                 
@@ -189,7 +155,7 @@ class ItemController {
             
             guard let image = metadata?.downloadURL()?.absoluteString else { return }
             
-            let dictionaryValues = ["title": item.title, "description": item.description, "image": image, "price": item.price] as [String: Any]
+            let dictionaryValues = ["title": item.title, "description": item.description, "image": image, "price": item.price, "sellerUID": currentUID] as [String: Any]
             Database.database().reference().child("users").child(currentUID).child("cartItems").childByAutoId().updateChildValues(dictionaryValues, withCompletionBlock: { (error, _) in
                 if let error = error {
                     print("Error saving cart items to db", error)
@@ -198,6 +164,70 @@ class ItemController {
         }
         
         print("User cart item added", ItemController.shared.userCartItems.count)
+    }
+    
+    func fetchAllSellingItems(completion: @escaping([Item]?) -> (Void)) {
+        
+        Database.database().reference().child("allSellingItems").observeSingleEvent(of: .value) { (snapshot) in
+            
+            guard let dictionaryValues = snapshot.value as? [String: Any] else {
+                completion(nil)
+                return
+            }
+            var items = [Item]()
+            dictionaryValues.forEach({ (key, value) in
+                guard let itemDictionary = value as? [String: Any] else { return }
+                guard let item = Item(withDictionary: itemDictionary) else { return }
+                items.append(item)
+            })
+            
+            completion(items)
+            return
+        }
+    }
+    
+    func fetchUserDataWoo(completion: @escaping([UserSellingItem]?, [Item]?, UIImage, String) -> Void) {
+        
+        guard let currentUserUID = Auth.auth().currentUser?.uid else { return }
+        
+        Database.database().reference().child("users/\(currentUserUID)").observeSingleEvent(of: .value) { (snapshot) in
+            
+            guard let dictionaryValues = snapshot.value as? [String: Any] else { return }
+            guard let profImage = ProfileImage(withDictionary: dictionaryValues) else { return }
+            guard let username = ProfileName(withDictionary: dictionaryValues) else { return }
+            self.profileImage = profImage.image
+            self.profileName = username.name
+            
+            guard let userSellingItem = dictionaryValues["userSellingItems"] as? [String: Any] else {
+                completion(nil, nil, profImage.image, username.name); return
+            }
+            
+            var fetchedUserSellingItems = [UserSellingItem]()
+            userSellingItem.forEach({ (key, value) in
+                
+                guard let sellingItemDictionary = value as? [String: Any] else {
+                    completion(nil, nil, profImage.image, username.name); return
+                }
+                guard let item = UserSellingItem(withDictionary: sellingItemDictionary) else {
+                    completion(nil, nil, profImage.image, username.name); return
+                }
+                fetchedUserSellingItems.append(item)
+                
+            })
+            
+            guard let cartItems = dictionaryValues["cartItems"] as? [String: Any] else {
+                completion(nil, nil, profImage.image, username.name); return
+            }
+            
+            var fetchedCartItems = [Item]()
+            cartItems.forEach({ (key, value) in
+                guard let cartItemsDictionary = value as? [String: Any] else { completion(nil, nil, profImage.image, username.name); return }
+                guard let item = Item(withDictionary: cartItemsDictionary) else { completion(nil, nil, profImage.image, username.name); return }
+                fetchedCartItems.append(item)
+            })
+            
+            completion(fetchedUserSellingItems, fetchedCartItems, profImage.image, username.name); return
+        }
     }
 }
 

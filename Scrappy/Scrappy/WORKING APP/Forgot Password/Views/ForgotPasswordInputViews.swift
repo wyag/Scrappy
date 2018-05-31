@@ -23,7 +23,7 @@ class ForgotPasswordInputViews: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.white
         view.layer.cornerRadius = 12
-        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.borderColor = UIColor.darkGray.cgColor
         view.layer.borderWidth = 0.5
         return view
     }()
@@ -35,12 +35,21 @@ class ForgotPasswordInputViews: UIView {
         return button
     }()
     
+    let enterEmailHereLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Reset Your Email"
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        return label
+    }()
+    
     let emailTextField: UITextField = {
         let email = UITextField()
         email.translatesAutoresizingMaskIntoConstraints = false
         email.placeholder = "Enter Email Here"
-        email.layer.borderColor = UIColor.lightGray.cgColor
-        email.layer.borderWidth = 0.4
+        email.layer.borderColor = UIColor.darkGray.cgColor
+        email.layer.borderWidth = 0.5
+        email.layer.cornerRadius = 6
         let leftView = UILabel(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         leftView.backgroundColor = UIColor.clear
         email.leftView = leftView
@@ -54,6 +63,7 @@ class ForgotPasswordInputViews: UIView {
         button.setTitle("Submit", for: .normal)
         button.backgroundColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
         button.setTitleColor(UIColor.white, for: .normal)
+        button.layer.cornerRadius = 7
         return button
     }()
     
@@ -72,11 +82,16 @@ class ForgotPasswordInputViews: UIView {
         closeButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
         closeButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
         
+        popUpView.addSubview(enterEmailHereLabel)
+        enterEmailHereLabel.leadingAnchor.constraint(equalTo: popUpView.leadingAnchor, constant: 25).isActive = true
+        enterEmailHereLabel.topAnchor.constraint(equalTo: popUpView.topAnchor, constant: 90).isActive = true
+        enterEmailHereLabel.trailingAnchor.constraint(equalTo: popUpView.trailingAnchor, constant: -25).isActive = true
+        enterEmailHereLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
         popUpView.addSubview(emailTextField)
-        emailTextField.centerXAnchor.constraint(equalTo: popUpView.centerXAnchor).isActive = true
-        emailTextField.leadingAnchor.constraint(equalTo: popUpView.leadingAnchor, constant: 25).isActive = true
-        emailTextField.topAnchor.constraint(equalTo: popUpView.topAnchor, constant: 130).isActive = true
-        emailTextField.trailingAnchor.constraint(equalTo: popUpView.trailingAnchor, constant: -25).isActive = true
+        emailTextField.leadingAnchor.constraint(equalTo: enterEmailHereLabel.leadingAnchor).isActive = true
+        emailTextField.topAnchor.constraint(equalTo: enterEmailHereLabel.bottomAnchor).isActive = true
+        emailTextField.trailingAnchor.constraint(equalTo: enterEmailHereLabel.trailingAnchor).isActive = true
         emailTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         popUpView.addSubview(submitButton)

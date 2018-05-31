@@ -123,6 +123,18 @@ class ProfileSettingInputViews: UIView {
         return button
     }()
     
+    let sellingItemsLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = Constants.orangeColor
+        label.textColor = UIColor.white
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.text = "Items for sale"
+        label.alpha = 0.7
+        label.textAlignment = .center 
+        return label
+    }()
+    
     let collectionView: UICollectionView = {
         let collectionLayout = UICollectionViewFlowLayout()
         collectionLayout.scrollDirection = .horizontal
@@ -148,33 +160,39 @@ class ProfileSettingInputViews: UIView {
         changeProfileImageButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         changeProfileImageButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 10).isActive = true
         
-        addSubview(lineSeparator)
-        lineSeparator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        lineSeparator.topAnchor.constraint(equalTo: changeProfileImageButton.bottomAnchor, constant: 24).isActive = true
-        lineSeparator.widthAnchor.constraint(equalToConstant: frame.width).isActive = true
-        lineSeparator.heightAnchor.constraint(equalToConstant: 0.4).isActive = true
+        addSubview(sellingItemsLabel)
+        sellingItemsLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        sellingItemsLabel.topAnchor.constraint(equalTo: changeProfileImageButton.bottomAnchor, constant: 24).isActive = true
+        sellingItemsLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        sellingItemsLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true 
         
-        addSubview(labelStackView)
-        labelStackView.addArrangedSubview(nameLabel)
-        labelStackView.addArrangedSubview(emailLabel)
-        labelStackView.addArrangedSubview(passwordLabel)
-        labelStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25).isActive = true
-        labelStackView.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 90).isActive = true
-        labelStackView.widthAnchor.constraint(equalToConstant: frame.width * 0.3).isActive = true
-        labelStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -(frame.height * 0.4)).isActive = true
+//        addSubview(lineSeparator)
+//        lineSeparator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+//        lineSeparator.topAnchor.constraint(equalTo: changeProfileImageButton.bottomAnchor, constant: 24).isActive = true
+//        lineSeparator.widthAnchor.constraint(equalToConstant: frame.width).isActive = true
+//        lineSeparator.heightAnchor.constraint(equalToConstant: 0.4).isActive = true
         
-        addSubview(textfieldStackView)
-        textfieldStackView.addArrangedSubview(nameTextField)
-        textfieldStackView.addArrangedSubview(emailTextField)
-        textfieldStackView.addArrangedSubview(passwordTextField)
-        textfieldStackView.leadingAnchor.constraint(equalTo: labelStackView.trailingAnchor, constant: 15).isActive = true
-        textfieldStackView.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 78).isActive = true
-        textfieldStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25).isActive = true
-        textfieldStackView.bottomAnchor.constraint(equalTo: labelStackView.bottomAnchor).isActive = true
+//        addSubview(labelStackView)
+//        labelStackView.addArrangedSubview(nameLabel)
+//        labelStackView.addArrangedSubview(emailLabel)
+//        labelStackView.addArrangedSubview(passwordLabel)
+//        labelStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25).isActive = true
+//        labelStackView.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 90).isActive = true
+//        labelStackView.widthAnchor.constraint(equalToConstant: frame.width * 0.3).isActive = true
+//        labelStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -(frame.height * 0.4)).isActive = true
+//
+//        addSubview(textfieldStackView)
+//        textfieldStackView.addArrangedSubview(nameTextField)
+//        textfieldStackView.addArrangedSubview(emailTextField)
+//        textfieldStackView.addArrangedSubview(passwordTextField)
+//        textfieldStackView.leadingAnchor.constraint(equalTo: labelStackView.trailingAnchor, constant: 15).isActive = true
+//        textfieldStackView.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 78).isActive = true
+//        textfieldStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25).isActive = true
+//        textfieldStackView.bottomAnchor.constraint(equalTo: labelStackView.bottomAnchor).isActive = true
         
         addSubview(collectionView)
         collectionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        collectionView.topAnchor.constraint(equalTo: textfieldStackView.bottomAnchor, constant: 20).isActive = true
+        collectionView.topAnchor.constraint(equalTo: sellingItemsLabel.bottomAnchor, constant: 20).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }

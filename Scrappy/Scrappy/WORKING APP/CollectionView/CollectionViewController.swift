@@ -8,6 +8,11 @@
 
 import UIKit
 import Firebase
+import SVProgressHUD
+
+protocol CollectionViewControllerDelegate: class {
+    func logoutButtonTapped()
+}
 
 class CollectionViewController: UIViewController {
     
@@ -17,6 +22,8 @@ class CollectionViewController: UIViewController {
     let topSellerImagesID = "TopSellerImagesID"
     let allImageCellID = "ImageCellID"
     let raiting = 4
+    var allSellingItemsIsFetch = false
+    var userDataIsFetched = false
     
     var isMenuTapped = false
     
@@ -40,24 +47,53 @@ class CollectionViewController: UIViewController {
     
     @objc func pullToFetchData() {
         
-        itemController.allSellingItems.removeAll()
-        itemController.fetchAllSellingItems()
-        
         self.bottomCollectionView.reloadData()
         self.refresher.endRefreshing()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        menu.removeFromSuperview()
         
-        profileName.text = ItemController.shared.profileName
-        profileImageButton.setImage(ItemController.shared.profileImage, for: .normal)
-        bottomCollectionView.reloadData()
+        if allSellingItemsIsFetch == false {
+            
+            DispatchQueue.global().async {
+                ItemController.shared.fetchAllSellingItems { (allItems) -> (Void) in
+                    if let allItems = allItems {
+                        
+                        DispatchQueue.main.async {
+                            ItemController.shared.allSellingItems = allItems
+                            self.bottomCollectionView.reloadData()
+                        }
+                        
+                    }
+                }
+            }
+            
+            DispatchQueue.global().async {
+                ItemController.shared.fetchUserDataWoo { (sellerItems, items, image, name) in
+                    
+                    if let sellerItems = sellerItems, let items = items {
+                        
+                        DispatchQueue.main.async {
+                            ItemController.shared.userSellingItems = sellerItems
+                            ItemController.shared.userCartItems = items
+                            ItemController.shared.profileImage = image
+                            ItemController.shared.profileName = name
+                            self.profileImageButton.setImage(ItemController.shared.profileImage, for: .normal)
+                            self.profileName.text = ItemController.shared.profileName
+                            self.bottomCollectionView.reloadData()
+                        }
+                    }
+                }
+            }
+            
+            
+            
+            allSellingItemsIsFetch = true
+        }
         
         self.bottomCollectionView.reloadData()
-        
+        menu.removeFromSuperview()
     }
     
     override func viewDidLoad() {
@@ -76,6 +112,9 @@ class CollectionViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "hMenu").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(menuViewButtonTapped))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "cart").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(cartButtonTapped))
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 255/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(blurViewTapped))
+        blurEffectView.addGestureRecognizer(tapGesture)
     }
     
     // MARK: Navbar
@@ -153,20 +192,26 @@ class CollectionViewController: UIViewController {
     }
     
     @objc private func logoutButtonTapped() {
+        let logoutNotification = Notification.Name(rawValue: "LogOutKey")
+        NotificationCenter.default.post(name: logoutNotification, object: nil)
         handleLogOut()
     }
     
     func handleLogOut() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "Log out", style: .destructive, handler: { (_) in
-            do {
-                try Auth.auth().signOut()
-                ItemController.shared.allSellingItems.removeAll()
-                ItemController.shared.userSellingItems.removeAll()
-                ItemController.shared.userCartItems.removeAll()
-                self.dismiss(animated: true, completion: nil)
-            } catch {
-                print("Error signing out", error)
+            
+            if Auth.auth().currentUser != nil {
+                
+                do {
+                    try Auth.auth().signOut()
+                    ItemController.shared.allSellingItems.removeAll()
+                    ItemController.shared.userSellingItems.removeAll()
+                    ItemController.shared.userCartItems.removeAll()
+                    self.dismiss(animated: true, completion: nil)
+                } catch {
+                    print("Error signing out", error)
+                }
             }
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -216,6 +261,15 @@ class CollectionViewController: UIViewController {
         logoutButton.widthAnchor.constraint(equalTo: menuView.widthAnchor, multiplier: 0.7).isActive = true
         logoutButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         logoutButton.centerXAnchor.constraint(equalTo: menuView.centerXAnchor).isActive = true
+    }
+    
+    @objc func blurViewTapped() {
+        isMenuTapped = false
+        
+        UIView.animate(withDuration: 0.7) {
+            self.menuView.transform = CGAffineTransform(translationX: -(self.view.frame.width * 0.45), y: 0)
+            self.blurEffectView.alpha = 0
+        }
     }
     
     @objc func menuViewButtonTapped() {
@@ -284,7 +338,7 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        
             let item = ItemController.shared.allSellingItems[indexPath.row]
             let detailCollectionVC = DetailCollectionViewController()
             detailCollectionVC.itemImage = item.image
@@ -292,6 +346,8 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
             detailCollectionVC.itemPrice = item.price
             detailCollectionVC.raitingNumber = raiting
             detailCollectionVC.cardDescription = item.description
+            detailCollectionVC.sellerProfileImage.image = item.sellerProfImage
+            detailCollectionVC.sellerUsername.text = item.sellerName
             navigationController?.show(detailCollectionVC, sender: self)
     }
     

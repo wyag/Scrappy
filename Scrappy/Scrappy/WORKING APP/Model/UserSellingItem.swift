@@ -28,7 +28,7 @@ struct UserSellingItem {
     }
     
     init(withTitle title: String, description: String, image: UIImage, price: Int, sellerName: String = "title") {
-        
+    
         self.title = title
         self.description = description
         self.image = image
