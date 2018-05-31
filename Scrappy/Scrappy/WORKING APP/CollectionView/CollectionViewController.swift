@@ -56,36 +56,36 @@ class CollectionViewController: UIViewController {
         
         if allSellingItemsIsFetch == false {
             
-            DispatchQueue.global().async {
-                ItemController.shared.fetchAllSellingItems { (allItems) -> (Void) in
-                    if let allItems = allItems {
-                        
-                        DispatchQueue.main.async {
-                            ItemController.shared.allSellingItems = allItems
-                            self.bottomCollectionView.reloadData()
-                        }
-                        
+            
+            ItemController.shared.fetchAllSellingItems { (allItems) -> (Void) in
+                if let allItems = allItems {
+                    
+                    DispatchQueue.main.async {
+                        ItemController.shared.allSellingItems = allItems
+                        self.bottomCollectionView.reloadData()
+                    }
+                    
+                }
+            }
+            
+            
+            
+            ItemController.shared.fetchUserDataWoo { (sellerItems, items, image, name) in
+                
+                if let sellerItems = sellerItems, let items = items {
+                    
+                    DispatchQueue.main.async {
+                        ItemController.shared.userSellingItems = sellerItems
+                        ItemController.shared.userCartItems = items
+                        ItemController.shared.profileImage = image
+                        ItemController.shared.profileName = name
+                        self.profileImageButton.setImage(ItemController.shared.profileImage, for: .normal)
+                        self.profileName.text = ItemController.shared.profileName
+                        self.bottomCollectionView.reloadData()
                     }
                 }
             }
             
-            DispatchQueue.global().async {
-                ItemController.shared.fetchUserDataWoo { (sellerItems, items, image, name) in
-                    
-                    if let sellerItems = sellerItems, let items = items {
-                        
-                        DispatchQueue.main.async {
-                            ItemController.shared.userSellingItems = sellerItems
-                            ItemController.shared.userCartItems = items
-                            ItemController.shared.profileImage = image
-                            ItemController.shared.profileName = name
-                            self.profileImageButton.setImage(ItemController.shared.profileImage, for: .normal)
-                            self.profileName.text = ItemController.shared.profileName
-                            self.bottomCollectionView.reloadData()
-                        }
-                    }
-                }
-            }
             
             
             
@@ -261,6 +261,8 @@ class CollectionViewController: UIViewController {
         logoutButton.widthAnchor.constraint(equalTo: menuView.widthAnchor, multiplier: 0.7).isActive = true
         logoutButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         logoutButton.centerXAnchor.constraint(equalTo: menuView.centerXAnchor).isActive = true
+               self.view.addSubview(self.blurEffectView)
+        blurEffectView.alpha = 0 
     }
     
     @objc func blurViewTapped() {
@@ -277,7 +279,7 @@ class CollectionViewController: UIViewController {
             isMenuTapped = true
             UIView.animate(withDuration: 0.7) {
                 self.menuView.transform = CGAffineTransform(translationX: self.view.frame.width * 0.45, y: 0)
-                self.view.addSubview(self.blurEffectView)
+         
                 self.view.bringSubview(toFront: self.menuView)
                 self.blurEffectView.alpha = 0.8
             }
@@ -341,15 +343,16 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
         
         let item = ItemController.shared.allSellingItems[indexPath.row]
         let detailCollectionVC = DetailCollectionViewController()
-        
-        SellerController.shared.fetchSellerInfo(uid: item.sellerUID) { (seller) in
-            if let seller = seller {
-                
-                DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            SellerController.shared.fetchSellerInfo(uid: item.sellerUID) { (seller) in
+                if let seller = seller {
+                    
+                    
                     SellerController.shared.seller = seller
                     detailCollectionVC.sellerProfileImage.image = SellerController.shared.seller.image
                     detailCollectionVC.sellerUsername.text = SellerController.shared.seller.name
                     self.navigationController?.show(detailCollectionVC, sender: self)
+                    
                     
                 }
             }
