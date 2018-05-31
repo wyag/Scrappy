@@ -361,6 +361,7 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
         detailCollectionVC.raitingNumber = self.raiting
         detailCollectionVC.cardDescription = item.description
         
+
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
