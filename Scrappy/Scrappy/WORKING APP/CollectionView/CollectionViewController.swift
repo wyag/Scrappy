@@ -339,16 +339,29 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-            let item = ItemController.shared.allSellingItems[indexPath.row]
-            let detailCollectionVC = DetailCollectionViewController()
-            detailCollectionVC.itemImage = item.image
-            detailCollectionVC.itemTitle = item.title
-            detailCollectionVC.itemPrice = item.price
-            detailCollectionVC.raitingNumber = raiting
-            detailCollectionVC.cardDescription = item.description
-//            detailCollectionVC.sellerProfileImage.image = item.sellerProfImage
-//            detailCollectionVC.sellerUsername.text = item.sellerName
-            navigationController?.show(detailCollectionVC, sender: self)
+        let item = ItemController.shared.allSellingItems[indexPath.row]
+        let detailCollectionVC = DetailCollectionViewController()
+        
+        SellerController.shared.fetchSellerInfo(uid: item.sellerUID) { (seller) in
+            if let seller = seller {
+                
+                DispatchQueue.main.async {
+                    SellerController.shared.seller = seller
+                    detailCollectionVC.sellerProfileImage.image = SellerController.shared.seller.image
+                    detailCollectionVC.sellerUsername.text = SellerController.shared.seller.name
+                    self.navigationController?.show(detailCollectionVC, sender: self)
+                    
+                }
+            }
+        }
+        
+        detailCollectionVC.itemImage = item.image
+        detailCollectionVC.itemTitle = item.title
+        detailCollectionVC.itemPrice = item.price
+        detailCollectionVC.raitingNumber = self.raiting
+        detailCollectionVC.cardDescription = item.description
+        
+
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
