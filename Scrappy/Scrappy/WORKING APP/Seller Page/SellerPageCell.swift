@@ -13,7 +13,7 @@ class SellerPageCell: UICollectionViewCell {
     var sellersPostImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.backgroundColor = .red
+        image.image = #imageLiteral(resourceName: "kevinhart")
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
         return image

@@ -346,8 +346,8 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
             detailCollectionVC.itemPrice = item.price
             detailCollectionVC.raitingNumber = raiting
             detailCollectionVC.cardDescription = item.description
-            detailCollectionVC.sellerProfileImage.image = item.sellerProfImage
-            detailCollectionVC.sellerUsername.text = item.sellerName
+//            detailCollectionVC.sellerProfileImage.image = item.sellerProfImage
+//            detailCollectionVC.sellerUsername.text = item.sellerName
             navigationController?.show(detailCollectionVC, sender: self)
     }
     

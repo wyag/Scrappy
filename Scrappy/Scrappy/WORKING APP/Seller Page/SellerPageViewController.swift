@@ -11,10 +11,12 @@ import UIKit
 class SellerPageViewController: UIViewController {
     
     let sellerPageCellID = "SellerPageCellID"
+    let raiting = 4
     
     var sellerProfileImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.image = #imageLiteral(resourceName: "kevinhart")
         image.backgroundColor = UIColor.purple
         image.layer.cornerRadius = 62.5
         image.clipsToBounds = true
@@ -24,7 +26,7 @@ class SellerPageViewController: UIViewController {
     var sellerUsername: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Username"
+        label.text = "Kevin Hart"
         label.textColor = UIColor.black
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
@@ -47,6 +49,13 @@ class SellerPageViewController: UIViewController {
         cv.backgroundColor = .clear
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
+    }()
+    
+    var messageButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setBackgroundImage(#imageLiteral(resourceName: "messageIconBlack"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
 
     override func viewDidLoad() {
@@ -78,14 +87,20 @@ class SellerPageViewController: UIViewController {
         lineSeperator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         lineSeperator.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
         lineSeperator.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
-        lineSeperator.topAnchor.constraint(equalTo: sellerUsername.bottomAnchor, constant: 5).isActive = true
+        lineSeperator.topAnchor.constraint(equalTo: sellerUsername.bottomAnchor, constant: 8).isActive = true
         lineSeperator.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         view.addSubview(sellerCollectionView)
-        sellerCollectionView.topAnchor.constraint(equalTo: lineSeperator.bottomAnchor, constant: 15).isActive = true
+        sellerCollectionView.topAnchor.constraint(equalTo: lineSeperator.bottomAnchor, constant: 10).isActive = true
         sellerCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         sellerCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         sellerCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        
+        view.addSubview(messageButton)
+        messageButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        messageButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        messageButton.leadingAnchor.constraint(equalTo: sellerProfileImage.trailingAnchor, constant: -10).isActive = true
+        messageButton.bottomAnchor.constraint(equalTo: sellerProfileImage.bottomAnchor).isActive = true
     }
 }
 
@@ -101,6 +116,18 @@ extension SellerPageViewController: UICollectionViewDelegate, UICollectionViewDa
 //        return ItemController.shared.userSellingItems.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let item = ItemController.shared.userSellingItems[indexPath.row]
+        let detailVC = DetailCollectionViewController()
+        detailVC.itemImage = item.image
+        detailVC.itemTitle = item.title
+        detailVC.itemPrice = item.price
+        detailVC.raitingNumber = raiting
+        detailVC.cardDescription = item.description
+        navigationController?.show(detailVC, sender: self)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: sellerPageCellID, for: indexPath) as? SellerPageCell else { return UICollectionViewCell() }
         
@@ -114,7 +141,7 @@ extension SellerPageViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 5)
+        return UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
     }
     
     
