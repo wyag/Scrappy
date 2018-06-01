@@ -74,8 +74,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // 'cartTableView'
         cartTableView.backgroundColor = UIColor.white
-        cartTableView.frame = CGRect(x: 0, y: 60, width: self.view.frame.width, height: (self.view.frame.height - 120))
-        cartTableView.rowHeight = 100
+        cartTableView.frame = CGRect(x: 0, y: self.view.frame.height/12.266, width: self.view.frame.width, height: (self.view.frame.height - (self.view.frame.width/3.45)))
+        cartTableView.rowHeight = self.view.frame.height/7.36
         cartTableView.delegate = self
         cartTableView.dataSource = self
         cartTableView.register(CartTableViewCell.self, forCellReuseIdentifier: "cartCell")
@@ -95,7 +95,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         checkoutButton.layer.shadowRadius = 4
         checkoutButton.layer.shadowOpacity = 1
         checkoutButton.layer.shadowOffset = CGSize(width: 0, height: 1)
-        checkoutButton.frame = CGRect(x: 0, y: (self.view.frame.height - 100), width: (self.view.frame.width/3 * 2), height: 60)
+        checkoutButton.frame = CGRect(x: 0, y: (self.view.frame.height - (self.view.frame.height/7.36)), width: (self.view.frame.width/3 * 2), height: self.view.frame.width/6.9)
         checkoutButton.center.x = (self.view.center.x - 5)
         checkoutButton.addTarget(self, action: #selector(self.goToCheckout(_:)), for: .touchUpInside)
         
@@ -127,7 +127,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.cellDescription = ItemController.shared.userCartItems[indexPath.row].description
         // Cell Frame
         cell.backgroundColor = UIColor.white
-        let cellFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 100)
+        let cellFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height/7.36)
         cell.setupCell(frame: cellFrame)
         // Return Cell
         return cell
