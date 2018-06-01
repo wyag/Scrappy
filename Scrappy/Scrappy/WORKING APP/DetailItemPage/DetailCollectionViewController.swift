@@ -26,12 +26,13 @@ class DetailCollectionViewController: UIViewController {
     var itemImage: UIImage?
     var itemTitle: String?
     var itemPrice: Int?
-    var cardDescription: String?
+    var cardDescription: String? 
     var sellerUID: String? 
     
     var passedImageView: UIImageView = {
        let image =  UIImageView()
         image.clipsToBounds = true
+        image.backgroundColor = .black
         image.contentMode = .scaleAspectFill
         return image
     }()
@@ -121,7 +122,8 @@ class DetailCollectionViewController: UIViewController {
         
         // 'passedImageView'
         view.addSubview(passedImageView)
-        passedImageView.frame = CGRect(x: 0, y: 105, width: view.frame.width, height: 300)
+        passedImageView.frame = CGRect(x: 0, y: 105, width: view.frame.width, height: (view.frame.height / 2.5))
+//        passedImageView.frame = CGRect(x: 0, y: 105, width: view.frame.width, height: 300)
         passedImageView.center.x = self.view.center.x
         
         // 'sellerView'
