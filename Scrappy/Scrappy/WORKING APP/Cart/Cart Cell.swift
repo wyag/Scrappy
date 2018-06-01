@@ -45,9 +45,9 @@ class CartTableViewCell: UITableViewCell {
         // 'itPhoto'
         itPhoto.backgroundColor = UIColor.clear
         itPhoto.image = aImage
-        itPhoto.frame = CGRect(x: 10, y: 0, width: 80, height: 80)
+        itPhoto.frame = CGRect(x: frame.width/41.4, y: 0, width: frame.width/5.175, height: frame.width/5.175)
         itPhoto.center.y = self.center.y
-        itPhoto.layer.cornerRadius = 20
+        itPhoto.layer.cornerRadius = frame.width/20.7
         itPhoto.clipsToBounds = true
         
         
@@ -55,7 +55,7 @@ class CartTableViewCell: UITableViewCell {
         let itNameAT = NSMutableAttributedString(string: aName, attributes: [NSAttributedStringKey.foregroundColor: UIColor.black, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 16) as Any])
         itName.attributedText = itNameAT
         itName.backgroundColor = UIColor.clear
-        itName.frame = CGRect(x: 120, y: 0, width: 100, height: 20)
+        itName.frame = CGRect(x: frame.width/3.45, y: 0, width: frame.width/4.14, height: frame.width/20.7)
         itName.sizeToFit()
         itName.textAlignment = .center
         itName.frame.origin.y = itPhoto.frame.origin.y
@@ -64,7 +64,7 @@ class CartTableViewCell: UITableViewCell {
         let itPriceAT = NSMutableAttributedString(string: "$ \(aPrice)", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Regular", size: 14) as Any])
         itPrice.attributedText = itPriceAT
         itPrice.backgroundColor = UIColor.clear
-        itPrice.frame = CGRect(x: 120, y: 0, width: 100, height: 20)
+        itPrice.frame = CGRect(x: frame.width/3.45, y: 0, width: frame.width/4.14, height: frame.width/20.7)
         itPrice.sizeToFit()
         itPrice.textAlignment = .center
         itPrice.frame.origin.y = itPhoto.center.y

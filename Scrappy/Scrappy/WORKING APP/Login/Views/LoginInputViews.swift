@@ -115,10 +115,8 @@ class LoginInputViews: UIView {
         return button
     }()
     
-    
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         
         addSubview(scrappyLabel)
         scrappyLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
@@ -151,7 +149,6 @@ class LoginInputViews: UIView {
         dontHaveAccLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         dontHaveAccLabel.bottomAnchor.constraint(equalTo: createNewAccButton.topAnchor, constant: -5).isActive = true
         dontHaveAccLabel.widthAnchor.constraint(equalToConstant: frame.width).isActive = true
-        
     }
 }
 

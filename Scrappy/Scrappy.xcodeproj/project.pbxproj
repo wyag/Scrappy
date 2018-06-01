@@ -236,7 +236,6 @@
 				5DEEF76E20BC4E2C00D415C9 /* CartItems.swift */,
 				5D7918B920BC687B00B06231 /* UserSellingItems.swift */,
 				5D27909B20B46E7100A8779B /* Constants.swift */,
-				5DAA2DAF20B5DBF500852195 /* StripeClient.swift */,
 				5DECCCD120B7D11B007444CB /* MyAPIClient.swift */,
 			);
 			path = Model;
@@ -297,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				5DC1FB3B20AFE22C0034A149 /* LoginInputViews.swift */,
+				5DAA2DAF20B5DBF500852195 /* StripeClient.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
