@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class SellerPageViewController: UIViewController {
     
     let sellerPageCellID = "SellerPageCellID"
     let raiting = 4
+    var sellerUID: String? 
     
     var sellerProfileImage: UIImageView = {
         let image = UIImageView()
@@ -55,13 +57,41 @@ class SellerPageViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setBackgroundImage(#imageLiteral(resourceName: "messageIconBlack"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(messageButtonTapped), for: .touchUpInside)
         return button
     }()
+    
+    @objc func messageButtonTapped() {
+        guard let uid = sellerUID, let username = sellerUsername.text, let image = sellerProfileImage.image else { return }
+        let chatLogVC = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        let messageUser = MessageUser(uid: uid, username: username, profileImage: image)
+        chatLogVC.user = messageUser
+        navigationController?.pushViewController(chatLogVC, animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        SellerController.shared.sellerItems.removeAll()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupViews()
+        SVProgressHUD.setForegroundColor(Constants.orangeColor)
+        SVProgressHUD.show()
+        
+        guard let sellerUID = sellerUID else { return }
+        SellerController.shared.fetchSellerItems(uid: sellerUID) { (sellerItems) in
+            if let sellerItems = sellerItems {
+                SellerController.shared.sellerItems = sellerItems
+                
+                DispatchQueue.main.async {
+                    self.sellerCollectionView.reloadData()
+                    SVProgressHUD.dismiss()
+                }
+            }
+        }
     }
     
     func setupViews() {
@@ -112,8 +142,7 @@ extension SellerPageViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 25
-//        return ItemController.shared.userSellingItems.count
+        return SellerController.shared.sellerItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -130,9 +159,7 @@ extension SellerPageViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: sellerPageCellID, for: indexPath) as? SellerPageCell else { return UICollectionViewCell() }
-        
-        cell.sellersPostImage.backgroundColor = .red
-//        cell.sellersPostImage.image = ItemController.shared.userSellingItems[indexPath.row].image
+        cell.sellersPostImage.image = SellerController.shared.sellerItems[indexPath.row].image
         return cell
     }
     

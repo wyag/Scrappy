@@ -27,6 +27,7 @@ class DetailCollectionViewController: UIViewController {
     var itemTitle: String?
     var itemPrice: Int?
     var cardDescription: String?
+    var sellerUID: String? 
     
     var passedImageView: UIImageView = {
        let image =  UIImageView()
@@ -109,6 +110,7 @@ class DetailCollectionViewController: UIViewController {
         let vc = SellerPageViewController()
         vc.sellerProfileImage.image = sellerProfileImage.image
         vc.sellerUsername.text = sellerUsername.text
+        vc.sellerUID = sellerUID
         navigationController?.pushViewController(vc, animated: true)
     }
     

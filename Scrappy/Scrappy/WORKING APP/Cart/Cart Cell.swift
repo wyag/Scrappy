@@ -37,7 +37,7 @@ class CartTableViewCell: UITableViewCell {
         guard let aImage = cellImage else { return }
         guard let aName = cellName else { return }
         guard let thePrice = cellPrice else { return }
-        let aPrice = Double(thePrice) / 100
+        let aPrice = thePrice
         
         // Set Cell Frame
         self.frame = frame

@@ -87,10 +87,12 @@ class LoginInputViews: UIView {
         let button = UIButton(type: .system)
         button.frame = CGRect(x: 0, y: 0, width: 0, height: 50)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
+        button.backgroundColor = Constants.orangeColor
+        button.alpha = 0.3
         button.setTitle("SIGN IN", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = button.frame.height / 2
+        button.isEnabled = false
         return button
     }()
     

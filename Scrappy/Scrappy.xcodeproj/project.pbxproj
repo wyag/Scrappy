@@ -12,6 +12,12 @@
 		5D13F58720B3869C00FCB87E /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D13F58620B3869C00FCB87E /* ItemController.swift */; };
 		5D15B22C20C093DD008E8758 /* SellerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D15B22B20C093DD008E8758 /* SellerController.swift */; };
 		5D15B22E20C09504008E8758 /* Seller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D15B22D20C09504008E8758 /* Seller.swift */; };
+		5D15B23020C12556008E8758 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D15B22F20C12556008E8758 /* ChatLogController.swift */; };
+		5D15B23620C14791008E8758 /* MessageUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D15B23520C14791008E8758 /* MessageUser.swift */; };
+		5D15B23820C14B7D008E8758 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D15B23720C14B7D008E8758 /* MessagesController.swift */; };
+		5D15B23A20C14DE1008E8758 /* TheMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D15B23920C14DE1008E8758 /* TheMessages.swift */; };
+		5D15B23C20C153A9008E8758 /* MessagesControllerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D15B23B20C153A9008E8758 /* MessagesControllerTableViewCell.swift */; };
+		5D15B23E20C17D92008E8758 /* ChatLogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D15B23D20C17D92008E8758 /* ChatLogCollectionViewCell.swift */; };
 		5D27909C20B46E7100A8779B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D27909B20B46E7100A8779B /* Constants.swift */; };
 		5D43504320AB9486001132B6 /* ProfileSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D43504220AB9486001132B6 /* ProfileSettingViewController.swift */; };
 		5D43504520ACA5A2001132B6 /* ProfileSettingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D43504420ACA5A2001132B6 /* ProfileSettingCollectionViewCell.swift */; };
@@ -84,6 +90,12 @@
 		5D13F58620B3869C00FCB87E /* ItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
 		5D15B22B20C093DD008E8758 /* SellerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerController.swift; sourceTree = "<group>"; };
 		5D15B22D20C09504008E8758 /* Seller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seller.swift; sourceTree = "<group>"; };
+		5D15B22F20C12556008E8758 /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
+		5D15B23520C14791008E8758 /* MessageUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageUser.swift; sourceTree = "<group>"; };
+		5D15B23720C14B7D008E8758 /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
+		5D15B23920C14DE1008E8758 /* TheMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheMessages.swift; sourceTree = "<group>"; };
+		5D15B23B20C153A9008E8758 /* MessagesControllerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesControllerTableViewCell.swift; sourceTree = "<group>"; };
+		5D15B23D20C17D92008E8758 /* ChatLogCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogCollectionViewCell.swift; sourceTree = "<group>"; };
 		5D27909B20B46E7100A8779B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5D43504220AB9486001132B6 /* ProfileSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewController.swift; sourceTree = "<group>"; };
 		5D43504420ACA5A2001132B6 /* ProfileSettingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -214,6 +226,8 @@
 				5D5BB1EE20ACDC1F00EDA8C9 /* Item.swift */,
 				5D5DF11920BE7C5500280EA1 /* UserSellingItem.swift */,
 				5D933B5220C0453F00224E13 /* User.swift */,
+				5D15B23520C14791008E8758 /* MessageUser.swift */,
+				5D15B23920C14DE1008E8758 /* TheMessages.swift */,
 				5D15B22D20C09504008E8758 /* Seller.swift */,
 				5D933B5620C049AE00224E13 /* Post.swift */,
 				5D7918BB20BCAD1A00B06231 /* ProfileImage.swift */,
@@ -588,6 +602,10 @@
 				BF31588620AB916B008EA7E5 /* Spencer */,
 				BA13F08720AA26FA004BF8FC /* Resources */,
 				5DEEF77020BC52A500D415C9 /* WORKING APP */,
+				5D15B22F20C12556008E8758 /* ChatLogController.swift */,
+				5D15B23D20C17D92008E8758 /* ChatLogCollectionViewCell.swift */,
+				5D15B23720C14B7D008E8758 /* MessagesController.swift */,
+				5D15B23B20C153A9008E8758 /* MessagesControllerTableViewCell.swift */,
 			);
 			path = Scrappy;
 			sourceTree = "<group>";
@@ -807,6 +825,7 @@
 				5D5BB1EF20ACDC1F00EDA8C9 /* Item.swift in Sources */,
 				BF250D8720B330ED00B051FE /* AddItemViewController.swift in Sources */,
 				5D5DF11A20BE7C5500280EA1 /* UserSellingItem.swift in Sources */,
+				5D15B23C20C153A9008E8758 /* MessagesControllerTableViewCell.swift in Sources */,
 				BA9E7C3B20B4D29600F03AA7 /* Custom Nav Menu.swift in Sources */,
 				BA97FED720ACBEEF003BF19D /* UIColorEx.swift in Sources */,
 				BA97FED220AC95B1003BF19D /* Home VC.swift in Sources */,
@@ -833,6 +852,7 @@
 				5D27909C20B46E7100A8779B /* Constants.swift in Sources */,
 				5D7918C520BE0BB500B06231 /* SellerImageAsString.swift in Sources */,
 				BAC3948020BC7DF100BD2CCA /* Convo VC.swift in Sources */,
+				5D15B23620C14791008E8758 /* MessageUser.swift in Sources */,
 				BA6D985620BC98C6006CCD39 /* Message VC.swift in Sources */,
 				5DEEF75420BB608200D415C9 /* EditItemInputViews.swift in Sources */,
 				BAF35B7D20AEC7B900CE3A87 /* Cart Cell.swift in Sources */,
@@ -847,6 +867,7 @@
 				BF31588D20AB9195008EA7E5 /* BottomImagesCell.swift in Sources */,
 				5DC1FB4B20B0A9050034A149 /* UserPaymentInputViews.swift in Sources */,
 				5DC1FB3C20AFE22C0034A149 /* LoginInputViews.swift in Sources */,
+				5D15B23A20C14DE1008E8758 /* TheMessages.swift in Sources */,
 				BA39998620A9E92200383CFB /* AppDelegate.swift in Sources */,
 				BA97990320B7403900A6D822 /* Address VC.swift in Sources */,
 				5DC1FB3E20AFE73F0034A149 /* SignUpInputViews.swift in Sources */,
@@ -858,8 +879,11 @@
 				5D43504520ACA5A2001132B6 /* ProfileSettingCollectionViewCell.swift in Sources */,
 				BA0CE25420BDB93000C5F14C /* MessageController.swift in Sources */,
 				5DEEF75220BB606B00D415C9 /* EditItemViewController.swift in Sources */,
+				5D15B23020C12556008E8758 /* ChatLogController.swift in Sources */,
 				5D15B22C20C093DD008E8758 /* SellerController.swift in Sources */,
+				5D15B23820C14B7D008E8758 /* MessagesController.swift in Sources */,
 				5D15B22E20C09504008E8758 /* Seller.swift in Sources */,
+				5D15B23E20C17D92008E8758 /* ChatLogCollectionViewCell.swift in Sources */,
 				BA87D47520B605C200ED14A1 /* Checkout Cell.swift in Sources */,
 				5DECCCD620B7D18D007444CB /* StripeCheckOutViewController.swift in Sources */,
 				5DC1FB1A20AF64F60034A149 /* UserPaymentCompleteViewController.swift in Sources */,

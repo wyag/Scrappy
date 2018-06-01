@@ -37,9 +37,38 @@ class LoginViewController: UIViewController {
         loginInputViews.createNewAccButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         
         NotificationCenter.default.addObserver(self, selector: #selector(emptyTextFields), name: NSNotification.Name(rawValue: "LogOutNotification"), object: nil)
+        
+        loginInputViews.emailTextField.addTarget(self, action: #selector(handleTextInputChanged), for: .editingChanged)
+        loginInputViews.passwordTextField.addTarget(self, action: #selector(handleTextInputChanged), for: .editingChanged)
+        
+        showTitle() 
+    }
+    
+    func showTitle() {
+        loginInputViews.scrappyLabel.transform = CGAffineTransform(scaleX: 0.1, y: 0.2).rotated(by: 3)
+        
+        UIView.animate(withDuration: 3, delay: 0.4, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: {
+            self.loginInputViews.scrappyLabel.transform = .identity
+        }) { (succes) in
+        }
+    }
+    
+    @objc func handleTextInputChanged() {
+        let isFormValid = loginInputViews.emailTextField.text?.count ?? 0 > 0 && loginInputViews.passwordTextField.text?.count ?? 0 > 0
+        
+        if isFormValid {
+            loginInputViews.signInButton.isEnabled = true
+            loginInputViews.signInButton.backgroundColor = Constants.orangeColor
+            loginInputViews.signInButton.alpha = 1
+            
+        } else {
+            loginInputViews.signInButton.isEnabled = false
+            loginInputViews.signInButton.alpha = 0.3
+        }
     }
     
     @objc func emptyTextFields() {
+        print("Log Out Notification sent successfully")
         loginInputViews.emailTextField.text = ""
         loginInputViews.passwordTextField.text = ""
     }
