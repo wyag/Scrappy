@@ -177,11 +177,11 @@ class CollectionViewController: UIViewController {
         messageController.tableView.reloadData()
         messageController.observeUserMessages()
         navigationController?.pushViewController(messageController, animated: true)
-//        let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
-//        navigationController?.pushViewController(chatLogController, animated: true)
+        self.menuViewButtonTapped()
     }
     
     @objc func sellAnItemButtonTapped() {
+        self.menuViewButtonTapped()
         navigationController?.pushViewController(AddItemViewController(), animated: true)
     }
     
@@ -199,6 +199,7 @@ class CollectionViewController: UIViewController {
     }()
     
     @objc func profileImageButtonTapped() {
+        self.menuViewButtonTapped()
         let profileSettingVC = ProfileSettingViewController()
         profileSettingVC.delegate = self 
         navigationController?.pushViewController(profileSettingVC, animated: true)
@@ -307,6 +308,7 @@ class CollectionViewController: UIViewController {
     }
     
     @objc func cartButtonTapped() {
+        self.menuViewButtonTapped()
         navigationController?.pushViewController(CartViewController(), animated: true)
     }
     
