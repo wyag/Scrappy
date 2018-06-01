@@ -10,7 +10,7 @@ target 'Scrappy' do
   pod'SkyFloatingLabelTextField'
   pod 'Stripe'
   pod 'SVProgressHUD'
-pod 'Alamofire'
+  pod 'Alamofire'
   
 
   # Pods for Scrappy

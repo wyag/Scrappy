@@ -13,6 +13,7 @@ class SellerController {
     
     static let shared = SellerController()
     var seller = Seller(name: "", image: #imageLiteral(resourceName: "xMark"))
+    var sellerItems = [UserSellingItem]()
     
     func fetchSellerInfo(uid: String, completion: @escaping(Seller?) -> Void) {
         Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value) { (snapshot) in
@@ -27,7 +28,27 @@ class SellerController {
             seller.image = image
             completion(seller); return
      
-        
+            
+        }
+    }
+    
+    func fetchSellerItems(uid: String, completion: @escaping([UserSellingItem]?) -> Void) {
+        Database.database().reference().child("users").child(uid).child("userSellingItems").observeSingleEvent(of: .value) { (snapshot) in
+            guard let dictionaryValues = snapshot.value as? [String: Any] else { completion(nil); return }
+            
+            var fetchedUserSellingItems = [UserSellingItem]()
+            dictionaryValues.forEach({ (key, value) in
+                
+                guard let sellingItemDictionary = value as? [String: Any] else {
+                    completion(nil); return
+                }
+                guard let item = UserSellingItem(withDictionary: sellingItemDictionary) else {
+                    completion(nil); return 
+                }
+                fetchedUserSellingItems.append(item)
+            })
+            self.sellerItems = fetchedUserSellingItems
+            completion(fetchedUserSellingItems); return
         }
     }
 }

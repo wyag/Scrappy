@@ -32,6 +32,15 @@ class SignUpViewController: UIViewController {
         
         signUpInputViews.closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         signUpInputViews.signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
+        signUpInputViews.plusPhotoButton.addTarget(self, action: #selector(handlePlusPhoto), for: .touchUpInside)
+    }
+    
+    @objc func handlePlusPhoto() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        
+        present(imagePickerController, animated: true, completion: nil)
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
@@ -61,16 +70,18 @@ class SignUpViewController: UIViewController {
     }
     
     @objc func signUpButtonTapped() {
+        SVProgressHUD.setForegroundColor(Constants.orangeColor)
         SVProgressHUD.show(withStatus: "Signing Up...")
         handleUserSignUp()
-        SVProgressHUD.dismiss(withDelay: 2)
+        
     }
     
     func handleUserSignUp() {
         
-        guard let username = signUpInputViews.usernameTextField.text else { return }
-        guard let email = signUpInputViews.emailTextField.text, !email.isEmpty else { return }
-        guard let password = signUpInputViews.passwordTextField.text, !password.isEmpty else { return }
+        guard let profileImage = signUpInputViews.plusPhotoButton.currentBackgroundImage, profileImage != #imageLiteral(resourceName: "addPhoto") else { SVProgressHUD.showError(withStatus: "Please create a profile image"); return }
+        guard let username = signUpInputViews.usernameTextField.text, !username.isEmpty else { SVProgressHUD.showError(withStatus: "Please Enter a username"); return }
+        guard let email = signUpInputViews.emailTextField.text, !email.isEmpty else { SVProgressHUD.showError(withStatus: "Please Enter an email"); return }
+        guard let password = signUpInputViews.passwordTextField.text, password.count >= 6 else { SVProgressHUD.showError(withStatus: "Please Enter a password with at least 6 characters"); return }
         
         Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
             
@@ -81,22 +92,33 @@ class SignUpViewController: UIViewController {
             
             print("Successfully created user:", user?.uid ?? "")
             
-            let dictionaryValues = ["username": username, "email": email]
-            guard let uid = user?.uid else { return }
+            guard let uploadData = UIImageJPEGRepresentation(profileImage, 0.3) else { return }
+            let imageUID = UUID().uuidString
             
-            let values = [uid: dictionaryValues]
-            
-            Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (error, reference) in
+            Storage.storage().reference().child("profileImages").child(imageUID).putData(uploadData, metadata: nil) { (metadata, error) in
                 
                 if let error = error {
-                    print("Failed to save user info into db", error)
+                    print("❌Error storing profile image to Storage. *Check handleUserSignUp()", error)
                 }
                 
-                print("Successfully saved user info into db")
+                guard let imageURL = metadata?.downloadURL()?.absoluteString else { return }
+                guard let uid = user?.uid else { return }
+                let dictionaryValues = ["username": username, "email": email, "profileImage": imageURL]
                 
-                self.dismiss(animated: true, completion: nil)
-    
-            })
+                let values = [uid: dictionaryValues]
+                
+                Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (error, reference) in
+                    
+                    if let error = error {
+                        print("Failed to save user info into db", error)
+                    }
+                    
+                    print("Successfully saved user info into db")
+                    SVProgressHUD.dismiss()
+                    self.dismiss(animated: true, completion: nil)
+
+                })
+            }
         }
     }
 }
@@ -112,6 +134,22 @@ extension SignUpViewController: UITextFieldDelegate {
         return true
     }
 }
+
+extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
+            self.signUpInputViews.plusPhotoButton.setBackgroundImage(editedImage, for: .normal)
+            
+            
+        } else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+            self.signUpInputViews.plusPhotoButton.setBackgroundImage(originalImage, for: .normal)
+        }
+        dismiss(animated: true, completion: nil)
+    }
+}
+
 
 
 

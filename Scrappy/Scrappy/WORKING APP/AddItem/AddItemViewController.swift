@@ -16,12 +16,12 @@ class AddItemViewController: UIViewController {
     // Properties
     let itemImageButton: UIButton = {
         let imageButton = UIButton()
-//        imageButton.setBackgroundImage(#imageLiteral(resourceName: "addProfImage"), for: .normal)
-//        imageButton.setBackgroundImage(#imageLiteral(resourceName: "addProfImageTapped"), for: .highlighted)
-        imageButton.setImage(#imageLiteral(resourceName: "addProfImage"), for: .normal)
+        imageButton.setImage(UIImage(named: "editimage"), for: .normal)
         imageButton.setBackgroundImage(#imageLiteral(resourceName: "addProfileBackground"), for: .highlighted)
         imageButton.translatesAutoresizingMaskIntoConstraints = false
         imageButton.addTarget(self, action: #selector(itemImageButtonTapped), for: .touchUpInside)
+        imageButton.layer.borderColor = UIColor.darkGray.cgColor
+        imageButton.layer.borderWidth = 0.6
         return imageButton
     }()
     

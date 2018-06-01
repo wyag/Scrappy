@@ -35,6 +35,22 @@ class SignUpInputViews: UIView {
         return label
     }()
     
+    let plusPhotoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.imageView?.contentMode = .scaleAspectFit
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 60
+        button.setBackgroundImage(#imageLiteral(resourceName: "addPhoto"), for: UIControlState.normal)
+        return button
+    }()
+    
+    let plusPhotoImage: UIImageView = {
+        let image = UIImageView(image: #imageLiteral(resourceName: "addPhoto"))
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
     let textfieldStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -115,17 +131,18 @@ class SignUpInputViews: UIView {
         closeButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
         closeButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
         
-        addSubview(createNewAccLabel)
-        createNewAccLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        createNewAccLabel.topAnchor.constraint(equalTo: topAnchor, constant: 80).isActive = true
-        createNewAccLabel.widthAnchor.constraint(equalToConstant: frame.width).isActive = true
+        addSubview(plusPhotoButton)
+        plusPhotoButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        plusPhotoButton.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 20).isActive = true
+        plusPhotoButton.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        plusPhotoButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
         
         addSubview(textfieldStackView)
         textfieldStackView.addArrangedSubview(usernameTextField)
         textfieldStackView.addArrangedSubview(emailTextField)
         textfieldStackView.addArrangedSubview(passwordTextField)
         textfieldStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25).isActive = true
-        textfieldStackView.topAnchor.constraint(equalTo: createNewAccLabel.bottomAnchor, constant: 100).isActive = true
+        textfieldStackView.topAnchor.constraint(equalTo: plusPhotoButton.bottomAnchor, constant: 30).isActive = true
         textfieldStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25).isActive = true
         textfieldStackView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         

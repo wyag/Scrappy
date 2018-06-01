@@ -12,10 +12,6 @@ class ProfileSettingCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 2.0)
-        layer.shadowRadius = 2.0
-        layer.shadowOpacity = 0.5
     }
     
     required init?(coder aDecoder: NSCoder) {

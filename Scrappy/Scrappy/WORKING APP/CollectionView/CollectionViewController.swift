@@ -53,7 +53,8 @@ class CollectionViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        setupMenuView()
+
         if allSellingItemsIsFetch == false {
             
             
@@ -68,8 +69,6 @@ class CollectionViewController: UIViewController {
                 }
             }
             
-            
-            
             ItemController.shared.fetchUserDataWoo { (sellerItems, items, image, name) in
                 
                 if let sellerItems = sellerItems, let items = items {
@@ -79,16 +78,12 @@ class CollectionViewController: UIViewController {
                         ItemController.shared.userCartItems = items
                         ItemController.shared.profileImage = image
                         ItemController.shared.profileName = name
-                        self.profileImageButton.setImage(ItemController.shared.profileImage, for: .normal)
-                        self.profileName.text = ItemController.shared.profileName
+                        self.profileImageButton.setImage(image, for: .normal)
+                        self.profileName.text = name
                         self.bottomCollectionView.reloadData()
                     }
                 }
             }
-            
-            
-            
-            
             allSellingItemsIsFetch = true
         }
         
@@ -101,14 +96,14 @@ class CollectionViewController: UIViewController {
         self.view.backgroundColor = UIColor(red: 236/255.0, green: 236/255.0, blue: 236/255.0, alpha: 1)
 //        setupNav()
         setupViews()
-        setupMenuView()
         bottomCollectionView.refreshControl = refresher
         blurEffectView.frame = view.frame
         
         navigationController?.navigationBar.tintColor = UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
-        navigationItem.title = "Todays Sales"
-        let textAttributes = [NSAttributedStringKey.foregroundColor:UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)]
-        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        navigationItem.title = "New Items"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.orange, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Regular", size: 22) as Any]
+//        let textAttributes = [NSAttributedStringKey.foregroundColor:UIColor(red: 250/255.0, green: 150/255.0, blue: 0, alpha: 1.0)]
+//        navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "hMenu").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(menuViewButtonTapped))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "cart").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(cartButtonTapped))
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 255/255.0, green: 150/255.0, blue: 0, alpha: 1.0)
@@ -164,8 +159,26 @@ class CollectionViewController: UIViewController {
        return button
     }()
     
+    lazy var closeMenuButton: UIButton = {
+        let bt = UIButton()
+        bt.frame = CGRect(x: self.view.frame.width/2, y: 0, width: self.view.frame.width/2, height: self.view.frame.height)
+        bt.backgroundColor = .clear
+        bt.setImage(UIImage(named: "whiteX"), for: .normal)
+        bt.setImage(UIImage(named: "whiteX2"), for: .selected)
+        bt.addTarget(self, action: #selector(self.menuViewButtonTapped), for: .touchUpInside)
+        bt.alpha = 0
+        return bt
+    }()
+    
     @objc func messageButtonTapped() {
-        print("messages tapped!!")
+        let messageController = MessagesController()
+        messageController.messages.removeAll()
+        messageController.messagesDictionary.removeAll()
+        messageController.tableView.reloadData()
+        messageController.observeUserMessages()
+        navigationController?.pushViewController(messageController, animated: true)
+//        let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+//        navigationController?.pushViewController(chatLogController, animated: true)
     }
     
     @objc func sellAnItemButtonTapped() {
@@ -192,7 +205,7 @@ class CollectionViewController: UIViewController {
     }
     
     @objc private func logoutButtonTapped() {
-        let logoutNotification = Notification.Name(rawValue: "LogOutKey")
+        let logoutNotification = Notification.Name(rawValue: "LogOutNotification")
         NotificationCenter.default.post(name: logoutNotification, object: nil)
         handleLogOut()
     }
@@ -351,6 +364,7 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
                     SellerController.shared.seller = seller
                     detailCollectionVC.sellerProfileImage.image = SellerController.shared.seller.image
                     detailCollectionVC.sellerUsername.text = SellerController.shared.seller.name
+                    detailCollectionVC.sellerUID = item.sellerUID
                     self.navigationController?.show(detailCollectionVC, sender: self)
                     
                     

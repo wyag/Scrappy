@@ -57,7 +57,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Setup Nav Bar
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = UIColor.orange
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-Regular", size: 22) as Any]
         self.navigationItem.title = " Cart "
     }
     
@@ -132,6 +131,14 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.setupCell(frame: cellFrame)
         // Return Cell
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            ItemController.shared.userCartItems.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .bottom)
+            tableView.reloadData()
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
